@@ -67,11 +67,11 @@ class Login:
         self.window.setStyleSheet("width: 150px")
 
     def handleLogin(self):
-        username = self.inputUsername.text()
-        password = self.inputPassword.text()
-        if self.view.generalController.iniciarSesion(username, password):
-            self.window.hide()        
-            self.view.mostrarSeleccionSucursal()
-        else:
-            popup = Popup()
-            popup.showCriticalBasic("Credenciales inválidas")
+        #username = self.inputUsername.text()
+        #password = self.inputPassword.text()
+        #if self.view.generalController.iniciarSesion(username, password):
+        self.window.hide()        
+        self.view.mostrarSeleccionSucursal()
+        #else:
+        #    popup = Popup()
+        #    popup.showCriticalBasic("Credenciales inválidas")

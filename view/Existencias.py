@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from util.styles import primaryButton, controlLabel, pageHeader
-from model.CategoriaProducto import CategoriaProducto
+#from model.CategoriaProducto import CategoriaProducto
 
 class Existencias:
 
