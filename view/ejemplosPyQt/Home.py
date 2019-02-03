@@ -1,9 +1,9 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from view.RegistrarExistencia import RegistrarExistencia
-from view.CrearProducto import CrearProducto
-from view.Existencias import Existencias
+from view.ejemplosPyQt.RegistrarExistencia import RegistrarExistencia
+from view.ejemplosPyQt.CrearProducto import CrearProducto
+from view.ejemplosPyQt.Existencias import Existencias
 from util.styles import primaryButton, controlLabel, pageHeader
 
 class Home:

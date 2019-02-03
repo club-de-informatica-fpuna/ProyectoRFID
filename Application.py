@@ -20,7 +20,6 @@ class Application:
         '''
         controlador = GeneralController(Application.salir)
         controlador.iniciarVista()
-        pass
 
 if __name__ == "__main__":
     app = Application()

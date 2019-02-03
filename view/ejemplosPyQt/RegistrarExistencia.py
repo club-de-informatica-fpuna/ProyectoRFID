@@ -91,9 +91,10 @@ class RegistrarExistencia:
 
     def changeProducto(self, index):
         data = self.inputProducto.itemData(index)
-        if data is not None or data != '':
-            precio = "{:,}".format(data.precio).replace(',','.')
-            self.inputPrecio.setText(precio)
-            self.inputCantidad.setText(str(data.stockActual))
-
-
+        try:
+            if data is not None or data != '':
+                precio = "{:,}".format(data.precio).replace(',','.')
+                self.inputPrecio.setText(precio)
+                self.inputCantidad.setText(str(data.stockActual))
+        except:
+            pass

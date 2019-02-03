@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from view.Popup import Popup
+from view.ejemplosPyQt.Popup import Popup
 from PIL import Image
 import time
 

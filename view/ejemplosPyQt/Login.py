@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from view.Popup import Popup
+from view.ejemplosPyQt.Popup import Popup
 
 class Login:
     def __init__(self, view):
@@ -71,7 +71,7 @@ class Login:
         #password = self.inputPassword.text()
         #if self.view.generalController.iniciarSesion(username, password):
         self.window.hide()        
-        self.view.mostrarSeleccionSucursal()
+        self.view.mostrarInicio()
         #else:
         #    popup = Popup()
         #    popup.showCriticalBasic("Credenciales inválidas")

@@ -1,6 +1,6 @@
-from view.Login import Login
-from view.SucursalSelect import SucursalSelect
-from view.Home import Home
+from view.ejemplosPyQt.Login import Login
+from view.ejemplosPyQt.SucursalSelect import SucursalSelect
+from view.ejemplosPyQt.Home import Home
 from PyQt5.QtWidgets import QApplication
 
 class View:
@@ -11,10 +11,6 @@ class View:
         self.app = QApplication([])
         self.loginView = Login(self)
         self.loginView.iniciar()
-    
-    def mostrarSeleccionSucursal(self):
-        self.sucursalSelectView = SucursalSelect(self)
-        self.sucursalSelectView.iniciar()
 
     def mostrarInicio(self):
         self.homeView = Home(self)

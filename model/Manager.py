@@ -1,4 +1,5 @@
 import psycopg2
+from model.CarreraManager import CarreraManager
 
 class Manager:
 
@@ -7,7 +8,7 @@ class Manager:
         self.PSQL_PORT = "5432"
         self.PSQL_USER = "postgres"
         self.PSQL_PASS = "postgres"
-        self.PSQL_DB = "ControlSystem"
+        self.PSQL_DB = "rfid"
         self.controller = controller
     
     def crearConexion(self):
@@ -16,3 +17,4 @@ class Manager:
     
     def iniciar(self):
         self.crearConexion()
+        self.carreraManager = CarreraManager(self.conn)
