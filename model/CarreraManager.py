@@ -6,9 +6,6 @@ class CarreraManager:
     def __init__(self, conn):
         self.conn = conn
     
-    def registrarCarrera(self, carrera):
-        pass
-    
     def listarCarreras(self):
         query = "SELECT * FROM carreras"
         cur = self.conn.cursor()
@@ -32,9 +29,9 @@ class CarreraManager:
             return True
         except (Exception) as error:
             print(error.__str__())
+            return False
         finally:
             cur.close()
-            return False
 
     def eliminarCarrera(self, idCarrera):
         query = "DELETE FROM carreras WHERE id = %s"
@@ -48,9 +45,9 @@ class CarreraManager:
             return True
         except(Exception) as error:
             print(error.__str__())
+            return False
         finally:
             cur.close()
-            return False
 
     def actualizarCarrera(self, carrera):
         query  = "UPDATE carreras SET denominacion = %s "

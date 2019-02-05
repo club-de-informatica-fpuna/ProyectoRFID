@@ -1,0 +1,75 @@
+import psycopg2
+from entidad.Alumno import Alumno
+
+class AlumnoManager:
+    
+    def __init__(self, conn):
+        self.conn = conn
+    
+    def listarAlumno(self):
+        cur = None
+        query = "SELECT * FROM alumnos"
+        alumnos = []
+        try:
+            cur = self.conn.cursor()
+            cur.execute(query)
+            rows = cur.fetchall()
+            for data in rows:
+                alumno = Alumno(data[0], data[1], data[2], data[3], data[4], data[5])
+                alumnos.append(alumno)
+            cur.close()
+            return alumnos
+        except(Exception) as error:
+            print(error.__str__())
+            return None
+        finally:
+            cur.close()
+
+    def registrarAlumno(self, alumno):
+        query  = "INSERT INTO alumnos (ci, apellidos, nombres, email, telefono, id) "
+        query += "VALUES (%s, %s, %s, %s, %s, %s)"
+        cur = None
+
+        try:
+            cur = self.conn.cursor()
+            cur.execute(query, [alumno.ci, alumno.apellido, alumno.nombre, alumno.email, alumno.telefono, alumno.idCarrera])
+            self.conn.commit()
+            cur.close()
+            return True
+        except(Exception) as error:
+            print(error.__str__())
+            return False
+        finally:
+            cur.close()
+
+    def eliminarAlumno(self, idSpanner):
+        query = "DELETE FROM alumnos WHERE ci = %s"
+        cur = None
+
+        try:
+            cur = self.conn.cursor()
+            cur.execute(query, [idSpanner])
+            self.conn.commit()
+            cur.close()
+            return True
+        except(Exception) as error:
+            print(error.__str__())
+            return False
+        finally:
+            cur.close()
+
+    def actualizarAlumnos(self, alumno):
+        query = ""
+        cur = None
+
+        try:
+            cur = self.conn.cursor()
+            cur.execute(query,[])
+            self.conn.commit()
+            cur.close()
+            return True
+        except(Exception) as error:
+            print(error.__str__())
+            return False
+        finally:
+            cur.close()

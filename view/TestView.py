@@ -1,4 +1,5 @@
 from entidad.Carrera import Carrera
+from entidad.Alumno import Alumno
 class TestView:
     def __init__(self, generalController):
         self.generalController = generalController
@@ -13,3 +14,14 @@ class TestView:
     def listarCarreras(self, carreras):
         for carrera in carreras:
             print(carrera)
+    
+    def initViewAlumnos(self):
+        alumno = Alumno(ci="1234567", apellido=".|.", nombre=".|.", email="@gmail.com", telefono='051-516-151', idCarrera=1)
+        #self.generalController.alumnoController.registrarAlumno(alumno)
+        self.generalController.alumnoController.eliminarAlumno("1234567")
+        alumnos = self.generalController.alumnoController.listarAlumno()
+        self.listarAlumnos(alumnos)
+
+    def listarAlumnos(self, alumnos):
+        for alumno in alumnos:
+            print(alumno)
