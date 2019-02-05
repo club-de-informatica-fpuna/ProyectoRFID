@@ -7,7 +7,7 @@ class Manager:
         self.PSQL_HOST = "localhost"
         self.PSQL_PORT = "5432"
         self.PSQL_USER = "postgres"
-        self.PSQL_PASS = "postgres"
+        self.PSQL_PASS = "12345"
         self.PSQL_DB = "rfid"
         self.controller = controller
     

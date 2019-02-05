@@ -4,13 +4,13 @@ class CarreraController:
         self.carreraManager = carreraManager
 
     def registrarCarrera(self, carrera):
-        pass
+        return self.carreraManager.registrarCarrera(carrera)
     
     def eliminarCarrera(self, idCarrera):
-        pass
+        return self.carreraManager.eliminarCarrera(idCarrera)
     
     def actualizarCarrera(self, carrera):
-        pass
+        return self.carreraManager.actualizarCarrera(carrera)
     
     def listarCarreras(self):
         return self.carreraManager.listarCarreras()
