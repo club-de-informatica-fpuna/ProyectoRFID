@@ -16,9 +16,10 @@ class TestView:
             print(carrera)
     
     def initViewAlumnos(self):
-        alumno = Alumno(ci="1234567", apellido=".|.", nombre=".|.", email="@gmail.com", telefono='051-516-151', idCarrera=1)
+        alumno = Alumno(ci="5416252", apellido=".|.", nombre=".|.", email="@gmail.com", telefono='051-516-151', idCarrera=1)
         #self.generalController.alumnoController.registrarAlumno(alumno)
-        self.generalController.alumnoController.eliminarAlumno("1234567")
+        #self.generalController.alumnoController.eliminarAlumno("1234567")
+        self.generalController.alumnoController.actualizarAlumnos(alumno)
         alumnos = self.generalController.alumnoController.listarAlumno()
         self.listarAlumnos(alumnos)
 

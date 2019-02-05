@@ -11,3 +11,6 @@ class AlumnoController:
 
     def eliminarAlumno(self, idSpanner):
         return self.alumnoManager.eliminarAlumno(idSpanner)
+
+    def actualizarAlumnos(self, alumno):
+        return self.alumnoManager.actualizarAlumnos(alumno)

@@ -59,12 +59,13 @@ class AlumnoManager:
             cur.close()
 
     def actualizarAlumnos(self, alumno):
-        query = ""
+        query  = "UPDATE alumnos SET apellidos = %s, nombres = %s, email = %s, telefono = %s, id = %s "
+        query += "WHERE ci = %s"
         cur = None
 
         try:
             cur = self.conn.cursor()
-            cur.execute(query,[])
+            cur.execute(query, [alumno.apellido, alumno.nombre, alumno.email, alumno.telefono, alumno.idCarrera, alumno.ci])
             self.conn.commit()
             cur.close()
             return True
