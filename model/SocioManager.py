@@ -94,15 +94,15 @@ class SocioManager:
             
             missingValues = self.getMissingValues(socio, missingAttributes)
 
-            if len(missingValues) != 0 :
+            if not missingValues :
+                return updatedRows
+            else:
                 missingValues.append(str(socio.ci))
                 cur = self.conn.cursor()
                 cur.execute(query, missingValues)
                 updatedRows = cur.rowcount
                 self.conn.commit()
                 cur.close()
-                return updatedRows
-            else:
                 return updatedRows
         except(Exception) as error:
             print("{} ERROR: {}".format(datetime.now(), error))
