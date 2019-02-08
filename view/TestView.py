@@ -1,5 +1,9 @@
 from entidad.Carrera import Carrera
 from entidad.Alumno import Alumno
+from entidad.Socio import Socio
+from datetime import datetime
+from util.ConversorImg import ConversorImg
+
 class TestView:
     def __init__(self, generalController):
         self.generalController = generalController
@@ -26,3 +30,18 @@ class TestView:
     def listarAlumnos(self, alumnos):
         for alumno in alumnos:
             print(alumno)
+
+    def initSocio(self):
+        #print(self.generalController.socioController.obtenerSocioCi(123456))
+        #self.generalController.socioController.eliminarSocioCi(123456)
+        #socio = Socio(4,4,123456, '/home/ivan/Descargas/icon-student-black.png', datetime.now(), False)
+        #self.generalController.socioController.registrarSocio(socio)
+        conversor = ConversorImg("/home/ivan/Descargas/images.png")
+        base64foto = conversor.encodeImg()
+        print(self.generalController.socioController.actualizarSocioCi(Socio(uid='5', foto=base64foto, estado=True, ci=123456)))
+        #socios = self.generalController.socioController.listarSocios()
+        #self.listarSocios(socios)
+    
+    def listarSocios(self, socios):
+        for s in socios:
+            print(s)

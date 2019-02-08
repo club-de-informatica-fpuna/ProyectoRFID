@@ -1,6 +1,7 @@
 import psycopg2
 from model.CarreraManager import CarreraManager
 from model.AlumnoManager import AlumnoManager
+from model.SocioManager import SocioManager
 
 class Manager:
 
@@ -19,4 +20,5 @@ class Manager:
     def iniciar(self):
         self.crearConexion()
         self.carreraManager = CarreraManager(self.conn)
-        self.alumnoManager = AlumnoManager(self.conn)
+        self.alumnoManager  = AlumnoManager(self.conn)
+        self.socioManager   = SocioManager(self.conn)

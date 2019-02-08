@@ -1,5 +1,6 @@
 import psycopg2
 from entidad.Carrera import Carrera
+import sys, traceback
 
 class CarreraManager:
 
@@ -28,7 +29,7 @@ class CarreraManager:
             cur.close()
             return True
         except (Exception) as error:
-            print(error.__str__())
+            traceback.print_exc(file=sys.stdout)
             return False
         finally:
             cur.close()
@@ -44,7 +45,7 @@ class CarreraManager:
             cur.close()
             return True
         except(Exception) as error:
-            print(error.__str__())
+            traceback.print_exc(file=sys.stdout)
             return False
         finally:
             cur.close()
@@ -63,9 +64,7 @@ class CarreraManager:
             cur.close()
             return updatedRows
         except(Exception, psycopg2.DatabaseError) as error:
-            print(error.__str__())
+            traceback.print_exc(file=sys.stdout)
         finally:
             cur.close()
             return updatedRows
-        
-

@@ -1,5 +1,6 @@
 import psycopg2
 from entidad.Alumno import Alumno
+import sys, traceback
 
 class AlumnoManager:
     
@@ -20,7 +21,7 @@ class AlumnoManager:
             cur.close()
             return alumnos
         except(Exception) as error:
-            print(error.__str__())
+            traceback.print_exc(file=sys.stdout)
             return None
         finally:
             cur.close()
@@ -32,12 +33,12 @@ class AlumnoManager:
 
         try:
             cur = self.conn.cursor()
-            cur.execute(query, [alumno.ci, alumno.apellido, alumno.nombre, alumno.email, alumno.telefono, alumno.idCarrera])
+            cur.execute(query, [str(alumno.ci), alumno.apellido, alumno.nombre, alumno.email, alumno.telefono, alumno.idCarrera])
             self.conn.commit()
             cur.close()
             return True
         except(Exception) as error:
-            print(error.__str__())
+            traceback.print_exc(file=sys.stdout)
             return False
         finally:
             cur.close()
@@ -48,12 +49,12 @@ class AlumnoManager:
 
         try:
             cur = self.conn.cursor()
-            cur.execute(query, [idSpanner])
+            cur.execute(query, [str(idSpanner)])
             self.conn.commit()
             cur.close()
             return True
         except(Exception) as error:
-            print(error.__str__())
+            traceback.print_exc(file=sys.stdout)
             return False
         finally:
             cur.close()
@@ -65,12 +66,12 @@ class AlumnoManager:
 
         try:
             cur = self.conn.cursor()
-            cur.execute(query, [alumno.apellido, alumno.nombre, alumno.email, alumno.telefono, alumno.idCarrera, alumno.ci])
+            cur.execute(query, [alumno.apellido, alumno.nombre, alumno.email, alumno.telefono, alumno.idCarrera, str(alumno.ci)])
             self.conn.commit()
             cur.close()
             return True
         except(Exception) as error:
-            print(error.__str__())
+            traceback.print_exc(file=sys.stdout)
             return False
         finally:
             cur.close()
