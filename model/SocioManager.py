@@ -93,8 +93,9 @@ class SocioManager:
             query += "WHERE ci = %s"
             
             missingValues = self.getMissingValues(socio, missingAttributes)
-            
+
             if len(missingValues) != 0 :
+                missingValues.append(str(socio.ci))
                 cur = self.conn.cursor()
                 cur.execute(query, missingValues)
                 updatedRows = cur.rowcount
@@ -108,7 +109,8 @@ class SocioManager:
             self.logger.error(traceback.format_exc())
             return updatedRows
         finally:
-            cur.close()
+            if cur != None:
+                cur.close()
     
     def fieldCreator(self, fieldList):
         length = len(fieldList)-1
@@ -122,7 +124,5 @@ class SocioManager:
         missingValues = []
         for field in fieldList:
             missingValues.append(socio.__getattribute__(field))
-
-        missingValues.append(str(socio.ci))
         return missingValues
 
