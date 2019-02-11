@@ -15,7 +15,7 @@ class GeneralController:
         self.socioController   = SocioController(self.manager.socioManager)
     
     def iniciarVista(self):
-        vista = TestView(self)
+        vista = View(self)
         #vista.iniciarVista()
         #vista.initViewAlumnos()
-        vista.initSocio()
+        vista.iniciarVista()
