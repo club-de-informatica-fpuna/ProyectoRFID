@@ -8,7 +8,7 @@ class Home:
 
     def __init__(self, view):
         self.view = view
-        self.title = 'Inicio | C.E.P.'
+        self.title = 'Inicio | CEP'
     
     def build(self):
         self.window = QWidget()
@@ -25,11 +25,13 @@ class Home:
     def createGriLayout(self):
         self.layout = QGridLayout()
 
-
         btnSocio = QPushButton('Socios')
         btnSocio.setObjectName('botonHome')
-        btnAlumno = QPushButton('Alumnos')
+
+        btnAlumno = QPushButton('Alumnos')        
         btnAlumno.setObjectName('botonHome')
+        btnAlumno.clicked.connect(self.view.mostrarModuloAlumnos)
+
         btnPrestamo = QPushButton('Prestamos')
         btnPrestamo.setObjectName('botonHome')
         btnVenta = QPushButton('Ventas')
@@ -43,11 +45,10 @@ class Home:
         btnSalir = QPushButton('Salir')
         btnSalir.setObjectName('botonHome')
         labelTitle = QLabel('Sistema de Control del CEP')
-
         labelTitle.setObjectName('tituloHome')
+
         with open('./view/resources/styles.css') as f:
             labelTitle.setStyleSheet(f.read())
-
         with open('./view/resources/styles.css') as f:
             btnSocio.setStyleSheet(f.read())
         with open('./view/resources/styles.css') as f:
@@ -81,14 +82,11 @@ class Home:
         self.layout.addWidget(btnEquipo, 4, 0)
         self.layout.addWidget(btnSalir, 4, 2)
         self.layout.addWidget(labelImg, 1, 1, 4, 1)
-
         self.layout.setContentsMargins(50, 50, 50, 50)
-
 
         self.window.setObjectName("ventanaHome")
         with open('./view/resources/styles.css') as f:
             self.window.setStyleSheet(f.read())        
-
         self.window.setLayout(self.layout)
 
     def center(self):

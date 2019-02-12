@@ -3,7 +3,8 @@ QPushButton#botonHome {
     color: #002156;
     border: 2px solid white;
     padding: 20px;
-    font-weight: 500;
+    font-size: 15px;
+    font-weight: 550;
     border-radius: 5px;
 }
 
@@ -18,6 +19,10 @@ QWidget#ventanaHome {
     padding: 10px;
 }
 
+QWidget#ventanaGeneral {
+    background: white;
+}
+
 QLabel#tituloHome {
     color: #fff;
     font-size: 30px;
@@ -25,4 +30,31 @@ QLabel#tituloHome {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     text-align: center;
     margin: auto;
+}
+
+QPushButton#botonPrimario {
+    background: #002156;
+    color: white;
+    border: 2px solid #002156;
+    padding: 5px;
+    font-size: 13px;
+    font-weight: 550;
+    border-radius: 5px;
+}
+
+QPushButton#botonPrimario:hover {
+    background: white;
+    color: #002156;
+    border: 2px solid #002156;
+}
+
+QLabel#tituloAlumnos{
+    color: #002156;
+    font-size: 25px;
+    font-weight: 500;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 20px;
 }

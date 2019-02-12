@@ -14,3 +14,6 @@ class CarreraController:
     
     def listarCarreras(self):
         return self.carreraManager.listarCarreras()
+    
+    def listarCarreraPorId(self, id):
+        return self.carreraManager.listarCarrerasPorId(id)

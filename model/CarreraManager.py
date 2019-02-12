@@ -68,3 +68,12 @@ class CarreraManager:
         finally:
             cur.close()
             return updatedRows
+    
+    def listarCarrerasPorId(self, id):
+        query = "SELECT * FROM carreras WHERE id = " + str(id)
+        cur = self.conn.cursor()
+        cur.execute(query)
+        row = cur.fetchone()
+        carrera = Carrera(row[0], row[1])
+        return carrera
+

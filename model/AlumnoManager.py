@@ -38,6 +38,7 @@ class AlumnoManager:
             cur.close()
             return True
         except(Exception) as error:
+
             traceback.print_exc(file=sys.stdout)
             return False
         finally:
