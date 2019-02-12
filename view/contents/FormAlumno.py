@@ -83,7 +83,7 @@ class FormAlumno:
 
     def center(self):
         screen = QDesktopWidget().screenGeometry()
-        size = self.window.geometry()
+        size = self.window.geometry()      
         self.window.move((screen.width() - size.width()) /2, (screen.height() - size.height()) / 2)
     
     def manejarPostAlumno(self):

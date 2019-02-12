@@ -70,10 +70,17 @@ class CarreraManager:
             return updatedRows
     
     def listarCarrerasPorId(self, id):
-        query = "SELECT * FROM carreras WHERE id = " + str(id)
-        cur = self.conn.cursor()
-        cur.execute(query)
-        row = cur.fetchone()
-        carrera = Carrera(row[0], row[1])
-        return carrera
+        query = "SELECT * FROM carreras WHERE id = %s"
+        cur = None
+        try:
+            cur = self.conn.cursor()
+            cur.execute(query, [str(id)])
+            row = cur.fetchone()
+            return Carrera(row[0], row[1])
+        except(Exception) as error:
+            traceback.print_exc(file=sys.stdout)
+        finally:
+            cur.close()
+        
+        
 

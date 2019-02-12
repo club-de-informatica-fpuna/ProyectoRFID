@@ -13,7 +13,7 @@ class Home:
     def build(self):
         self.window = QWidget()
         self.window.setWindowTitle(self.title)
-        #self.window.setWindowIcon(QIcon("icon.ico")) para el icono
+        self.window.setWindowIcon(QIcon(os.getcwd()+'/view/resources/cep-logo.ico'))
         self.createGriLayout()
         self.center()
 
@@ -27,6 +27,7 @@ class Home:
 
         btnSocio = QPushButton('Socios')
         btnSocio.setObjectName('botonHome')
+        btnSocio.clicked.connect(self.view.mostrarModuloSocio)
 
         btnAlumno = QPushButton('Alumnos')        
         btnAlumno.setObjectName('botonHome')

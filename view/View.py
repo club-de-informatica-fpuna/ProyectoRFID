@@ -1,6 +1,7 @@
 from view.contents.Home import Home
 from view.contents.Alumnos import Alumnos
 from view.contents.FormAlumno import FormAlumno
+from view.contents.Socios import Socio
 from PyQt5.QtWidgets import QApplication
 
 class View:
@@ -19,4 +20,7 @@ class View:
     def mostrarFormAlumno(self):
         self.formAlumno = FormAlumno(self)
         self.formAlumno.start() 
-        
+    
+    def mostrarModuloSocio(self):
+        self.socioView = Socio(self)
+        self.socioView.start()

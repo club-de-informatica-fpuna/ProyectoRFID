@@ -1,4 +1,5 @@
 from entidad.Socio import Socio
+from entidad.Carrera import Carrera
 from util.ConversorImg import ConversorImg
 import sys, traceback
 from datetime import datetime
@@ -82,6 +83,21 @@ class SocioManager:
         finally:
             cur.close()
 
+    def obtenerCarrera(self, key):
+        query = "SELECT c.id, c.denominacion FROM alumnos a JOIN carreras c ON c.id = a.id WHERE a.ci = %s"
+        cur = None
+        try:
+            cur = self.conn.cursor()
+            cur.execute(query, [str(key)])
+            row = cur.fetchone()
+            return Carrera(row[0], row[1])
+        except(Exception) as error:
+            print("{} ERROR: {}".format(datetime.now(), error))
+            self.logger.error(traceback.format_exc())
+            return False
+        finally:
+            if cur != None:
+                cur.close()
     def actualizarSocioCi(self, socio):
         query  = "UPDATE socios SET "
         updatedRows = 0

@@ -15,5 +15,8 @@ class SocioController:
     def eliminarSocioCi(self, ciKey):
         return self.socioManager.eliminarSocioCi(ciKey)
 
+    def obtenerCarrera(self, key):
+        return self.socioManager.obtenerCarrera(key)
+
     def actualizarSocioCi(self, socio):
         return self.socioManager.actualizarSocioCi(socio)
