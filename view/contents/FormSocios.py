@@ -12,6 +12,7 @@ class FormSocios:
     def build(self):
         self.window = QWidget()
         self.window.setWindowTitle(self.title)
+        self.createGridLayout()
 
     def start(self):
         self.build()
@@ -38,7 +39,7 @@ class FormSocios:
         self.inputCarrer = QComboBox()
 
         btnRegistrar = QPushButton("Registrar")
-        btnRegistrar.setObjectName("botonPrimario")        
+        btnRegistrar.setObjectName("botonPrimario")
 
         btnCancelar = QPushButton("Cancelar")
         btnCancelar.setObjectName("botonPrimario")        
@@ -50,6 +51,7 @@ class FormSocios:
 
         horizontalLayout.addWidget(btnRegistrar)
         horizontalLayout.addWidget(btnCancelar)
+        self.layout.addLayout(horizontalLayout,0,0)
 
         
 

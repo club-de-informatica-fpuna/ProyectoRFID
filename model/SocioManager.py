@@ -12,15 +12,13 @@ class SocioManager:
         self.logger = UtilLogger(self.__class__.__name__).get()
 
     def listarSocios(self):
-        query = "SELECT * FROM socios"
+        query = "SELECT id_socio, uid, ci, foto, fecha_ingreso, estado FROM socios"
         cur = None
         socios = []
-
         try:
             cur = self.conn.cursor()
             cur.execute(query)
             rows = cur.fetchall()
-            
             for column in rows:
                 socio = Socio(column[0], column[1], column[2], column[3], column[4], column[5])
                 socios.append(socio)

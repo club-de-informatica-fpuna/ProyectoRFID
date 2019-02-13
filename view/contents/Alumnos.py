@@ -25,7 +25,7 @@ class Alumnos:
         self.layout = QGridLayout(self.window)
 
         labelTitle = QLabel("Alumnos")
-        labelTitle.setObjectName("tituloAlumnos")
+        labelTitle.setObjectName("tituloModulo")
 
         btnNuevo = QPushButton("Nuevo")
         btnNuevo.setObjectName("botonPrimario")

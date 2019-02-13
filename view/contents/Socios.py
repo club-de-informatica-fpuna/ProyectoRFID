@@ -25,9 +25,17 @@ class Socio:
         self.layout = QGridLayout(self.window)
         
         labelTitle = QLabel("Socios")
+        labelTitle.setObjectName("tituloModulo")
+
+        with open('./view/resources/styles.css') as f:
+            labelTitle.setStyleSheet(f.read())        
 
         btnNew = QPushButton("Nuevo")
         btnNew.setObjectName("botonPrimario")
+        btnNew.clicked.connect(self.view.mostrarFormSocio)        
+
+        with open('./view/resources/styles.css') as f:
+            btnNew.setStyleSheet(f.read())
 
         self.inputSearch = QLineEdit()
         btnSearch = QPushButton("Buscar")
@@ -66,14 +74,17 @@ class Socio:
         
         self.partnerTable.move(0, 0)
 
-        self.layout.addWidget(labelTitle)
-        self.layout.addWidget(btnNew)
-        self.layout.addWidget(self.inputSearch)
-        self.layout.addWidget(btnSearch)
-        self.layout.addWidget(self.partnerTable)
+        self.layout.addWidget(labelTitle,0,0,1,10)
+        self.layout.addWidget(btnNew,1,0)
+        self.layout.addWidget(self.inputSearch,1,8)
+        self.layout.addWidget(btnSearch,1,9)
+        self.layout.addWidget(self.partnerTable,2,0,1,10)
         self.layout.setAlignment(Qt.AlignTop)
+        self.layout.setContentsMargins(20, 20, 20, 20)
 
-
+        self.window.setObjectName("ventanaGeneral")
+        with open('./view/resources/styles.css') as f:
+            self.window.setStyleSheet(f.read())
 
     def center(self):
         screen = QDesktopWidget().screenGeometry()

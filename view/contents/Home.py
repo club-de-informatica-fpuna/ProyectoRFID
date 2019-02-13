@@ -45,6 +45,7 @@ class Home:
         btnEquipo.setObjectName('botonHome')
         btnSalir = QPushButton('Salir')
         btnSalir.setObjectName('botonHome')
+        btnSalir.clicked.connect(self.view.salir)
         labelTitle = QLabel('Sistema de Control del CEP')
         labelTitle.setObjectName('tituloHome')
 

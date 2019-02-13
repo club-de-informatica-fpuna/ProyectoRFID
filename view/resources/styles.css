@@ -48,7 +48,7 @@ QPushButton#botonPrimario:hover {
     border: 2px solid #002156;
 }
 
-QLabel#tituloAlumnos{
+QLabel#tituloModulo{
     color: #002156;
     font-size: 25px;
     font-weight: 500;

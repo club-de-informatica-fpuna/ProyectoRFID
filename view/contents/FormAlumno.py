@@ -49,7 +49,8 @@ class FormAlumno:
         btnRegistrar.clicked.connect(self.manejarPostAlumno)
 
         btnCancelar = QPushButton("Cancelar")
-        btnCancelar.setObjectName("botonPrimario")        
+        btnCancelar.setObjectName("botonPrimario")
+        btnCancelar.clicked.connect(self.manejarCancelar)
 
         with open('./view/resources/styles.css') as f:
             btnCancelar.setStyleSheet(f.read())
@@ -96,5 +97,8 @@ class FormAlumno:
         alumno.idCarrera = 1
         res = self.view.generalController.alumnoController.registrarAlumno(alumno)
         if res :
-            self.window.hide()
+            self.window.destroy()
             self.view.mostrarModuloAlumnos()
+    
+    def manejarCancelar(self):
+        self.window.hide()
