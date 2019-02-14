@@ -11,6 +11,8 @@ class ConversorImg:
 
     def encodeImg(self):
         img = Image.open(self.pathToImg)
+        minTam = (400, 300)
+        img.thumbnail(minTam)
         inMemFile = io.BytesIO()
         img.save(inMemFile, format = img.format)
         # reset file pointer to start
