@@ -6,11 +6,11 @@ from model.SocioManager import SocioManager
 class Manager:
 
     def __init__(self, controller):
-        self.PSQL_HOST = "localhost"
+        self.PSQL_HOST = "ec2-107-20-183-142.compute-1.amazonaws.com"
         self.PSQL_PORT = "5432"
-        self.PSQL_USER = "postgres"
-        self.PSQL_PASS = "12345"
-        self.PSQL_DB = "rfid"
+        self.PSQL_USER = "qdknorzbxmusgh"
+        self.PSQL_PASS = "219f081a9ed3403137926ddb0f09a516326818bfb2b2a081ead5b2bedd378f4a"
+        self.PSQL_DB = "dvjf688pvmb2i"
         self.controller = controller
     
     def crearConexion(self):

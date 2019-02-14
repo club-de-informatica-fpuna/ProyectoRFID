@@ -46,7 +46,7 @@ class AlumnoManager:
             cur.close()            
 
     def registrarAlumno(self, alumno):
-        query  = "INSERT INTO alumnos (ci, apellidos, nombres, email, telefono, id) "
+        query  = "INSERT INTO alumnos (ci, apellidos, nombres, email, telefono, id_carrera) "
         query += "VALUES (%s, %s, %s, %s, %s, %s)"
         cur = None
 
@@ -64,12 +64,19 @@ class AlumnoManager:
             cur.close()
 
     def eliminarAlumno(self, idSpanner):
-        query = "DELETE FROM alumnos WHERE ci = %s"
+        query = "DELETE FROM alumnos CASCADE WHERE ci = %s"
         cur = None
-
         try:
             cur = self.conn.cursor()
-            cur.execute(query, [str(idSpanner)])
+            if type(idSpanner) == list:
+                for i in idSpanner:
+                    try:
+                        cur.execute(query, [str(i)])
+                    except(Exception) as error:
+                        self.conn.rollback()
+                        traceback.print_exc(file=sys.stdout)
+            else:
+                cur.execute(query, [str(idSpanner)])
             self.conn.commit()
             cur.close()
             return True
@@ -80,7 +87,7 @@ class AlumnoManager:
             cur.close()
 
     def actualizarAlumnos(self, alumno):
-        query  = "UPDATE alumnos SET apellidos = %s, nombres = %s, email = %s, telefono = %s, id = %s "
+        query  = "UPDATE alumnos SET apellidos = %s, nombres = %s, email = %s, telefono = %s, id_carrera = %s "
         query += "WHERE ci = %s"
         cur = None
 
@@ -113,7 +120,7 @@ class AlumnoManager:
 
     def buscarAlumno(self, ci):
         cur = None
-        query = "SELECT ci, apellidos, nombres, email, telefono, id FROM alumnos WHERE ci = '" + str(ci) + "'"
+        query = "SELECT ci, apellidos, nombres, email, telefono, id_carrera FROM alumnos WHERE ci = '" + str(ci) + "'"
         try:
             cur = self.conn.cursor()
             cur.execute(query)
