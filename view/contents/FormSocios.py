@@ -26,8 +26,6 @@ class FormSocios:
         horizontalLayoutSearch   = QHBoxLayout()
         verticalLayoutContent    = QVBoxLayout() 
 
-        labelTitle = QLabel('Registrar Socio')
-
         pathImgIconSave = os.getcwd()+"/view/resources/icons/upload.png"
 
         imgButton = QPushButton()
@@ -69,11 +67,15 @@ class FormSocios:
         btnCancelar.setObjectName("botonPrimario")
 
         btnSearch = QPushButton("Buscar")
+        btnSearch.setObjectName("botonPrimario")
+        btnSearch.clicked.connect(self.buscarAlumno)
 
         with open('./view/resources/styles.css') as f:
             btnCancelar.setStyleSheet(f.read())
         with open('./view/resources/styles.css') as f:
             btnRegistrar.setStyleSheet(f.read())
+        with open('./view/resources/styles.css') as f:
+            btnSearch.setStyleSheet(f.read())            
 
         verticalLayoutImage.addWidget(self.lbImg)
         verticalLayoutImage.addWidget(imgButton)
@@ -84,8 +86,6 @@ class FormSocios:
         horizontalLayoutSearch.addWidget(self.inputCI)
         horizontalLayoutSearch.addWidget(btnSearch)
 
-
-        verticalLayoutContent.addWidget(labelTitle)
         verticalLayoutContent.addWidget(ci)
         verticalLayoutContent.addLayout(horizontalLayoutSearch)
         verticalLayoutContent.addWidget(firstName)
@@ -97,8 +97,7 @@ class FormSocios:
         verticalLayoutContent.addWidget(uid)
         verticalLayoutContent.addWidget(self.inputUID)
         verticalLayoutContent.addWidget(fechaInsert)
-        verticalLayoutContent.addWidget(self.inputDate)
-        
+        verticalLayoutContent.addWidget(self.inputDate)                
         verticalLayoutContent.addLayout(horizontalLayoutButtons)
 
         self.layout.addLayout(verticalLayoutImage)
@@ -117,5 +116,16 @@ class FormSocios:
         pixmapResized = pixMap.scaled(400, 300, Qt.KeepAspectRatio)
         self.lbImg.setPixmap(pixmapResized)
     
+    def buscarAlumno(self):
+        ci = self.inputCI.text()
+        alumno = self.view.generalController.alumnoController.buscarAlumno(ci)
+        if alumno is None:
+            return
+        else:
+            self.inputFN.setText(alumno.nombre)
+            self.inputLN.setText(alumno.apellido)
+            carrera = self.view.generalController.socioController.obtenerCarrera(ci)
+            if carrera is not None:
+                self.inputCarrer.setText(carrera.denominacion)
 
 

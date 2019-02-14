@@ -110,3 +110,21 @@ class AlumnoManager:
             return None
         finally:
             cur.close()        
+
+    def buscarAlumno(self, ci):
+        cur = None
+        query = "SELECT ci, apellidos, nombres, email, telefono, id FROM alumnos WHERE ci = '" + str(ci) + "'"
+        try:
+            cur = self.conn.cursor()
+            cur.execute(query)
+            row = cur.fetchone()
+            cur.close()
+            if row is not None:
+                alumno = Alumno(row[0], row[1], row[2], row[3], row[4], row[5])
+                return alumno
+            return None
+        except(Exception) as error:
+            traceback.print_exc(file=sys.stdout)
+            return None
+        finally:
+            cur.close()

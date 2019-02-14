@@ -65,15 +65,20 @@ class Home:
 
         btnEquipo = QPushButton('Equipos')
         btnEquipo.setObjectName('botonHome')
+        btnEquipo.setIcon(QIcon("./view/resources/equipo.jpg"))
+        btnEquipo.setIconSize(QSize(40,40))        
         btnEquipo.setMinimumWidth(200)        
 
         btnSalir = QPushButton('Salir')
         btnSalir.setObjectName('botonHome')
+        btnSalir.setIcon(QIcon("./view/resources/exit.svg"))
+        btnSalir.setIconSize(QSize(40,40))        
         btnSalir.setMinimumWidth(200)                
         btnSalir.clicked.connect(self.view.salir)
 
         labelTitle = QLabel('Sistema de Control del CEP')
         labelTitle.setObjectName('tituloHome')
+        labelTitle.setAlignment(Qt.AlignCenter)
 
         with open('./view/resources/styles.css') as f:
             labelTitle.setStyleSheet(f.read())

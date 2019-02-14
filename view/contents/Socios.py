@@ -13,6 +13,7 @@ class Socio:
     def build(self):
         self.window = QWidget()
         self.window.setWindowTitle(self.title)
+        self.window.setWindowIcon(QIcon('./view/resources/socio.png'))
         self.socios = self.setState(self.view.generalController.socioController.listarSocios())
         self.createGridLayout()
         self.center()

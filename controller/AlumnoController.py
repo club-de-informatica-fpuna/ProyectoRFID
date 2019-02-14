@@ -20,3 +20,6 @@ class AlumnoController:
 
     def getCantidadAlumnos(self):
         return self.alumnoManager.getCantidadAlumnos()
+    
+    def buscarAlumno(self, ci):
+        return self.alumnoManager.buscarAlumno(ci)

@@ -15,6 +15,7 @@ class Alumnos:
     def build(self):
         self.window = QWidget()
         self.window.setWindowTitle(self.title)
+        self.window.setWindowIcon(QIcon('./view/resources/student.svg'))
         self.alumnos = self.view.generalController.alumnoController.listarAlumnoPaginado(self.paginaActual, self.cantidadElementos) 
         self.cantidadAlumnos = self.view.generalController.alumnoController.getCantidadAlumnos()
         self.createGridLayout()
