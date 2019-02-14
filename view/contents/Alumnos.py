@@ -63,6 +63,11 @@ class Alumnos:
         btnNuevo.setIcon(QIcon("./view/resources/add.svg"))
         btnNuevo.clicked.connect(self.view.mostrarFormAlumno)
 
+        btnEliminar = QPushButton("Eliminar")
+        btnEliminar.setObjectName("botonPrimario")
+        btnEliminar.setIcon(QIcon("./view/resources/add.svg"))
+        btnEliminar.clicked.connect(self.deleteStudents) 
+
         self.inputSearch = QLineEdit()
         self.inputSearch.setObjectName("inputSearch")
         self.inputSearch.setMaximumWidth(200)
@@ -122,6 +127,7 @@ class Alumnos:
         
         self.layout.addWidget(labelTitle,0,0,1,10)
         self.layout.addWidget(btnNuevo,1,0)
+        self.layout.addWidget(btnEliminar,1,1)        
         self.layout.addWidget(self.inputSearch,1,9)
         self.layout.addWidget(btnSearch,1,10)
         self.layout.addWidget(self.tablaAlumnos,2,0,1,11)
@@ -162,3 +168,13 @@ class Alumnos:
         cantPaginas = math.ceil(self.cantidadAlumnos/self.cantidadElementos)
         self.view.alumnosView = Alumnos(self.view,cantPaginas)
         self.view.alumnosView.start()
+    
+    def deleteStudents(self):
+        select = self.tablaAlumnos.selectionModel()
+        selectedRows = select.selectedRows()
+        data = []
+        for i in selectedRows:
+            data.append(str(i.data()))
+        res = self.view.generalController.alumnoController.eliminarAlumno(data)
+        if res:
+            self.view.mostrarModuloAlumnos()
