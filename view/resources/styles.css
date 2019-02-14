@@ -1,7 +1,7 @@
 QPushButton#botonHome {
-    background: white;
+    background: #fff;
     color: #002156;
-    border: 2px solid white;
+    border: 2px solid #fff;
     padding: 20px;
     font-size: 17px;
     font-weight: 550;
@@ -11,8 +11,8 @@ QPushButton#botonHome {
 
 QPushButton#botonHome:hover {
     background: #002156;
-    color: white;
-    border: 2px solid white;
+    color: #fff;
+    border: 2px solid #fff;
 }
 
 QWidget#ventanaHome {
@@ -25,7 +25,7 @@ QWidget#ventanaGeneral {
 }
 
 QLabel#tituloHome {
-    color: white;
+    color: #fff;
     font-size: 30px;
     font-weight: 800;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -35,7 +35,7 @@ QLabel#tituloHome {
 
 QPushButton#botonPrimario {
     background: #002156;
-    color: white;
+    color: #fff;
     border: 2px solid #002156;
     padding: 5px;
     font-size: 13px;
@@ -44,7 +44,7 @@ QPushButton#botonPrimario {
 }
 
 QPushButton#botonPrimario:hover {
-    background: white;
+    background: #fff;
     color: #002156;
     border: 2px solid #002156;
 }
@@ -60,11 +60,57 @@ QLabel#tituloModulo {
     margin-bottom: 20px;
 }
 
-QLineEdit#inputSearch{
-    background: white;
-    color: gray;
+QLineEdit#inputSearch {
+    background: #fff;
+    color: #636c72;
     border: 1px solid #002156;
     border-radius: 5px;
     font-size: 13px;
     padding: 5px;
+}
+
+QPushButton#upload {
+    color: #fff;
+    background-color: #002156;
+    border: 1px solid #002156;
+    border-radius: 5px;
+}
+
+QPushButton#upload:hover {
+    background-color: #fff;
+    color: #002156;
+    border: 2px solid #002156;
+}
+
+QPushButton#searchStudent {
+    color: #fff;
+    border: 1px solid #002156;
+    background-color: #002156;
+    font-size: 13px;
+    font-weight: 550;
+    border-radius: 5px;
+    height: 25%;
+    width: 100%;
+}
+
+QPushButton#searchStudent:hover {
+    background-color: #fff;
+    color: #002156;
+    border: 2px solid #002156;
+}
+
+QPushButton#cancel {
+    background: #d9534f;
+    color: #fff;
+    border: 1px solid #d9534f;
+    font-size: 13px;
+    font-weight: 550;
+    border-radius: 5px;
+    height: 30%;
+}
+
+QPushButton#cancel:hover {
+    background-color: #fff;
+    color: #d9534f;
+    border: 2px solid #d9534f;
 }

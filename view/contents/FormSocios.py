@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.uic import *
+from entidad.Socio import Socio
 import os
 class FormSocios:
 
@@ -13,6 +14,7 @@ class FormSocios:
         self.window = QWidget()
         self.window.setWindowTitle(self.title)
         self.createGridLayout()
+        self.center()
 
     def start(self):
         self.build()
@@ -26,19 +28,24 @@ class FormSocios:
         horizontalLayoutSearch   = QHBoxLayout()
         verticalLayoutContent    = QVBoxLayout() 
 
-        pathImgIconSave = os.getcwd()+"/view/resources/icons/upload.png"
+        pathImgIconUpload   = os.getcwd()+"/view/resources/icons/"
+        self.pathImgDefault = os.getcwd()+"/view/resources/student-img-default.png"
 
-        imgButton = QPushButton()
-        imgButton.setObjectName("botonPrimario")
-        imgButton.setIcon(QIcon(pathImgIconSave))
-        imgButton.setIconSize(QSize(50,30))
+        self.imgButton = QPushButton()
+        self.imgButton.setObjectName("upload")
+        self.imgButton.setIcon(QIcon(pathImgIconUpload+"upload.png"))
+        self.imgButton.setIconSize(QSize(50,30))
         with open('./view/resources/styles.css') as f:
-            imgButton.setStyleSheet(f.read())
+            self.imgButton.setStyleSheet(f.read())
 
 
-        imgButton.clicked.connect(self.selectImg)
+        self.imgButton.clicked.connect(self.selectImg)
 
         self.lbImg = QLabel()
+        self.imageUtil(self.pathImgDefault)
+
+        lbImgTile = QLabel("Imagen")
+        lbImgTile.setStyleSheet("text-align:center;")
 
         ci          = QLabel("C.I.")
         firstName   = QLabel("Nombres")
@@ -54,20 +61,28 @@ class FormSocios:
         self.inputCarrer = QLineEdit()
         self.inputUID    = QLineEdit()
         self.inputDate   = QDateEdit(QDate.currentDate())
+        #cal = QCalendarWidget()
         self.inputDate.setDisplayFormat('dd/MM/yyyy')
         
         self.inputFN.setEnabled(False)
         self.inputLN.setEnabled(False)
         self.inputCarrer.setEnabled(False)
+        self.inputCI.setFocus()
 
         btnRegistrar = QPushButton("Registrar")
         btnRegistrar.setObjectName("botonPrimario")
+        btnRegistrar.clicked.connect(self.postSocio)
 
         btnCancelar = QPushButton("Cancelar")
-        btnCancelar.setObjectName("botonPrimario")
+        btnCancelar.setIcon(QIcon(pathImgIconUpload+"cancel.png"))
+        btnCancelar.setIconSize(QSize(20,20))
+        btnCancelar.setObjectName("cancel")
+        btnCancelar.clicked.connect(self.cancel)
 
         btnSearch = QPushButton("Buscar")
-        btnSearch.setObjectName("botonPrimario")
+        btnSearch.setObjectName("searchStudent")
+        btnSearch.setIcon(QIcon(pathImgIconUpload+"search.png"))
+        btnSearch.setIconSize(QSize(20,20))
         btnSearch.clicked.connect(self.buscarAlumno)
 
         with open('./view/resources/styles.css') as f:
@@ -75,10 +90,11 @@ class FormSocios:
         with open('./view/resources/styles.css') as f:
             btnRegistrar.setStyleSheet(f.read())
         with open('./view/resources/styles.css') as f:
-            btnSearch.setStyleSheet(f.read())            
+            btnSearch.setStyleSheet(f.read())
 
+        verticalLayoutImage.addWidget(lbImgTile)
         verticalLayoutImage.addWidget(self.lbImg)
-        verticalLayoutImage.addWidget(imgButton)
+        verticalLayoutImage.addWidget(self.imgButton)
 
         horizontalLayoutButtons.addWidget(btnRegistrar)
         horizontalLayoutButtons.addWidget(btnCancelar)
@@ -108,17 +124,18 @@ class FormSocios:
             self.window.setStyleSheet(f.read())
 
     def selectImg(self):
+        self.detailRoute = None
         pathImg = QFileDialog.getOpenFileName(filter = "Imagenes (*.png *.jpg *.svg *.jpeg)")
-        if not pathImg[0]:
-            pathImg = os.getcwd()+"/view/resources/student-img-default.png"
-
-        pixMap = QPixmap(pathImg[0])
-        pixmapResized = pixMap.scaled(400, 300, Qt.KeepAspectRatio)
-        self.lbImg.setPixmap(pixmapResized)
+        
+        self.detailRoute = self.pathImgDefault if not pathImg[0] else pathImg[0]
+        
+        self.imageUtil(self.detailRoute)
+        
     
     def buscarAlumno(self):
         ci = self.inputCI.text()
         alumno = self.view.generalController.alumnoController.buscarAlumno(ci)
+
         if alumno is None:
             return
         else:
@@ -128,4 +145,25 @@ class FormSocios:
             if carrera is not None:
                 self.inputCarrer.setText(carrera.denominacion)
 
+    def postSocio(self):
+        ci              = self.inputCI.text()
+        uid             = self.inputUID.text()
+        photo           = self.detailRoute    
+        dateOfAdmission = self.inputDate.date().toPyDate()
+        socio = Socio(idSocio=1, uid=uid, ci=ci, foto=photo, fechaIngreso=dateOfAdmission, estado=True)
+        self.view.generalController.socioController.registrarSocio(socio)
+        
 
+    def cancel(self):
+        self.window.hide()
+
+    def imageUtil(self, pathImg):
+        pixMap = QPixmap(pathImg)
+        pixmapResized = pixMap.scaled(400, 300, Qt.KeepAspectRatio)
+        self.lbImg.setPixmap(pixmapResized)
+
+    def center(self):
+        screen = QDesktopWidget().screenGeometry()
+        size = self.window.geometry()      
+        self.window.move((screen.width() - size.width()) /2, (screen.height() - size.height()) / 2)
+        self.window.setFixedSize(self.window.size())
