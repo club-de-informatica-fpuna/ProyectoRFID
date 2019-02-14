@@ -14,7 +14,7 @@ class Home:
         self.window = QWidget()
         self.window.setWindowTitle(self.title)
         self.window.setWindowIcon(QIcon(os.getcwd()+'/view/resources/cep-logo.ico'))
-        self.createGriLayout()
+        self.createGridLayout()
         self.center()
 
     def start(self):
@@ -22,30 +22,56 @@ class Home:
         self.window.show()
         self.view.app.exec_()
 
-    def createGriLayout(self):
+    def createGridLayout(self):
         self.layout = QGridLayout()
 
         btnSocio = QPushButton('Socios')
         btnSocio.setObjectName('botonHome')
+        btnSocio.setIcon(QIcon("./view/resources/socio.png"))
+        btnSocio.setIconSize(QSize(40,40))
         btnSocio.clicked.connect(self.view.mostrarModuloSocio)
+        btnSocio.setMinimumWidth(200)
 
         btnAlumno = QPushButton('Alumnos')        
         btnAlumno.setObjectName('botonHome')
+        btnAlumno.setIcon(QIcon("./view/resources/student.svg"))
+        btnAlumno.setIconSize(QSize(40,40))        
         btnAlumno.clicked.connect(self.view.mostrarModuloAlumnos)
+        btnAlumno.setMinimumWidth(200)        
 
         btnPrestamo = QPushButton('Prestamos')
         btnPrestamo.setObjectName('botonHome')
+        btnPrestamo.setIcon(QIcon("./view/resources/loan.png"))
+        btnPrestamo.setIconSize(QSize(40,40))
+        btnPrestamo.setMinimumWidth(200)        
+
         btnVenta = QPushButton('Ventas')
         btnVenta.setObjectName('botonHome')
+        btnVenta.setIcon(QIcon("./view/resources/sale.png"))
+        btnVenta.setIconSize(QSize(40,40))        
+        btnVenta.setMinimumWidth(200)        
+
         btnPromocion = QPushButton('Promociones')
         btnPromocion.setObjectName('botonHome')
+        btnPromocion.setIcon(QIcon("./view/resources/promotions.png"))
+        btnPromocion.setIconSize(QSize(40,40))                
+        btnPromocion.setMinimumWidth(200)        
+
         btnCaja = QPushButton('Caja')
         btnCaja.setObjectName('botonHome')
+        btnCaja.setIcon(QIcon("./view/resources/caja.jpg"))
+        btnCaja.setIconSize(QSize(40,40))        
+        btnCaja.setMinimumWidth(200)        
+
         btnEquipo = QPushButton('Equipos')
         btnEquipo.setObjectName('botonHome')
+        btnEquipo.setMinimumWidth(200)        
+
         btnSalir = QPushButton('Salir')
         btnSalir.setObjectName('botonHome')
+        btnSalir.setMinimumWidth(200)                
         btnSalir.clicked.connect(self.view.salir)
+
         labelTitle = QLabel('Sistema de Control del CEP')
         labelTitle.setObjectName('tituloHome')
 
@@ -95,4 +121,4 @@ class Home:
         screen = QDesktopWidget().screenGeometry()
         size = self.window.geometry()      
         self.window.move((screen.width() - size.width()) /2, (screen.height() - size.height()) / 2)
-        self.window.setFixedSize(self.window.size())
+        #self.window.setFixedSize(self.window.size())

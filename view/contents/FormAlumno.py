@@ -94,7 +94,10 @@ class FormAlumno:
         alumno.apellido = self.inputApellido.text()
         alumno.telefono = self.inputTelefono.text()
         alumno.email = self.inputTelefono.text()
-        alumno.idCarrera = 1
+        carrera = self.inputCarreras.currentData()
+        if carrera is None:
+            return        
+        alumno.idCarrera = carrera.id
         res = self.view.generalController.alumnoController.registrarAlumno(alumno)
         if res :
             self.window.destroy()

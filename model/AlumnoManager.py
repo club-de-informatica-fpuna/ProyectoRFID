@@ -26,6 +26,25 @@ class AlumnoManager:
         finally:
             cur.close()
 
+    def listarAlumnoPaginado(self, pagina, cantElementos):
+        cur = None
+        query = "SELECT * FROM alumnos limit " + str(cantElementos) + " offset " + str(((pagina-1)*cantElementos))
+        alumnos = []
+        try:
+            cur = self.conn.cursor()
+            cur.execute(query)
+            rows = cur.fetchall()
+            for data in rows:
+                alumno = Alumno(data[0], data[1], data[2], data[3], data[4], data[5])
+                alumnos.append(alumno)
+            cur.close()
+            return alumnos
+        except(Exception) as error:
+            traceback.print_exc(file=sys.stdout)
+            return None
+        finally:
+            cur.close()            
+
     def registrarAlumno(self, alumno):
         query  = "INSERT INTO alumnos (ci, apellidos, nombres, email, telefono, id) "
         query += "VALUES (%s, %s, %s, %s, %s, %s)"
@@ -76,3 +95,18 @@ class AlumnoManager:
             return False
         finally:
             cur.close()
+    
+    def getCantidadAlumnos(self):
+        cur = None        
+        query = "SELECT COUNT(ci) FROM alumnos"
+        try:
+            cur = self.conn.cursor()
+            cur.execute(query)
+            cant = cur.fetchone()
+            cur.close()
+            return cant[0]
+        except(Exception) as error:
+            traceback.print_exc(file=sys.stdout)
+            return None
+        finally:
+            cur.close()        

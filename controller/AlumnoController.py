@@ -14,3 +14,9 @@ class AlumnoController:
 
     def actualizarAlumnos(self, alumno):
         return self.alumnoManager.actualizarAlumnos(alumno)
+
+    def listarAlumnoPaginado(self, pagina, cantElementos):
+        return self.alumnoManager.listarAlumnoPaginado(pagina, cantElementos)
+
+    def getCantidadAlumnos(self):
+        return self.alumnoManager.getCantidadAlumnos()

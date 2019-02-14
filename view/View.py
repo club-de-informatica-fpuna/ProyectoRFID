@@ -4,10 +4,12 @@ from view.contents.FormAlumno import FormAlumno
 from view.contents.FormSocios import FormSocios
 from view.contents.Socios import Socio
 from PyQt5.QtWidgets import QApplication
+import math
 
 class View:
     def __init__(self, generalController):
         self.generalController = generalController
+        self.alumnosView = None
     
     def iniciarVista(self):
         self.app = QApplication([])
@@ -15,7 +17,15 @@ class View:
         self.homeView.start()
     
     def mostrarModuloAlumnos(self):
-        self.alumnosView = Alumnos(self)
+        if self.alumnosView is not None:
+            cantidadAlumnos = self.alumnosView.cantidadAlumnos
+            if cantidadAlumnos is None or cantidadAlumnos <= 0:
+                self.alumnosView = Alumnos(self)
+            else:
+                cantPaginas = math.ceil(cantidadAlumnos/self.alumnosView.cantidadElementos)
+                self.alumnosView = Alumnos(self, cantPaginas)
+        else:
+            self.alumnosView = Alumnos(self)            
         self.alumnosView.start()
 
     def mostrarFormAlumno(self):

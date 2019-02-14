@@ -3,9 +3,10 @@ QPushButton#botonHome {
     color: #002156;
     border: 2px solid white;
     padding: 20px;
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 550;
     border-radius: 5px;
+    width: 200px;
 }
 
 QPushButton#botonHome:hover {
@@ -20,11 +21,12 @@ QWidget#ventanaHome {
 }
 
 QWidget#ventanaGeneral {
-    background: white;
+    background: rgb(243, 243, 243);
 }
 
 QLabel#tituloHome {
-    color: #fff;
+    color: white;
+    background: red;
     font-size: 30px;
     font-weight: 800;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -57,4 +59,13 @@ QLabel#tituloModulo{
     padding: 0;
     margin: 0;
     margin-bottom: 20px;
+}
+
+QLineEdit#inputSearch{
+    background: white;
+    color: gray;
+    border: 1px solid #002156;
+    border-radius: 5px;
+    font-size: 13px;
+    padding: 5px;
 }

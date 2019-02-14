@@ -2,18 +2,21 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.uic import *
-import os
+import os, math
 
 class Alumnos:
 
-    def __init__(self, view):
+    def __init__(self, view, paginaActual=1, cantidadElementos=10):
         self.view = view
         self.title = 'Alumnos | CEP'
+        self.paginaActual = paginaActual
+        self.cantidadElementos = cantidadElementos
     
     def build(self):
         self.window = QWidget()
         self.window.setWindowTitle(self.title)
-        self.alumnos = self.view.generalController.alumnoController.listarAlumno()        
+        self.alumnos = self.view.generalController.alumnoController.listarAlumnoPaginado(self.paginaActual, self.cantidadElementos) 
+        self.cantidadAlumnos = self.view.generalController.alumnoController.getCantidadAlumnos()
         self.createGridLayout()
         self.center()
 
@@ -24,22 +27,65 @@ class Alumnos:
     def createGridLayout(self):
         self.layout = QGridLayout(self.window)
 
+        horizontalLayout = QHBoxLayout()
+
+        btnPrimeraPagina = QPushButton("<<")
+        btnPrimeraPagina.setObjectName("botonPrimario")
+        btnPrimeraPagina.clicked.connect(self.firstPage)
+
+        btnAnteriorPagina = QPushButton(" < ")
+        btnAnteriorPagina.setObjectName("botonPrimario")
+        btnAnteriorPagina.clicked.connect(self.previousPage)
+
+        btnPaginaActual = QPushButton(" " + str(self.paginaActual) + " ")
+        btnPaginaActual.setObjectName("botonPrimario")        
+
+        btnSiguientePagina = QPushButton(" > ")
+        btnSiguientePagina.setObjectName("botonPrimario")
+        btnSiguientePagina.clicked.connect(self.nextPage)
+
+        btnUltimaPagina = QPushButton(">>")
+        btnUltimaPagina.setObjectName("botonPrimario")
+        btnUltimaPagina.clicked.connect(self.lastPage)        
+
+        horizontalLayout.addWidget(btnPrimeraPagina)
+        horizontalLayout.addWidget(btnAnteriorPagina)
+        horizontalLayout.addWidget(btnPaginaActual)        
+        horizontalLayout.addWidget(btnSiguientePagina)           
+        horizontalLayout.addWidget(btnUltimaPagina)
+
         labelTitle = QLabel("Alumnos")
         labelTitle.setObjectName("tituloModulo")
 
         btnNuevo = QPushButton("Nuevo")
         btnNuevo.setObjectName("botonPrimario")
+        btnNuevo.setIcon(QIcon("./view/resources/add.svg"))
         btnNuevo.clicked.connect(self.view.mostrarFormAlumno)
 
-        inputSearch = QLineEdit()
+        self.inputSearch = QLineEdit()
+        self.inputSearch.setObjectName("inputSearch")
+        self.inputSearch.setMaximumWidth(200)
 
         btnSearch = QPushButton("Buscar")
-        btnSearch.setObjectName("botonPrimario")        
+        btnSearch.setObjectName("botonPrimario")
+        btnSearch.setIcon(QIcon("./view/resources/search.svg"))
 
         with open('./view/resources/styles.css') as f:
             labelTitle.setStyleSheet(f.read())
         with open('./view/resources/styles.css') as f:
             btnSearch.setStyleSheet(f.read())
+        with open('./view/resources/styles.css') as f:
+            btnPrimeraPagina.setStyleSheet(f.read())
+        with open('./view/resources/styles.css') as f:
+            btnAnteriorPagina.setStyleSheet(f.read())                        
+        with open('./view/resources/styles.css') as f:
+            btnSiguientePagina.setStyleSheet(f.read())
+        with open('./view/resources/styles.css') as f:
+            btnUltimaPagina.setStyleSheet(f.read())
+        with open('./view/resources/styles.css') as f:
+            btnPaginaActual.setStyleSheet(f.read())
+        with open('./view/resources/styles.css') as f:
+            self.inputSearch.setStyleSheet(f.read())                                    
 
         self.tablaAlumnos = QTableWidget()
         self.tablaAlumnos.setRowCount(len(self.alumnos))
@@ -75,9 +121,10 @@ class Alumnos:
         
         self.layout.addWidget(labelTitle,0,0,1,10)
         self.layout.addWidget(btnNuevo,1,0)
-        self.layout.addWidget(inputSearch,1,8)
-        self.layout.addWidget(btnSearch,1,9)
-        self.layout.addWidget(self.tablaAlumnos,2,0,1,10)
+        self.layout.addWidget(self.inputSearch,1,9)
+        self.layout.addWidget(btnSearch,1,10)
+        self.layout.addWidget(self.tablaAlumnos,2,0,1,11)
+        self.layout.addLayout(horizontalLayout,3,9,1,2)
         self.layout.setAlignment(Qt.AlignTop)
         self.layout.setContentsMargins(20, 20, 20, 20)
 
@@ -89,4 +136,28 @@ class Alumnos:
         screen = QDesktopWidget().screenGeometry()
         width = (screen.width()-screen.width()/8)
         height = (screen.height()-screen.height()/8)
-        self.window.setGeometry( (screen.width()-width) /2, (screen.height()-height)/2, width, height)       
+        self.window.setGeometry( (screen.width()-width) /2, (screen.height()-height)/2, width, height)
+
+    def nextPage(self):
+        if self.cantidadAlumnos is None or self.cantidadAlumnos <= 0:
+            return
+        cantPaginas = math.ceil(self.cantidadAlumnos/self.cantidadElementos)
+        if self.paginaActual < cantPaginas:
+            self.view.alumnosView = Alumnos(self.view, self.paginaActual+1)
+            self.view.alumnosView.start()
+
+    def previousPage(self):
+        if self.paginaActual > 1:
+            self.view.alumnosView = Alumnos(self.view, self.paginaActual-1)
+            self.view.alumnosView.start()
+        
+    def firstPage(self):
+        self.view.alumnosView = Alumnos(self.view, 1)
+        self.view.alumnosView.start()
+    
+    def lastPage(self):
+        if self.cantidadAlumnos is None or self.cantidadAlumnos <= 0:
+            return
+        cantPaginas = math.ceil(self.cantidadAlumnos/self.cantidadElementos)
+        self.view.alumnosView = Alumnos(self.view,cantPaginas)
+        self.view.alumnosView.start()
