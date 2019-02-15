@@ -9,6 +9,7 @@ class FormSocios:
     def __init__(self, view):
         self.view = view
         self.title = 'Nuevo Socio | CEP'
+        self.detailRoute = None
 
     def build(self):
         self.window = QWidget()
@@ -38,14 +39,12 @@ class FormSocios:
         with open('./view/resources/styles.css') as f:
             self.imgButton.setStyleSheet(f.read())
 
-
-        self.imgButton.clicked.connect(self.selectImg)
-
+        lbImgTile = QLabel("Imagen")
+        lbImgTile.setStyleSheet("text-align:center;")
         self.lbImg = QLabel()
         self.imageUtil(self.pathImgDefault)
 
-        lbImgTile = QLabel("Imagen")
-        lbImgTile.setStyleSheet("text-align:center;")
+        self.imgButton.clicked.connect(self.selectImg)
 
         ci          = QLabel("C.I.")
         firstName   = QLabel("Nombres")
@@ -124,11 +123,9 @@ class FormSocios:
             self.window.setStyleSheet(f.read())
 
     def selectImg(self):
-        self.detailRoute = None
         pathImg = QFileDialog.getOpenFileName(filter = "Imagenes (*.png *.jpg *.svg *.jpeg)")
         
         self.detailRoute = self.pathImgDefault if not pathImg[0] else pathImg[0]
-        
         self.imageUtil(self.detailRoute)
         
     
@@ -148,10 +145,13 @@ class FormSocios:
     def postSocio(self):
         ci              = self.inputCI.text()
         uid             = self.inputUID.text()
-        photo           = self.detailRoute    
+        photo           = self.pathImgDefault if self.detailRoute is None else self.detailRoute
         dateOfAdmission = self.inputDate.date().toPyDate()
-        socio = Socio(idSocio=1, uid=uid, ci=ci, foto=photo, fechaIngreso=dateOfAdmission, estado=True)
-        self.view.generalController.socioController.registrarSocio(socio)
+        socio = Socio(uid=uid, ci=ci, foto=photo, fechaIngreso=dateOfAdmission, estado=True)
+        response = self.view.generalController.socioController.registrarSocio(socio)
+        if response :
+            self.window.destroy()
+            self.view.mostrarModuloSocio()
         
 
     def cancel(self):

@@ -46,14 +46,14 @@ class SocioManager:
             cur.close()
 
     def registrarSocio(self, socio):
-        query  = "INSERT INTO socios (id_socio, uid, ci, foto, fecha_ingreso, estado) "
-        query += "VALUES (%s, %s, %s, %s, %s, %s)"
+        query  = "INSERT INTO socios (uid, ci, foto, fecha_ingreso, estado) "
+        query += "VALUES (%s, %s, %s, %s, %s)"
         cur = None
         socio.foto = ConversorImg(socio.foto).encodeImg()
 
         try:
             cur = self.conn.cursor()
-            cur.execute(query, [socio.idSocio, socio.uid, str(socio.ci), socio.foto, socio.fechaIngreso, socio.estado])
+            cur.execute(query, [socio.uid, str(socio.ci), socio.foto, socio.fechaIngreso, socio.estado])
             self.conn.commit()
             cur.close()
             return True
@@ -67,10 +67,19 @@ class SocioManager:
     def eliminarSocioCi(self, ciKey):
         query = "DELETE FROM socios WHERE ci = %s"
         cur = None
-
         try:
             cur = self.conn.cursor()
-            cur.execute(query, [str(ciKey)])
+            if isinstance(ciKey, list):
+                for i in ciKey:
+                    try:
+                        cur.execute(query, [i])
+                    except(Exception) as error:
+                        self.conn.rollback()
+                        print("{} ERROR: {}".format(datetime.now(), error))
+                        self.logger.error(traceback.format_exc())   
+            else:
+                cur.execute(query, ciKey)
+
             self.conn.commit()
             cur.close()
             return True
@@ -79,10 +88,11 @@ class SocioManager:
             self.logger.error(traceback.format_exc())
             return False
         finally:
-            cur.close()
+            if cur != None:
+                cur.close()
 
     def obtenerCarrera(self, key):
-        query = "SELECT c.id, c.denominacion FROM alumnos a JOIN carreras c ON c.id = a.id WHERE a.ci = %s"
+        query = "SELECT c.id, c.denominacion FROM alumnos a JOIN carreras c ON c.id = a.id_carrera WHERE a.ci = %s"
         cur = None
         try:
             cur = self.conn.cursor()

@@ -33,14 +33,26 @@ class Socio:
 
         btnNew = QPushButton("Nuevo")
         btnNew.setObjectName("botonPrimario")
-        btnNew.clicked.connect(self.view.mostrarFormSocio)        
+        btnNew.clicked.connect(self.view.mostrarFormSocio)
+
+        btnRemove = QPushButton("Eliminar")
+        btnRemove.setObjectName("cancel")
+        btnRemove.clicked.connect(self.removePartner)
 
         with open('./view/resources/styles.css') as f:
             btnNew.setStyleSheet(f.read())
+        with open('./view/resources/styles.css') as f:
+            btnRemove.setStyleSheet(f.read())
 
         self.inputSearch = QLineEdit()
+        self.inputSearch.setObjectName("inputSearch")
+        self.inputSearch.setMaximumWidth(200)
+
         btnSearch = QPushButton("Buscar")
         btnSearch.setObjectName("botonPrimario")
+
+        with open('./view/resources/styles.css') as f:
+            self.inputSearch.setStyleSheet(f.read())
 
         with open('./view/resources/styles.css') as f:
             btnSearch.setStyleSheet(f.read())
@@ -53,8 +65,8 @@ class Socio:
         header.setStretchLastSection(True)
         header.setSectionResizeMode(QHeaderView.ResizeToContents)
 
-        self.partnerTable.setHorizontalHeaderItem(0, QTableWidgetItem("UID"))
-        self.partnerTable.setHorizontalHeaderItem(1, QTableWidgetItem("C.I."))
+        self.partnerTable.setHorizontalHeaderItem(0, QTableWidgetItem("C.I."))
+        self.partnerTable.setHorizontalHeaderItem(1, QTableWidgetItem("UID"))
         self.partnerTable.setHorizontalHeaderItem(2, QTableWidgetItem("FECHA INGRESO"))
         self.partnerTable.setHorizontalHeaderItem(3, QTableWidgetItem("CARRERA"))
         self.partnerTable.setHorizontalHeaderItem(4, QTableWidgetItem("ESTADO"))
@@ -66,8 +78,8 @@ class Socio:
 
         for partner in self.socios:
             carrer = self.view.generalController.socioController.obtenerCarrera(partner.ci)
-            self.partnerTable.setItem(self.socios.index(partner), 0, QTableWidgetItem(partner.uid))
-            self.partnerTable.setItem(self.socios.index(partner), 1, QTableWidgetItem(partner.ci))
+            self.partnerTable.setItem(self.socios.index(partner), 0, QTableWidgetItem(partner.ci))
+            self.partnerTable.setItem(self.socios.index(partner), 1, QTableWidgetItem(partner.uid))
             self.partnerTable.setItem(self.socios.index(partner), 2, QTableWidgetItem(str(partner.fechaIngreso)))
             self.partnerTable.setItem(self.socios.index(partner), 3, QTableWidgetItem(carrer.denominacion))
             self.partnerTable.setItem(self.socios.index(partner), 4, QTableWidgetItem(partner.estado))
@@ -75,17 +87,31 @@ class Socio:
         
         self.partnerTable.move(0, 0)
 
-        self.layout.addWidget(labelTitle,0,0,1,10)
-        self.layout.addWidget(btnNew,1,0)
-        self.layout.addWidget(self.inputSearch,1,8)
-        self.layout.addWidget(btnSearch,1,9)
-        self.layout.addWidget(self.partnerTable,2,0,1,10)
+        self.layout.addWidget(labelTitle, 0, 0, 1, 10)
+        self.layout.addWidget(btnNew, 1, 0)
+        self.layout.addWidget(btnRemove, 1, 1)
+        self.layout.addWidget(self.inputSearch, 1, 8)
+        self.layout.addWidget(btnSearch, 1, 9)
+        self.layout.addWidget(self.partnerTable, 2, 0, 1, 10)
         self.layout.setAlignment(Qt.AlignTop)
         self.layout.setContentsMargins(20, 20, 20, 20)
 
         self.window.setObjectName("ventanaGeneral")
         with open('./view/resources/styles.css') as f:
             self.window.setStyleSheet(f.read())
+
+    def removePartner(self):
+        choices    = self.partnerTable.selectionModel()
+        selections = choices.selectedRows()
+
+        data = []
+        for i in selections:
+            data.append(str(i.data()))
+
+        response = self.view.generalController.socioController.eliminarSocioCi(data)
+        if response:
+            self.view.mostrarModuloSocio()
+
 
     def center(self):
         screen = QDesktopWidget().screenGeometry()
