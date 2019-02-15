@@ -66,22 +66,22 @@ QLabel#tituloModulo {
 
 QLabel#tituloPopup {
     color: #002156;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 500;
     text-align: left;
     padding: 0;
     margin: 0;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 QLabel#tituloMensaje {
     color: black;
-    font-size: 18px;
+    font-size: 12px;
     font-weight: 500;
     text-align: left;
     padding: 0;
     margin: 0;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 QLineEdit#inputSearch {

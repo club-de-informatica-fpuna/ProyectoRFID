@@ -93,11 +93,12 @@ class FormAlumno:
         alumno.nombre = self.inputNombre.text()
         alumno.apellido = self.inputApellido.text()
         alumno.telefono = self.inputTelefono.text()
-        alumno.email = self.inputTelefono.text()
+        alumno.email = self.inputEmail.text()
         carrera = self.inputCarreras.currentData()
         if carrera is None:
             alumno.idCarrera = None
-
+        else:
+            alumno.idCarrera = carrera.id
         resValidacion = self.validarCampos(alumno)
         if resValidacion is not True:
             self.view.mostrarPopup("Validar campos", "Por favor, verifique los siguientes campos", resValidacion)
@@ -115,11 +116,21 @@ class FormAlumno:
 
     def validarCampos(self, alumno):
         campos = []
+        if not alumno.nombre :
+            campos.append("Nombre")
+        if not alumno.apellido:
+            campos.append("Apellido")
+        if not alumno.telefono:
+            campos.append("Teléfono")
+        if not alumno.email:
+            print(alumno.email)
+            campos.append("Email")                                   
         try:
             ciNumber = int(alumno.ci)
         except(Exception) as error:
             campos.append("Cédula de identidad")
-        
+        if alumno.idCarrera is None:
+            campos.append("Carrera")        
         if len(campos) > 0:
             return campos
         else:
