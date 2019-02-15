@@ -7,15 +7,20 @@ import os
 
 class FormAlumno:
 
-    def __init__(self, view):
+    def __init__(self, view, title, update=False, alumnoUpdate=None):
         self.view = view
-        self.title = 'Nuevo alumno | CEP'
+        self.title = title
+        self.update = update
+        self.alumnoUpdate = alumnoUpdate
     
     def build(self):
         self.window = QWidget()
         self.window.setWindowTitle(self.title)
         self.carreras = self.view.generalController.carreraController.listarCarreras()
-        self.createGridLayout()
+        if self.update:
+            self.createGridUpdateLayout()            
+        else:
+            self.createGridLayout()
         self.center()
 
     def start(self):
@@ -81,6 +86,76 @@ class FormAlumno:
         self.window.setObjectName("ventanaPopup")
         with open('./view/resources/styles.css') as f:
             self.window.setStyleSheet(f.read())
+
+    def createGridUpdateLayout(self):
+
+        self.layout = QGridLayout(self.window)
+        horizontalLayout = QHBoxLayout()
+
+        labelNombre = QLabel("Nombre")
+        labelApellido = QLabel("Apellido")
+        labelCedula = QLabel("Cedula de identidad")
+        labelEmail = QLabel("Email")        
+        labelTelefono = QLabel("Teléfono")
+        labelCarreras = QLabel("Carrera")
+
+        self.inputNombre = QLineEdit()
+        self.inputNombre.setText(self.alumnoUpdate.nombre)
+
+        self.inputApellido = QLineEdit()
+        self.inputApellido.setText(self.alumnoUpdate.apellido)
+
+        self.inputCedula = QLineEdit()        
+        self.inputCedula.setEnabled(False)
+        self.inputCedula.setText(self.alumnoUpdate.ci)
+
+        self.inputEmail = QLineEdit()
+        self.inputEmail.setText(self.alumnoUpdate.email)
+
+        self.inputTelefono = QLineEdit()
+        self.inputTelefono.setText(self.alumnoUpdate.telefono)
+
+        self.inputCarreras = QComboBox()
+        for i in self.carreras:
+            self.inputCarreras.addItem(i.denominacion, i)
+        self.inputCarreras.setCurrentIndex(0) 
+
+        btnGuardar = QPushButton("Guardar")
+        btnGuardar.setObjectName("botonPrimario")        
+        #btnGuardar.clicked.connect(self.manejarPostAlumno)
+
+        btnCancelar = QPushButton("Cancelar")
+        btnCancelar.setObjectName("botonPrimario")
+        btnCancelar.clicked.connect(self.manejarCancelar)
+
+        with open('./view/resources/styles.css') as f:
+            btnCancelar.setStyleSheet(f.read())
+        with open('./view/resources/styles.css') as f:
+            btnGuardar.setStyleSheet(f.read())
+
+        horizontalLayout.addWidget(btnGuardar)
+        horizontalLayout.addWidget(btnCancelar)
+
+        self.layout.addWidget(labelNombre,0,0,1,2)
+        self.layout.addWidget(self.inputNombre,1,0,1,2)
+        self.layout.addWidget(labelApellido,2,0,1,2)        
+        self.layout.addWidget(self.inputApellido,3,0,1,2)        
+        self.layout.addWidget(labelCedula,4,0,1,2)        
+        self.layout.addWidget(self.inputCedula,5,0,1,2)  
+        self.layout.addWidget(labelEmail,6,0,1,2)        
+        self.layout.addWidget(self.inputEmail,7,0,1,2)                        
+        self.layout.addWidget(labelTelefono,8,0,1,2)        
+        self.layout.addWidget(self.inputTelefono,9,0,1,2)
+        self.layout.addWidget(labelCarreras,10,0,1,2)        
+        self.layout.addWidget(self.inputCarreras,11,0,1,2)
+        self.layout.addLayout(horizontalLayout,12,0,1,2)
+
+        self.layout.setAlignment(Qt.AlignTop)
+        self.layout.setContentsMargins(20, 20, 20, 20)
+
+        self.window.setObjectName("ventanaPopup")
+        with open('./view/resources/styles.css') as f:
+            self.window.setStyleSheet(f.read())            
 
     def center(self):
         screen = QDesktopWidget().screenGeometry()

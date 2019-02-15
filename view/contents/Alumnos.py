@@ -71,7 +71,7 @@ class Alumnos:
         btnEditar = QPushButton("Editar")
         btnEditar.setObjectName("botonPrimario")
         btnEditar.setIcon(QIcon("./view/resources/edit.svg"))
-        #btnEditar.clicked.connect(self.deleteStudents)         
+        btnEditar.clicked.connect(self.manejarEditar)         
 
         self.inputSearch = QLineEdit()
         self.inputSearch.setObjectName("inputSearch")
@@ -189,3 +189,13 @@ class Alumnos:
         res = self.view.generalController.alumnoController.eliminarAlumno(data)
         if res:
             self.view.mostrarModuloAlumnos()
+
+    def manejarEditar(self):
+        select = self.tablaAlumnos.selectionModel()
+        selectedRows = select.selectedRows()
+        data = []
+        for i in selectedRows:
+            data.append(str(i.data()))
+        alumno = self.view.generalController.alumnoController.buscarAlumno(data[0])        
+        if alumno is not None:
+            self.view.mostrarFormAlumno(title="Actualizar alumno | CEP", update=True, alumnoUpdate=alumno)

@@ -29,9 +29,11 @@ class View:
             self.alumnosView = Alumnos(self)            
         self.alumnosView.start()
 
-    def mostrarFormAlumno(self):
-        self.formAlumno = FormAlumno(self)
-        self.formAlumno.start()
+    def mostrarFormAlumno(self, title, update=False, alumnoUpdate=None):
+        if title is False:
+            title = "Nuevo alumno | CEP"
+        self.formAlumno = FormAlumno(self, title=title, update=update, alumnoUpdate=alumnoUpdate)
+        self.formAlumno.start()        
     
     def mostrarFormSocio(self):
         self.formSocio = FormSocios(self)
