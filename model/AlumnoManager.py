@@ -56,10 +56,14 @@ class AlumnoManager:
             self.conn.commit()
             cur.close()
             return True
+        except (psycopg2.IntegrityError) as error:
+            traceback.print_exc(file=sys.stdout)            
+            self.conn.rollback()
+            return "Ya existe un alumno con dicha cédula de identidad"
         except(Exception) as error:
-
             traceback.print_exc(file=sys.stdout)
-            return False
+            self.conn.rollback()
+            return "Ha ocurrido un error inesperado"
         finally:
             cur.close()
 

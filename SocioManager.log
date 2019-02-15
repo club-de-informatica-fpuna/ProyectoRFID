@@ -1,0 +1,9 @@
+2019-02-14 22:39:57,765 ERROR:log_namespace.SocioManager Traceback (most recent call last):
+  File "/home/gino_junchaya/Desarrollo/ClubInformatica/RFID/model/SocioManager.py", line 89, in obtenerCarrera
+    cur.execute(query, [str(key)])
+psycopg2.ProgrammingError: column a.id does not exist
+LINE 1: ...minacion FROM alumnos a JOIN carreras c ON c.id = a.id WHERE...
+                                                             ^
+HINT:  Perhaps you meant to reference the column "c.id".
+
+

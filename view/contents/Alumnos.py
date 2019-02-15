@@ -65,11 +65,17 @@ class Alumnos:
 
         btnEliminar = QPushButton("Eliminar")
         btnEliminar.setObjectName("botonPrimario")
-        btnEliminar.setIcon(QIcon("./view/resources/add.svg"))
+        btnEliminar.setIcon(QIcon("./view/resources/delete.svg"))
         btnEliminar.clicked.connect(self.deleteStudents) 
+
+        btnEditar = QPushButton("Editar")
+        btnEditar.setObjectName("botonPrimario")
+        btnEditar.setIcon(QIcon("./view/resources/edit.svg"))
+        #btnEditar.clicked.connect(self.deleteStudents)         
 
         self.inputSearch = QLineEdit()
         self.inputSearch.setObjectName("inputSearch")
+        self.inputSearch.setPlaceholderText("Ingrese su CI")
         self.inputSearch.setMaximumWidth(200)
 
         btnSearch = QPushButton("Buscar")
@@ -91,12 +97,14 @@ class Alumnos:
         with open('./view/resources/styles.css') as f:
             btnPaginaActual.setStyleSheet(f.read())
         with open('./view/resources/styles.css') as f:
-            self.inputSearch.setStyleSheet(f.read())                                    
+            self.inputSearch.setStyleSheet(f.read())
+        with open('./view/resources/styles.css') as f:
+            btnEditar.setStyleSheet(f.read())
 
         self.tablaAlumnos = QTableWidget()
         self.tablaAlumnos.setRowCount(len(self.alumnos))
 
-        self.tablaAlumnos.setColumnCount(6)
+        self.tablaAlumnos.setColumnCount(5)
 
         header = self.tablaAlumnos.horizontalHeader()
         header.setStretchLastSection(True)
@@ -107,7 +115,10 @@ class Alumnos:
         self.tablaAlumnos.setHorizontalHeaderItem(2, QTableWidgetItem("EMAIL"))
         self.tablaAlumnos.setHorizontalHeaderItem(3, QTableWidgetItem("TELÉFONO"))
         self.tablaAlumnos.setHorizontalHeaderItem(4, QTableWidgetItem("CARRERA"))
-        self.tablaAlumnos.setHorizontalHeaderItem(5, QTableWidgetItem("ACCIONES"))
+
+        self.tablaAlumnos.resizeColumnsToContents()
+        self.tablaAlumnos.resizeRowsToContents()
+
 
         self.tablaAlumnos.horizontalHeader().setStyleSheet("QHeaderView::section {background: #002156; color: white; font-weight: bold; border: 1px solid silver; padding: 5px}")
         self.tablaAlumnos.verticalHeader().setStyleSheet("QHeaderView::section {background: #002156; color: white; font-weight: bold; border: 1px solid silver; padding: 5px}")        
@@ -121,13 +132,13 @@ class Alumnos:
             self.tablaAlumnos.setItem(count,2,QTableWidgetItem(i.email))
             self.tablaAlumnos.setItem(count,3,QTableWidgetItem(i.telefono))
             self.tablaAlumnos.setItem(count,4,QTableWidgetItem(carrera.denominacion))
-            self.tablaAlumnos.setItem(count,5,QTableWidgetItem(""))            
             count = count + 1
         self.tablaAlumnos.move(0,0)
         
         self.layout.addWidget(labelTitle,0,0,1,10)
         self.layout.addWidget(btnNuevo,1,0)
-        self.layout.addWidget(btnEliminar,1,1)        
+        self.layout.addWidget(btnEliminar,1,1)
+        self.layout.addWidget(btnEditar,1,2)                
         self.layout.addWidget(self.inputSearch,1,9)
         self.layout.addWidget(btnSearch,1,10)
         self.layout.addWidget(self.tablaAlumnos,2,0,1,11)

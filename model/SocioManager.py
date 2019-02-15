@@ -82,7 +82,7 @@ class SocioManager:
             cur.close()
 
     def obtenerCarrera(self, key):
-        query = "SELECT c.id, c.denominacion FROM alumnos a JOIN carreras c ON c.id = a.id WHERE a.ci = %s"
+        query = "SELECT c.id, c.denominacion FROM alumnos a JOIN carreras c ON c.id = a.id_carrera WHERE a.ci = %s"
         cur = None
         try:
             cur = self.conn.cursor()
