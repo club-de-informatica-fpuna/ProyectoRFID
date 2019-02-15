@@ -24,6 +24,10 @@ QWidget#ventanaGeneral {
     background: rgb(243, 243, 243);
 }
 
+QWidget#ventanaPopup {
+    background: white;
+}
+
 QLabel#tituloHome {
     color: #fff;
     font-size: 30px;
@@ -60,9 +64,29 @@ QLabel#tituloModulo {
     margin-bottom: 20px;
 }
 
+QLabel#tituloPopup {
+    color: #002156;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+QLabel#tituloMensaje {
+    color: black;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
 QLineEdit#inputSearch {
-    background: #fff;
-    color: #636c72;
+    background: white;
+    color: gray;
     border: 1px solid #002156;
     border-radius: 5px;
     font-size: 13px;

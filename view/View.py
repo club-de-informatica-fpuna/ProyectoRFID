@@ -1,4 +1,5 @@
 from view.contents.Home import Home
+from view.contents.Popup import Popup
 from view.contents.Alumnos import Alumnos
 from view.contents.FormAlumno import FormAlumno
 from view.contents.FormSocios import FormSocios
@@ -42,3 +43,7 @@ class View:
     
     def salir(self):
         self.app.exit()
+
+    def mostrarPopup(self, titleWindow, title, message):
+        self.popup = Popup(view=self, title=title, titleWindow=titleWindow, message=message)
+        self.popup.start()

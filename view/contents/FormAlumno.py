@@ -78,7 +78,7 @@ class FormAlumno:
         self.layout.setAlignment(Qt.AlignTop)
         self.layout.setContentsMargins(20, 20, 20, 20)
 
-        self.window.setObjectName("ventanaGeneral")
+        self.window.setObjectName("ventanaPopup")
         with open('./view/resources/styles.css') as f:
             self.window.setStyleSheet(f.read())
 
@@ -96,12 +96,31 @@ class FormAlumno:
         alumno.email = self.inputTelefono.text()
         carrera = self.inputCarreras.currentData()
         if carrera is None:
-            return        
-        alumno.idCarrera = carrera.id
+            alumno.idCarrera = None
+
+        resValidacion = self.validarCampos(alumno)
+        if resValidacion is not True:
+            self.view.mostrarPopup("Validar campos", "Por favor, verifique los siguientes campos", resValidacion)
+            return
+
         res = self.view.generalController.alumnoController.registrarAlumno(alumno)
-        if res :
+        if res is True:
             self.window.destroy()
             self.view.mostrarModuloAlumnos()
+        else:
+            self.view.mostrarPopup("Error", "Ha ocurrido un error", res)
     
     def manejarCancelar(self):
         self.window.hide()
+
+    def validarCampos(self, alumno):
+        campos = []
+        try:
+            ciNumber = int(alumno.ci)
+        except(Exception) as error:
+            campos.append("Cédula de identidad")
+        
+        if len(campos) > 0:
+            return campos
+        else:
+            return True
