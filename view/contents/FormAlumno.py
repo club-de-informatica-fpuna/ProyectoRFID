@@ -176,7 +176,7 @@ class FormAlumno:
 
         self.window.setObjectName("ventanaPopup")
         with open('./view/resources/styles.css') as f:
-            self.window.setStyleSheet(f.read())            
+            self.window.setStyleSheet(f.read())
 
     def center(self):
         screen = QDesktopWidget().screenGeometry()

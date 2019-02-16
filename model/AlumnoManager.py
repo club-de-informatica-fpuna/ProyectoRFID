@@ -79,12 +79,14 @@ class AlumnoManager:
                     except(Exception) as error:
                         self.conn.rollback()
                         traceback.print_exc(file=sys.stdout)
+                        return False
             else:
                 cur.execute(query, [str(idSpanner)])
             self.conn.commit()
             cur.close()
             return True
         except(Exception) as error:
+            self.conn.rollback()
             traceback.print_exc(file=sys.stdout)
             return False
         finally:

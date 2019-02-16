@@ -6,7 +6,7 @@ import os, math
 
 class Alumnos:
 
-    def __init__(self, view, paginaActual=1, cantidadElementos=10):
+    def __init__(self, view, paginaActual=1, cantidadElementos=15):
         self.view = view
         self.title = 'Alumnos | CEP'
         self.paginaActual = paginaActual
@@ -58,18 +58,21 @@ class Alumnos:
         labelTitle = QLabel("Alumnos")
         labelTitle.setObjectName("tituloModulo")
 
+        labelFooter = QLabel("Total de alumnos: " + str(self.cantidadAlumnos))
+        labelFooter.setObjectName("tituloPopup")
+
         btnNuevo = QPushButton("Nuevo")
         btnNuevo.setObjectName("botonPrimario")
         btnNuevo.setIcon(QIcon("./view/resources/add.svg"))
         btnNuevo.clicked.connect(self.view.mostrarFormAlumno)
 
         btnEliminar = QPushButton("Eliminar")
-        btnEliminar.setObjectName("botonPrimario")
+        btnEliminar.setObjectName("cancel")
         btnEliminar.setIcon(QIcon("./view/resources/delete.svg"))
         btnEliminar.clicked.connect(self.deleteStudents) 
 
         btnEditar = QPushButton("Editar")
-        btnEditar.setObjectName("botonPrimario")
+        btnEditar.setObjectName("botonSecundario")
         btnEditar.setIcon(QIcon("./view/resources/edit.svg"))
         btnEditar.clicked.connect(self.manejarEditar)         
 
@@ -101,6 +104,8 @@ class Alumnos:
             self.inputSearch.setStyleSheet(f.read())
         with open('./view/resources/styles.css') as f:
             btnEditar.setStyleSheet(f.read())
+        with open('./view/resources/styles.css') as f:
+            labelFooter.setStyleSheet(f.read())
 
         self.tablaAlumnos = QTableWidget()
         self.tablaAlumnos.setRowCount(len(self.alumnos))
@@ -143,6 +148,7 @@ class Alumnos:
         self.layout.addWidget(self.inputSearch,1,9)
         self.layout.addWidget(btnSearch,1,10)
         self.layout.addWidget(self.tablaAlumnos,2,0,1,11)
+        self.layout.addWidget(labelFooter,3,0,1,2)
         self.layout.addLayout(horizontalLayout,3,10,1,1)
         self.layout.setAlignment(Qt.AlignTop)
         self.layout.setContentsMargins(20, 20, 20, 20)
@@ -150,7 +156,7 @@ class Alumnos:
         self.window.setObjectName("ventanaGeneral")
         with open('./view/resources/styles.css') as f:
             self.window.setStyleSheet(f.read())
-
+        
     def center(self):
         screen = QDesktopWidget().screenGeometry()
         width = (screen.width()-screen.width()/8)
@@ -187,9 +193,18 @@ class Alumnos:
         data = []
         for i in selectedRows:
             data.append(str(i.data()))
-        res = self.view.generalController.alumnoController.eliminarAlumno(data)
-        if res:
-            self.view.mostrarModuloAlumnos()
+        if len(data) == 0:
+            self.view.mostrarPopup("Atención", "Atención", "Debes seleccionar el conjunto de alumnos a eliminar")
+            return
+        else:
+            qm = QMessageBox
+            ret = qm.question(self.window,"Confirmación", "¿Desea eliminar los registros seleccionados?", qm.Yes | qm.No)
+            if ret == qm.Yes:
+                res = self.view.generalController.alumnoController.eliminarAlumno(data)
+                if res is True:
+                    self.view.mostrarModuloAlumnos()
+                else:
+                    self.view.mostrarPopup("Atención", "No se puede eliminar", "El alumno es socio, primero debes desasociar al alumno")
 
     def manejarEditar(self):
         select = self.tablaAlumnos.selectionModel()
@@ -197,6 +212,9 @@ class Alumnos:
         data = []
         for i in selectedRows:
             data.append(str(i.data()))
+        if len(data) == 0:
+            self.view.mostrarPopup("Atención", "Atención", "Debes seleccionar el registro a editar")
+            return    
         alumno = self.view.generalController.alumnoController.buscarAlumno(data[0])        
         if alumno is not None:
             self.view.mostrarFormAlumno(title="Actualizar alumno | CEP", update=True, alumnoUpdate=alumno)
@@ -207,5 +225,4 @@ class Alumnos:
         if alumno is not None:
             self.view.mostrarFormAlumno(title="Ver alumno | CEP", update=True, alumnoUpdate=alumno, editable=False)
         else:
-            self.view.mostrarPopup("Datos no encontrados", "Datos no encontrados", "El alumno no existe")            
-            
+            self.view.mostrarPopup("Datos no encontrados", "Datos no encontrados", "El alumno no existe")
