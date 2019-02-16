@@ -7,11 +7,12 @@ import os
 
 class FormAlumno:
 
-    def __init__(self, view, title, update=False, alumnoUpdate=None):
+    def __init__(self, view, title, update=False, alumnoUpdate=None, editable=True):
         self.view = view
         self.title = title
         self.update = update
         self.alumnoUpdate = alumnoUpdate
+        self.editable = editable
     
     def build(self):
         self.window = QWidget()
@@ -62,9 +63,10 @@ class FormAlumno:
         with open('./view/resources/styles.css') as f:
             btnRegistrar.setStyleSheet(f.read())
 
-
         horizontalLayout.addWidget(btnRegistrar)
         horizontalLayout.addWidget(btnCancelar)
+
+        horizontalLayout.setContentsMargins(0,20,0,0)
 
         self.layout.addWidget(labelNombre,0,0,1,2)
         self.layout.addWidget(self.inputNombre,1,0,1,2)
@@ -120,21 +122,40 @@ class FormAlumno:
             self.inputCarreras.addItem(i.denominacion, i)
         self.inputCarreras.setCurrentIndex(0) 
 
+        if self.editable is False:
+            self.inputNombre.setEnabled(False)
+            self.inputApellido.setEnabled(False)
+            self.inputCedula.setEnabled(False)
+            self.inputEmail.setEnabled(False)
+            self.inputTelefono.setEnabled(False)
+            self.inputCarreras.setEnabled(False)
+
         btnGuardar = QPushButton("Guardar")
         btnGuardar.setObjectName("botonPrimario")        
-        #btnGuardar.clicked.connect(self.manejarPostAlumno)
+        btnGuardar.clicked.connect(self.manejarUpdateAlumno)
 
         btnCancelar = QPushButton("Cancelar")
         btnCancelar.setObjectName("botonPrimario")
         btnCancelar.clicked.connect(self.manejarCancelar)
 
+        btnCerrar = QPushButton("Cerrar")
+        btnCerrar.setObjectName("botonPrimario")
+        btnCerrar.clicked.connect(self.manejarCancelar)
+
         with open('./view/resources/styles.css') as f:
             btnCancelar.setStyleSheet(f.read())
         with open('./view/resources/styles.css') as f:
             btnGuardar.setStyleSheet(f.read())
+        with open('./view/resources/styles.css') as f:
+            btnCerrar.setStyleSheet(f.read())            
 
-        horizontalLayout.addWidget(btnGuardar)
-        horizontalLayout.addWidget(btnCancelar)
+        if self.editable is True:
+            horizontalLayout.addWidget(btnGuardar)
+            horizontalLayout.addWidget(btnCancelar)
+        else:
+            horizontalLayout.addWidget(btnCerrar)
+        
+        horizontalLayout.setContentsMargins(0,20,0,0)
 
         self.layout.addWidget(labelNombre,0,0,1,2)
         self.layout.addWidget(self.inputNombre,1,0,1,2)
@@ -185,6 +206,29 @@ class FormAlumno:
             self.view.mostrarModuloAlumnos()
         else:
             self.view.mostrarPopup("Error", "Ha ocurrido un error", res)
+
+    def manejarUpdateAlumno(self):
+        alumno = Alumno()
+        alumno.ci = self.inputCedula.text()
+        alumno.nombre = self.inputNombre.text()
+        alumno.apellido = self.inputApellido.text()
+        alumno.telefono = self.inputTelefono.text()
+        alumno.email = self.inputEmail.text()
+        carrera = self.inputCarreras.currentData()
+        if carrera is None:
+            alumno.idCarrera = None
+        else:
+            alumno.idCarrera = carrera.id
+        resValidacion = self.validarCampos(alumno)
+        if resValidacion is not True:
+            self.view.mostrarPopup("Validar campos", "Por favor, verifique los siguientes campos", resValidacion)
+            return
+        res = self.view.generalController.alumnoController.actualizarAlumnos(alumno)
+        if res is True:
+            self.window.destroy()
+            self.view.mostrarModuloAlumnos()
+        else:
+            self.view.mostrarPopup("Error", "Ha ocurrido un error", res)            
     
     def manejarCancelar(self):
         self.window.hide()

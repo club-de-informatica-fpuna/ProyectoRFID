@@ -13,7 +13,7 @@ class Home:
     def build(self):
         self.window = QWidget()
         self.window.setWindowTitle(self.title)
-        self.window.setWindowIcon(QIcon(os.getcwd()+'/view/resources/cep-logo.ico'))
+        self.window.setWindowIcon(QIcon("./view/resources/cep-logo.png"))
         self.createGridLayout()
         self.center()
 

@@ -94,7 +94,6 @@ class AlumnoManager:
         query  = "UPDATE alumnos SET apellidos = %s, nombres = %s, email = %s, telefono = %s, id_carrera = %s "
         query += "WHERE ci = %s"
         cur = None
-
         try:
             cur = self.conn.cursor()
             cur.execute(query, [alumno.apellido, alumno.nombre, alumno.email, alumno.telefono, alumno.idCarrera, str(alumno.ci)])
@@ -103,6 +102,7 @@ class AlumnoManager:
             return True
         except(Exception) as error:
             traceback.print_exc(file=sys.stdout)
+            self.conn.rollback()
             return False
         finally:
             cur.close()

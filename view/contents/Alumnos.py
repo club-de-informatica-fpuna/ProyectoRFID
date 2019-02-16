@@ -81,6 +81,7 @@ class Alumnos:
         btnSearch = QPushButton("Buscar")
         btnSearch.setObjectName("botonPrimario")
         btnSearch.setIcon(QIcon("./view/resources/search.svg"))
+        btnSearch.clicked.connect(self.manejarBuscar)
 
         with open('./view/resources/styles.css') as f:
             labelTitle.setStyleSheet(f.read())
@@ -142,7 +143,7 @@ class Alumnos:
         self.layout.addWidget(self.inputSearch,1,9)
         self.layout.addWidget(btnSearch,1,10)
         self.layout.addWidget(self.tablaAlumnos,2,0,1,11)
-        self.layout.addLayout(horizontalLayout,3,9,1,2)
+        self.layout.addLayout(horizontalLayout,3,10,1,1)
         self.layout.setAlignment(Qt.AlignTop)
         self.layout.setContentsMargins(20, 20, 20, 20)
 
@@ -199,3 +200,12 @@ class Alumnos:
         alumno = self.view.generalController.alumnoController.buscarAlumno(data[0])        
         if alumno is not None:
             self.view.mostrarFormAlumno(title="Actualizar alumno | CEP", update=True, alumnoUpdate=alumno)
+
+
+    def manejarBuscar(self):
+        alumno = self.view.generalController.alumnoController.buscarAlumno(self.inputSearch.text())
+        if alumno is not None:
+            self.view.mostrarFormAlumno(title="Ver alumno | CEP", update=True, alumnoUpdate=alumno, editable=False)
+        else:
+            self.view.mostrarPopup("Datos no encontrados", "Datos no encontrados", "El alumno no existe")            
+            

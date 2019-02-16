@@ -46,6 +46,7 @@ class Popup:
         btnCerrar = QPushButton("Cerrar")
         btnCerrar.setObjectName("botonPrimario")        
         btnCerrar.clicked.connect(self.manejarCancelar)
+        btnCerrar.setContentsMargins(0,20,0,0)
 
         with open('./view/resources/styles.css') as f:
             labelTitulo.setStyleSheet(f.read())
