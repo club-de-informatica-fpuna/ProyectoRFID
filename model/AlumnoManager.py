@@ -137,6 +137,7 @@ class AlumnoManager:
                 return alumno
             return None
         except(Exception) as error:
+            self.conn.rollback()
             traceback.print_exc(file=sys.stdout)
             return None
         finally:

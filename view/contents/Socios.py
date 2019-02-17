@@ -49,6 +49,7 @@ class Socio:
         self.inputSearch.setMaximumWidth(200)
 
         btnSearch = QPushButton("Buscar")
+        btnSearch.clicked.connect(self.buscarSocio)
         btnSearch.setObjectName("botonPrimario")
 
         with open('./view/resources/styles.css') as f:
@@ -123,3 +124,12 @@ class Socio:
         for s in socio:
             s.estado = "A" if s.estado else "I"
         return socio
+    
+    def buscarSocio(self):
+        ciSocio = self.inputSearch.text()
+        socio = self.view.generalController.socioController.obtenerSocioCi(ciSocio)
+        if socio is not None:
+            alumno = self.view.generalController.alumnoController.buscarAlumno(ciSocio)
+            carrera = self.view.generalController.socioController.obtenerCarrera(ciSocio)
+            if alumno is not None and carrera is not None:
+                self.view.mostrarConsultaSocio(socio, alumno, carrera)

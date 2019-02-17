@@ -23,8 +23,4 @@ class ConversorImg:
 
     def decodeImg(self, base64Str):
         base64Decode = base64.b64decode(base64Str)
-        imgBytes = io.BytesIO(base64Decode)
-        img = Image.open(imgBytes)
-        #img.show()
-        return img
-
+        return base64Decode

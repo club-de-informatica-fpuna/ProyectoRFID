@@ -3,7 +3,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.uic import *
 from entidad.Socio import Socio
-import os
+import os, uuid
 class FormSocios:
 
     def __init__(self, view):
@@ -32,12 +32,18 @@ class FormSocios:
         pathImgIconUpload   = os.getcwd()+"/view/resources/icons/"
         self.pathImgDefault = os.getcwd()+"/view/resources/student-img-default.png"
 
+        self.cameraButton = QPushButton("Camara")
+        self.cameraButton.setObjectName("botonPrimario")
+        self.cameraButton.clicked.connect(self.openCamera)
+
         self.imgButton = QPushButton()
         self.imgButton.setObjectName("upload")
         self.imgButton.setIcon(QIcon(pathImgIconUpload+"upload.png"))
         self.imgButton.setIconSize(QSize(50,30))
         with open('./view/resources/styles.css') as f:
             self.imgButton.setStyleSheet(f.read())
+        with open('./view/resources/styles.css') as f:
+            self.cameraButton.setStyleSheet(f.read())
 
         lbImgTile = QLabel("Imagen")
         lbImgTile.setStyleSheet("text-align:center;")
@@ -94,6 +100,7 @@ class FormSocios:
         verticalLayoutImage.addWidget(lbImgTile)
         verticalLayoutImage.addWidget(self.lbImg)
         verticalLayoutImage.addWidget(self.imgButton)
+        verticalLayoutImage.addWidget(self.cameraButton)
 
         horizontalLayoutButtons.addWidget(btnRegistrar)
         horizontalLayoutButtons.addWidget(btnCancelar)
@@ -167,3 +174,10 @@ class FormSocios:
         size = self.window.geometry()      
         self.window.move((screen.width() - size.width()) /2, (screen.height() - size.height()) / 2)
         self.window.setFixedSize(self.window.size())
+    
+    def openCamera(self):
+        self.filename = str(uuid.uuid4()) + ".png"
+        self.view.mostrarWebcam(self.filename, self.setPhoto)
+    
+    def setPhoto(self):
+        self.imageUtil(self.filename)

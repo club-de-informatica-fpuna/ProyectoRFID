@@ -39,6 +39,7 @@ class SocioManager:
             row = cur.fetchone()
             return Socio(row[0], row[1], row[2], row[3].tobytes(), row[4], row[5])
         except(Exception) as error:
+            self.conn.rollback()
             print("{} ERROR: {}".format(datetime.now(), error))
             self.logger.error(traceback.format_exc())
             return None

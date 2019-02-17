@@ -4,6 +4,8 @@ from view.contents.Alumnos import Alumnos
 from view.contents.FormAlumno import FormAlumno
 from view.contents.FormSocios import FormSocios
 from view.contents.Socios import Socio
+from view.contents.ConsultaSocio import ConsultaSocio
+from view.contents.Webcam import Webcam
 from PyQt5.QtWidgets import QApplication
 import math
 
@@ -42,6 +44,10 @@ class View:
     def mostrarModuloSocio(self):
         self.socioView = Socio(self)
         self.socioView.start()
+
+    def mostrarConsultaSocio(self, socio, alumno, carrera):
+        self.consultaSocio = ConsultaSocio(socio, alumno, carrera)
+        self.consultaSocio.start()
     
     def salir(self):
         self.app.exit()
@@ -49,3 +55,7 @@ class View:
     def mostrarPopup(self, titleWindow, title, message):
         self.popup = Popup(view=self, title=title, titleWindow=titleWindow, message=message)
         self.popup.start()
+    
+    def mostrarWebcam(self, filename, setPhoto):
+        self.webcamView = Webcam(filename, setPhoto)
+        self.webcamView.start()
