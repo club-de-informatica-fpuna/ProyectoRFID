@@ -2,19 +2,22 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.uic import *
-import os
+import os, math
 
 class Socio:
 
-    def __init__(self, view):
+    def __init__(self, view, actualPage=1, quantityElements=15):
         self.view = view
         self.title = 'Socios | CEP'
+        self.actualPage = actualPage
+        self.quantityElements = quantityElements
 
     def build(self):
         self.window = QWidget()
         self.window.setWindowTitle(self.title)
         self.window.setWindowIcon(QIcon('./view/resources/socio.png'))
-        self.socios = self.setState(self.view.generalController.socioController.listarSocios())
+        self.socios = self.setState(self.view.generalController.socioController.listarSocios(self.quantityElements, self.actualPage))
+        self.totalPartner = self.view.generalController.socioController.numberOfPartners()
         self.createGridLayout()
         self.center()
 
@@ -25,11 +28,19 @@ class Socio:
     def createGridLayout(self):
         self.layout = QGridLayout(self.window)
         
+        horizontalLayout = QHBoxLayout()
+
         labelTitle = QLabel("Socios")
         labelTitle.setObjectName("tituloModulo")
 
+        total = QLabel("Total de Socios: "+str(self.totalPartner))
+        total.setObjectName("tituloPopup")
+
         with open('./view/resources/styles.css') as f:
-            labelTitle.setStyleSheet(f.read())        
+            labelTitle.setStyleSheet(f.read())
+
+        with open('./view/resources/styles.css') as f:
+            total.setStyleSheet(f.read())       
 
         btnNew = QPushButton("Nuevo")
         btnNew.setObjectName("botonPrimario")
@@ -67,26 +78,66 @@ class Socio:
         header.setSectionResizeMode(QHeaderView.ResizeToContents)
 
         self.partnerTable.setHorizontalHeaderItem(0, QTableWidgetItem("C.I."))
-        self.partnerTable.setHorizontalHeaderItem(1, QTableWidgetItem("UID"))
-        self.partnerTable.setHorizontalHeaderItem(2, QTableWidgetItem("FECHA INGRESO"))
-        self.partnerTable.setHorizontalHeaderItem(3, QTableWidgetItem("CARRERA"))
+        self.partnerTable.setHorizontalHeaderItem(1, QTableWidgetItem("NOMBRE APELLIDO"))
+        self.partnerTable.setHorizontalHeaderItem(2, QTableWidgetItem("UID"))
+        self.partnerTable.setHorizontalHeaderItem(3, QTableWidgetItem("FECHA INGRESO"))
         self.partnerTable.setHorizontalHeaderItem(4, QTableWidgetItem("ESTADO"))
-        self.partnerTable.setHorizontalHeaderItem(5, QTableWidgetItem("ACCIONES"))
+        self.partnerTable.setHorizontalHeaderItem(5, QTableWidgetItem("CARRERA"))
+        
 
         self.partnerTable.horizontalHeader().setStyleSheet("QHeaderView::section {background: #002156; color: white; font-weight: bold; border: 1px solid silver; padding: 5px}")
         self.partnerTable.verticalHeader().setStyleSheet("QHeaderView::section {background: #002156; color: white; font-weight: bold; border: 1px solid silver; padding: 5px}")        
         self.partnerTable.setStyleSheet("border-top: 0px solid transparent; border-left: 0px solid transparent")
 
         for partner in self.socios:
-            carrer = self.view.generalController.socioController.obtenerCarrera(partner.ci)
+            alumno = self.view.generalController.socioController.obtenerAlumno(partner.ci)
             self.partnerTable.setItem(self.socios.index(partner), 0, QTableWidgetItem(partner.ci))
-            self.partnerTable.setItem(self.socios.index(partner), 1, QTableWidgetItem(partner.uid))
-            self.partnerTable.setItem(self.socios.index(partner), 2, QTableWidgetItem(str(partner.fechaIngreso)))
-            self.partnerTable.setItem(self.socios.index(partner), 3, QTableWidgetItem(carrer.denominacion))
+            self.partnerTable.setItem(self.socios.index(partner), 1, QTableWidgetItem(alumno.nombre +" "+ alumno.apellido))
+            self.partnerTable.setItem(self.socios.index(partner), 2, QTableWidgetItem(partner.uid))
+            self.partnerTable.setItem(self.socios.index(partner), 3, QTableWidgetItem(str(partner.fechaIngreso)))
             self.partnerTable.setItem(self.socios.index(partner), 4, QTableWidgetItem(partner.estado))
-            self.partnerTable.setItem(self.socios.index(partner), 5, QTableWidgetItem(""))
-        
+            self.partnerTable.setItem(self.socios.index(partner), 5, QTableWidgetItem(alumno.idCarrera.denominacion))
+
         self.partnerTable.move(0, 0)
+
+
+
+
+        btnPrimeraPagina = QPushButton("<<")
+        btnPrimeraPagina.setObjectName("botonPrimario")
+        btnPrimeraPagina.clicked.connect(self.firstPage)
+
+        btnAnteriorPagina = QPushButton(" < ")
+        btnAnteriorPagina.setObjectName("botonPrimario")
+        btnAnteriorPagina.clicked.connect(self.previousPage)
+
+        btnPaginaActual = QPushButton(" " + str(self.actualPage) + " ")
+        btnPaginaActual.setObjectName("botonPrimario")        
+
+        btnSiguientePagina = QPushButton(" > ")
+        btnSiguientePagina.setObjectName("botonPrimario")
+        btnSiguientePagina.clicked.connect(self.nextPage)
+
+        btnUltimaPagina = QPushButton(">>")
+        btnUltimaPagina.setObjectName("botonPrimario")
+        btnUltimaPagina.clicked.connect(self.lastPage)        
+
+        horizontalLayout.addWidget(btnPrimeraPagina)
+        horizontalLayout.addWidget(btnAnteriorPagina)
+        horizontalLayout.addWidget(btnPaginaActual)        
+        horizontalLayout.addWidget(btnSiguientePagina)           
+        horizontalLayout.addWidget(btnUltimaPagina)
+
+        with open('./view/resources/styles.css') as f:
+            btnPrimeraPagina.setStyleSheet(f.read())
+        with open('./view/resources/styles.css') as f:
+            btnAnteriorPagina.setStyleSheet(f.read())                        
+        with open('./view/resources/styles.css') as f:
+            btnSiguientePagina.setStyleSheet(f.read())
+        with open('./view/resources/styles.css') as f:
+            btnUltimaPagina.setStyleSheet(f.read())
+        with open('./view/resources/styles.css') as f:
+            btnPaginaActual.setStyleSheet(f.read())
 
         self.layout.addWidget(labelTitle, 0, 0, 1, 10)
         self.layout.addWidget(btnNew, 1, 0)
@@ -94,6 +145,8 @@ class Socio:
         self.layout.addWidget(self.inputSearch, 1, 8)
         self.layout.addWidget(btnSearch, 1, 9)
         self.layout.addWidget(self.partnerTable, 2, 0, 1, 10)
+        self.layout.addWidget(total,3,0,1,2)
+        self.layout.addLayout(horizontalLayout, 3, 9, 1, 1)
         self.layout.setAlignment(Qt.AlignTop)
         self.layout.setContentsMargins(20, 20, 20, 20)
 
@@ -109,22 +162,19 @@ class Socio:
         for i in selections:
             data.append(str(i.data()))
 
-        response = self.view.generalController.socioController.eliminarSocioCi(data)
-        if response:
-            self.view.mostrarModuloSocio()
+        if len(data) == 0:
+            self.view.mostrarPopup("Atención", "Atención", "Debes seleccionar al menos uno para poder eliminar")
+            return
+        else:
+            qm = QMessageBox
+            response = qm.question(self.window, "Confirmación", "¿Desea eliminar los registros?", qm.Yes | qm.No)
+            if response == qm.Yes:
+                res = self.view.generalController.socioController.eliminarSocioCi(data)
+                if res :
+                    self.view.mostrarModuloSocio()
+                else:
+                    self.view.mostrarPopup("Atención", "Error", "No se puede eliminar")
 
-
-    def center(self):
-        screen = QDesktopWidget().screenGeometry()
-        width = (screen.width()-screen.width()/8)
-        height = (screen.height()-screen.height()/8)
-        self.window.setGeometry( (screen.width()-width) /2, (screen.height()-height)/2, width, height)
-
-    def setState(self, socio):
-        for s in socio:
-            s.estado = "A" if s.estado else "I"
-        return socio
-    
     def buscarSocio(self):
         ciSocio = self.inputSearch.text()
         socio = self.view.generalController.socioController.obtenerSocioCi(ciSocio)
@@ -133,3 +183,40 @@ class Socio:
             carrera = self.view.generalController.socioController.obtenerCarrera(ciSocio)
             if alumno is not None and carrera is not None:
                 self.view.mostrarConsultaSocio(socio, alumno, carrera)
+    
+    def center(self):
+        screen = QDesktopWidget().screenGeometry()
+        width = (screen.width()-screen.width()/8)
+        height = (screen.height()-screen.height()/8)
+        self.window.setGeometry( (screen.width()-width) /2, (screen.height()-height)/2, width, height)
+
+    def nextPage(self):
+        if self.totalPartner == 0:
+            return
+        pageAmount = math.ceil(self.totalPartner/self.quantityElements)
+
+        if self.actualPage < pageAmount:
+            self.view.socioView = Socio(self.view, self.actualPage + 1)
+            self.view.socioView.start()
+
+    def previousPage(self):
+        if self.actualPage > 1:
+            self.view.socioView = Socio(self.view, self.actualPage -1)
+            self.view.socioView.start()
+
+    def firstPage(self):
+        self.view.socioView = Socio(self.view, 1)
+        self.view.socioView.start()
+
+    def lastPage(self):
+        if self.totalPartner <= 0:
+            return
+        pageAmount = math.ceil(self.totalPartner/self.quantityElements)
+
+        self.view.socioView = Socio(self.view, pageAmount)
+        self.view.socioView.start()
+
+    def setState(self, socio):
+        for s in socio:
+            s.estado = "Activo" if s.estado else "Inactivo"
+        return socio

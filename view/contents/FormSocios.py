@@ -180,4 +180,5 @@ class FormSocios:
         self.view.mostrarWebcam(self.filename, self.setPhoto)
     
     def setPhoto(self):
+        self.detailRoute = self.filename
         self.imageUtil(self.filename)

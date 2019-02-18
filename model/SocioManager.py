@@ -1,5 +1,6 @@
 from entidad.Socio import Socio
 from entidad.Carrera import Carrera
+from entidad.Alumno import Alumno
 from util.ConversorImg import ConversorImg
 import sys, traceback
 from datetime import datetime
@@ -11,13 +12,15 @@ class SocioManager:
         self.conn = conn
         self.logger = UtilLogger(self.__class__.__name__).get()
 
-    def listarSocios(self):
-        query = "SELECT id_socio, uid, ci, foto, fecha_ingreso, estado FROM socios"
+    def listarSocios(self, quantityElements, actualPage):
+        query  = "SELECT id_socio, uid, ci, foto, fecha_ingreso, estado FROM socios "
+        query += "limit %s offset %s"
         cur = None
         socios = []
         try:
             cur = self.conn.cursor()
-            cur.execute(query)
+            since = (actualPage-1)*quantityElements
+            cur.execute(query, [quantityElements, since])
             rows = cur.fetchall()
             for column in rows:
                 socio = Socio(column[0], column[1], column[2], column[3], column[4], column[5])
@@ -107,6 +110,25 @@ class SocioManager:
         finally:
             if cur != None:
                 cur.close()
+
+    def obtenerAlumno(self, key):
+        query = "SELECT a.nombres, a.apellidos, c.id, c.denominacion FROM alumnos a JOIN carreras c ON c.id = a.id_carrera WHERE a.ci = %s"
+        cur = None
+        try:
+            cur = self.conn.cursor()
+            cur.execute(query, [str(key)])
+            row = cur.fetchone()
+            carrera = Carrera(row[2], row[3])
+            alumno = Alumno(nombre=row[0], apellido=row[1], idCarrera=carrera)
+            return alumno
+        except(Exception) as error:
+            print("{} ERROR: {}".format(datetime.now(), error))
+            self.logger.error(traceback.format_exc())
+            return False
+        finally:
+            if cur != None:
+                cur.close()                
+
     def actualizarSocioCi(self, socio):
         query  = "UPDATE socios SET "
         updatedRows = 0
@@ -150,4 +172,22 @@ class SocioManager:
         for field in fieldList:
             missingValues.append(socio.__getattribute__(field))
         return missingValues
+
+    def numberOfPartners(self):
+        query = "SELECT COUNT(ID_SOCIO) FROM SOCIOS"
+        cur = None
+        total = 0
+        try:
+            cur = self.conn.cursor()
+            cur.execute(query)
+            total = cur.fetchone()[0]
+            cur.close()
+            return total
+        except(Exception) as error:
+            print("{} ERROR: {}".format(datetime.now(), error))
+            self.logger.error(traceback.format_exc())
+            return total
+        finally:
+            if cur != None:
+                cur.close()
 
