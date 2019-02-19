@@ -67,6 +67,10 @@ class Popup:
         with open('./view/resources/styles.css') as f:
             self.window.setStyleSheet(f.read())
 
+        shortcutCerrar = QShortcut(QKeySequence(Qt.Key_Return), btnCerrar)
+        shortcutCerrar.setContext(Qt.WidgetShortcut)
+        shortcutCerrar.activated.connect(self.window.hide)              
+
     def center(self):
         screen = QDesktopWidget().screenGeometry()
         size = self.window.geometry()      

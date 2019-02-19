@@ -1,6 +1,6 @@
 QPushButton#botonHome {
     background: #fff;
-    color: #002156;
+    color: #0e52c0;
     border: 2px solid #fff;
     padding: 20px;
     font-size: 17px;
@@ -10,13 +10,13 @@ QPushButton#botonHome {
 }
 
 QPushButton#botonHome:hover {
-    background: #002156;
+    background: #0e52c0;
     color: #fff;
     border: 2px solid #fff;
 }
 
 QWidget#ventanaHome {
-    background: #002156;
+    background: qlineargradient(x1: 1, y1: 0, x2: 1 y2: 1, stop: 0 #002156, stop: 1 #0e52c0);
     padding: 10px;
 }
 
@@ -31,16 +31,27 @@ QWidget#ventanaPopup {
 QLabel#tituloHome {
     color: #fff;
     font-size: 30px;
-    font-weight: 800;
+    font-weight: 550;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     text-align: center;
-    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+QLabel#footerHome {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 400;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
 }
 
 QPushButton#botonPrimario {
-    background: #002156;
+    background: #0e52c0;
     color: #fff;
-    border: 2px solid #002156;
+    border: 2px solid #0e52c0;
     padding: 5px;
     font-size: 13px;
     font-weight: 550;
@@ -49,8 +60,8 @@ QPushButton#botonPrimario {
 
 QPushButton#botonPrimario:hover {
     background: #fff;
-    color: #002156;
-    border: 2px solid #002156;
+    color: #0e52c0;
+    border: 2px solid #0e52c0;
 }
 
 QPushButton#botonSecundario {

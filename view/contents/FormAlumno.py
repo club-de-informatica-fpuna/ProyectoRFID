@@ -40,15 +40,39 @@ class FormAlumno:
         labelTelefono = QLabel("Teléfono")
         labelCarreras = QLabel("Carrera")
 
-        self.inputNombre = QLineEdit()
-        self.inputApellido = QLineEdit()
-        self.inputCedula = QLineEdit()
-        self.inputEmail = QLineEdit()
-        self.inputTelefono = QLineEdit()
-        self.inputCarreras = QComboBox()
+        self.inputCarreras = QComboBox(self.window)
         self.inputCarreras.addItem(" - Seleccione carrera - ")
         for i in self.carreras:
             self.inputCarreras.addItem(i.denominacion, i)
+        shortcutCarreras = QShortcut(QKeySequence(Qt.Key_Return), self.inputCarreras)
+        shortcutCarreras.setContext(Qt.WidgetShortcut)
+        shortcutCarreras.activated.connect(self.manejarPostAlumno)            
+
+        self.inputTelefono = QLineEdit(self.window)
+        shortcutTelefono = QShortcut(QKeySequence(Qt.Key_Return), self.inputTelefono)
+        shortcutTelefono.setContext(Qt.WidgetShortcut)
+        shortcutTelefono.activated.connect(self.inputCarreras.setFocus)        
+
+        self.inputEmail = QLineEdit(self.window)
+        shortcutEmail = QShortcut(QKeySequence(Qt.Key_Return), self.inputEmail)
+        shortcutEmail.setContext(Qt.WidgetShortcut)
+        shortcutEmail.activated.connect(self.inputTelefono.setFocus)
+
+        self.inputCedula = QLineEdit(self.window)
+        shortcutCedula = QShortcut(QKeySequence(Qt.Key_Return), self.inputCedula)
+        shortcutCedula.setContext(Qt.WidgetShortcut)
+        shortcutCedula.activated.connect(self.inputEmail.setFocus)        
+
+        self.inputApellido = QLineEdit(self.window)
+        shortcutApellido = QShortcut(QKeySequence(Qt.Key_Return), self.inputApellido)
+        shortcutApellido.setContext(Qt.WidgetShortcut)
+        shortcutApellido.activated.connect(self.inputCedula.setFocus)        
+
+        self.inputNombre = QLineEdit(self.window)
+        self.inputNombre.setFocus()
+        shortcutNombre = QShortcut(QKeySequence(Qt.Key_Return), self.inputNombre)
+        shortcutNombre.setContext(Qt.WidgetShortcut)
+        shortcutNombre.activated.connect(self.inputApellido.setFocus)
 
         btnRegistrar = QPushButton("Registrar")
         btnRegistrar.setObjectName("botonPrimario")        
@@ -89,6 +113,10 @@ class FormAlumno:
         with open('./view/resources/styles.css') as f:
             self.window.setStyleSheet(f.read())
 
+        shortcutSalir = QShortcut(QKeySequence(Qt.Key_Escape), self.window)
+        shortcutSalir.setContext(Qt.WindowShortcut)
+        shortcutSalir.activated.connect(self.window.hide)            
+
     def createGridUpdateLayout(self):
 
         self.layout = QGridLayout(self.window)
@@ -101,26 +129,47 @@ class FormAlumno:
         labelTelefono = QLabel("Teléfono")
         labelCarreras = QLabel("Carrera")
 
-        self.inputNombre = QLineEdit()
-        self.inputNombre.setText(self.alumnoUpdate.nombre)
+        self.inputCarreras = QComboBox(self.window)
+        for i in self.carreras:
+            self.inputCarreras.addItem(i.denominacion, i)
+        self.inputCarreras.setCurrentIndex(0)
 
-        self.inputApellido = QLineEdit()
-        self.inputApellido.setText(self.alumnoUpdate.apellido)
+        shortcutCarreras = QShortcut(QKeySequence(Qt.Key_Return), self.inputCarreras)
+        shortcutCarreras.setContext(Qt.WidgetShortcut)
+        shortcutCarreras.activated.connect(self.manejarUpdateAlumno)        
 
-        self.inputCedula = QLineEdit()        
+        self.inputTelefono = QLineEdit(self.window)
+        self.inputTelefono.setText(self.alumnoUpdate.telefono)
+
+        shortcutTelefono = QShortcut(QKeySequence(Qt.Key_Return), self.inputTelefono)
+        shortcutTelefono.setContext(Qt.WidgetShortcut)
+        shortcutTelefono.activated.connect(self.inputCarreras.setFocus)           
+
+        self.inputEmail = QLineEdit(self.window)
+        self.inputEmail.setText(self.alumnoUpdate.email)
+
+        shortcutEmail = QShortcut(QKeySequence(Qt.Key_Return), self.inputEmail)
+        shortcutEmail.setContext(Qt.WidgetShortcut)
+        shortcutEmail.activated.connect(self.inputTelefono.setFocus)
+
+        self.inputCedula = QLineEdit(self.window)        
         self.inputCedula.setEnabled(False)
         self.inputCedula.setText(self.alumnoUpdate.ci)
 
-        self.inputEmail = QLineEdit()
-        self.inputEmail.setText(self.alumnoUpdate.email)
+        self.inputApellido = QLineEdit(self.window)
+        self.inputApellido.setText(self.alumnoUpdate.apellido)
 
-        self.inputTelefono = QLineEdit()
-        self.inputTelefono.setText(self.alumnoUpdate.telefono)
+        shortcutApellido = QShortcut(QKeySequence(Qt.Key_Return), self.inputApellido)
+        shortcutApellido.setContext(Qt.WidgetShortcut)
+        shortcutApellido.activated.connect(self.inputEmail.setFocus)        
 
-        self.inputCarreras = QComboBox()
-        for i in self.carreras:
-            self.inputCarreras.addItem(i.denominacion, i)
-        self.inputCarreras.setCurrentIndex(0) 
+        self.inputNombre = QLineEdit(self.window)
+        self.inputNombre.setText(self.alumnoUpdate.nombre)
+        self.inputNombre.setFocus()
+
+        shortcutNombre = QShortcut(QKeySequence(Qt.Key_Return), self.inputNombre)
+        shortcutNombre.setContext(Qt.WidgetShortcut)
+        shortcutNombre.activated.connect(self.inputApellido.setFocus)
 
         if self.editable is False:
             self.inputNombre.setEnabled(False)
@@ -153,6 +202,9 @@ class FormAlumno:
             horizontalLayout.addWidget(btnGuardar)
             horizontalLayout.addWidget(btnCancelar)
         else:
+            shortcutCerrar = QShortcut(QKeySequence(Qt.Key_Return), btnCerrar)
+            shortcutCerrar.setContext(Qt.WidgetShortcut)
+            shortcutCerrar.activated.connect(self.window.hide)  
             horizontalLayout.addWidget(btnCerrar)
         
         horizontalLayout.setContentsMargins(0,20,0,0)
@@ -177,6 +229,10 @@ class FormAlumno:
         self.window.setObjectName("ventanaPopup")
         with open('./view/resources/styles.css') as f:
             self.window.setStyleSheet(f.read())
+
+        shortcutSalir = QShortcut(QKeySequence(Qt.Key_Escape), self.window)
+        shortcutSalir.setContext(Qt.WindowShortcut)
+        shortcutSalir.activated.connect(self.window.hide)            
 
     def center(self):
         screen = QDesktopWidget().screenGeometry()
