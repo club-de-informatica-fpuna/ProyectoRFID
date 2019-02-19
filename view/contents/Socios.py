@@ -15,7 +15,7 @@ class Socio:
     def build(self):
         self.window = QWidget()
         self.window.setWindowTitle(self.title)
-        self.window.setWindowIcon(QIcon('./view/resources/socio.png'))
+        self.window.setWindowIcon(QIcon('./view/resources/partner.svg'))
         self.socios = self.setState(self.view.generalController.socioController.listarSocios(self.quantityElements, self.actualPage))
         self.totalPartner = self.view.generalController.socioController.numberOfPartners()
         self.createGridLayout()
