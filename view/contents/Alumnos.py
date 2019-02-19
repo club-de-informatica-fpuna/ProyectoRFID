@@ -31,22 +31,22 @@ class Alumnos:
         horizontalLayout = QHBoxLayout()
 
         btnPrimeraPagina = QPushButton("<<")
-        btnPrimeraPagina.setObjectName("botonPrimario")
+        btnPrimeraPagina.setObjectName("page")
         btnPrimeraPagina.clicked.connect(self.firstPage)
 
         btnAnteriorPagina = QPushButton(" < ")
-        btnAnteriorPagina.setObjectName("botonPrimario")
+        btnAnteriorPagina.setObjectName("page")
         btnAnteriorPagina.clicked.connect(self.previousPage)
 
         btnPaginaActual = QPushButton(" " + str(self.paginaActual) + " ")
-        btnPaginaActual.setObjectName("botonPrimario")        
+        btnPaginaActual.setObjectName("page")        
 
         btnSiguientePagina = QPushButton(" > ")
-        btnSiguientePagina.setObjectName("botonPrimario")
+        btnSiguientePagina.setObjectName("page")
         btnSiguientePagina.clicked.connect(self.nextPage)
 
         btnUltimaPagina = QPushButton(">>")
-        btnUltimaPagina.setObjectName("botonPrimario")
+        btnUltimaPagina.setObjectName("page")
         btnUltimaPagina.clicked.connect(self.lastPage)        
 
         horizontalLayout.addWidget(btnPrimeraPagina)
@@ -96,6 +96,10 @@ class Alumnos:
         shortcutSearch = QShortcut(QKeySequence(Qt.Key_Return), self.inputSearch)
         shortcutSearch.setContext(Qt.WidgetShortcut)
         shortcutSearch.activated.connect(self.manejarBuscar)
+
+        shortcutSearchIntro = QShortcut(QKeySequence(Qt.Key_Enter), self.inputSearch)
+        shortcutSearchIntro.setContext(Qt.WidgetShortcut)
+        shortcutSearchIntro.activated.connect(self.manejarBuscar)        
 
         btnSearch = QPushButton("Buscar")
         btnSearch.setObjectName("botonPrimario")
