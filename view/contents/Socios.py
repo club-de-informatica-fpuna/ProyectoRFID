@@ -47,7 +47,7 @@ class Socio:
 
         btnNew = QPushButton("Nuevo")
         btnNew.setObjectName("botonPrimario")
-        btnNew.setIcon(QIcon(pathIcons + "new.png"))
+        btnNew.setIcon(QIcon(pathIcons + "add-partner.png"))
         btnNew.clicked.connect(self.view.mostrarFormSocio)
 
         btnRemove = QPushButton("Eliminar")

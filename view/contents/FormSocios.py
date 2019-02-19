@@ -25,12 +25,11 @@ class FormSocios:
 
     def createGridLayout(self):
         self.pathIcons      = "./view/resources/icons/"
-        self.pathImgDefault = os.getcwd()+"/view/resources/student-img-default.png"
         self.pathResources  = "./view/resources/"
         if not self.update:
             self.layoutPost()
         else:
-            self.layoutPut()
+            self.layoutPut(self.socio)
         
         
 
@@ -42,8 +41,10 @@ class FormSocios:
         horizontalLayoutSearch   = QHBoxLayout()
         verticalLayoutContent    = QVBoxLayout() 
 
-        self.cameraButton = QPushButton("Camara")
+        self.cameraButton = QPushButton()
         self.cameraButton.setObjectName("botonPrimario")
+        self.cameraButton.setIcon(QIcon(self.pathIcons+"camera.png"))
+        self.cameraButton.setIconSize(QSize(20,20))
         self.cameraButton.clicked.connect(self.openCamera)
 
         self.imgButton = QPushButton()
@@ -58,7 +59,7 @@ class FormSocios:
         lbImgTile = QLabel("Imagen")
         lbImgTile.setStyleSheet("text-align:center;")
         self.lbImg = QLabel()
-        self.imageUtil(self.pathImgDefault)
+        self.imageUtil(self.pathResources + "student-img-default.png")
 
         self.imgButton.clicked.connect(self.selectImg)
 
@@ -81,9 +82,11 @@ class FormSocios:
         self.inputFN.setEnabled(False)
         self.inputLN.setEnabled(False)
         self.inputCarrer.setEnabled(False)
-        self.inputCI.setFocus()
+        self.inputCI.setFocus(True)
 
         btnRegistrar = QPushButton("Registrar")
+        btnRegistrar.setIcon(QIcon(self.pathIcons+"floppy.png"))
+        btnRegistrar.setIconSize(QSize(16,16))
         btnRegistrar.setObjectName("botonPrimario")
         btnRegistrar.clicked.connect(self.postSocio)
 
@@ -138,13 +141,109 @@ class FormSocios:
         with open(self.pathResources + "styles.css") as f:
             self.window.setStyleSheet(f.read())
 
-    def layoutPut(self):
-        pass
+    def layoutPut(self, partnerUpdate):
+        self.layout = QHBoxLayout(self.window)
+
+        verticalLayoutImage      = QVBoxLayout()
+        horizontalLayoutButtons  = QHBoxLayout()
+        horizontalLayoutSearch   = QHBoxLayout()
+        verticalLayoutContent    = QVBoxLayout() 
+
+        self.cameraButton = QPushButton()
+        self.cameraButton.setObjectName("botonPrimario")
+        self.cameraButton.setIcon(QIcon(self.pathIcons+"camera.png"))
+        self.cameraButton.setIconSize(QSize(20,20))
+        self.cameraButton.clicked.connect(self.openCamera)
+
+        self.imgButton = QPushButton()
+        self.imgButton.setObjectName("upload")
+        self.imgButton.setIcon(QIcon(self.pathIcons+"upload.png"))
+        self.imgButton.setIconSize(QSize(50,30))
+        with open(self.pathResources + "styles.css") as f:
+            self.imgButton.setStyleSheet(f.read())
+        with open(self.pathResources + "styles.css") as f:
+            self.cameraButton.setStyleSheet(f.read())
+
+        lbImgTile = QLabel("Imagen")
+        lbImgTile.setStyleSheet("text-align:center;")
+        self.lbImg = QLabel()
+        self.imageUtil(self.pathResources + "student-img-default.png")
+
+        self.imgButton.clicked.connect(self.selectImg)
+
+        ci          = QLabel("C.I.")
+        firstName   = QLabel("Nombres")
+        lastName    = QLabel("Apellidos")
+        career      = QLabel("Carrera")
+        uid         = QLabel("UID Tarjeta")
+        fechaInsert = QLabel("Fecha Ingreso")
+        
+
+        self.inputCI     = QLineEdit()
+        self.inputFN     = QLineEdit()
+        self.inputLN     = QLineEdit()
+        self.inputCarrer = QLineEdit()
+        self.inputUID    = QLineEdit()
+        self.inputDate   = QDateEdit()
+        self.inputDate.setDisplayFormat('dd/MM/yyyy')
+        
+        self.inputCI.setEnabled(False)
+        self.inputFN.setEnabled(False)
+        self.inputLN.setEnabled(False)
+        self.inputDate.setEnabled(False)
+
+        btnUpdate = QPushButton("Actualizar")
+        btnUpdate.setIcon(QIcon(self.pathIcons+"update.png"))
+        btnUpdate.setIconSize(QSize(16,16))
+        btnUpdate.setObjectName("botonPrimario")
+        #btnUpdate.clicked.connect(self.postSocio)
+
+        btnCancelar = QPushButton("Cancelar")
+        btnCancelar.setIcon(QIcon(self.pathIcons+"cancel.png"))
+        btnCancelar.setIconSize(QSize(20,20))
+        btnCancelar.setObjectName("cancel")
+        btnCancelar.clicked.connect(self.cancel)
+
+        with open(self.pathResources + "styles.css") as f:
+            btnCancelar.setStyleSheet(f.read())
+        with open(self.pathResources + "styles.css") as f:
+            btnUpdate.setStyleSheet(f.read())
+
+        verticalLayoutImage.addWidget(lbImgTile)
+        verticalLayoutImage.addWidget(self.lbImg)
+        verticalLayoutImage.addWidget(self.imgButton)
+        verticalLayoutImage.addWidget(self.cameraButton)
+
+        horizontalLayoutButtons.addWidget(btnUpdate)
+        horizontalLayoutButtons.addWidget(btnCancelar)
+
+        horizontalLayoutSearch.addWidget(self.inputCI)
+
+        verticalLayoutContent.addWidget(ci)
+        verticalLayoutContent.addLayout(horizontalLayoutSearch)
+        verticalLayoutContent.addWidget(firstName)
+        verticalLayoutContent.addWidget(self.inputFN)
+        verticalLayoutContent.addWidget(lastName)
+        verticalLayoutContent.addWidget(self.inputLN)
+        verticalLayoutContent.addWidget(career)
+        verticalLayoutContent.addWidget(self.inputCarrer)
+        verticalLayoutContent.addWidget(uid)
+        verticalLayoutContent.addWidget(self.inputUID)
+        verticalLayoutContent.addWidget(fechaInsert)
+        verticalLayoutContent.addWidget(self.inputDate)                
+        verticalLayoutContent.addLayout(horizontalLayoutButtons)
+
+        self.layout.addLayout(verticalLayoutImage)
+        self.layout.addLayout(verticalLayoutContent)
+
+        self.window.setObjectName("ventanaGeneral")
+        with open(self.pathResources + "styles.css") as f:
+            self.window.setStyleSheet(f.read())
 
     def selectImg(self):
         pathImg = QFileDialog.getOpenFileName(filter = "Imagenes (*.png *.jpg *.svg *.jpeg)")
         
-        self.detailRoute = self.pathImgDefault if not pathImg[0] else pathImg[0]
+        self.detailRoute = self.pathResources + "student-img-default.png" if not pathImg[0] else pathImg[0]
         self.imageUtil(self.detailRoute)
         
     
@@ -164,7 +263,7 @@ class FormSocios:
     def postSocio(self):
         ci              = self.inputCI.text()
         uid             = self.inputUID.text()
-        photo           = self.pathImgDefault if self.detailRoute is None else self.detailRoute
+        photo           = self.pathResources + "student-img-default.png" if self.detailRoute is None else self.detailRoute
         dateOfAdmission = self.inputDate.date().toPyDate()
         socio = Socio(uid=uid, ci=ci, foto=photo, fechaIngreso=dateOfAdmission, estado=True)
         response = self.view.generalController.socioController.registrarSocio(socio)

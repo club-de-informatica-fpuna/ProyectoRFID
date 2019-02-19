@@ -121,15 +121,15 @@ QLineEdit#inputSearch {
 
 QPushButton#upload {
     color: #fff;
-    background-color: #002156;
-    border: 1px solid #002156;
+    background-color: #0e52c0;
+    border: 1px solid #0e52c0;
     border-radius: 5px;
 }
 
 QPushButton#upload:hover {
     background-color: #fff;
-    color: #002156;
-    border: 2px solid #002156;
+    color: #0e52c0;
+    border: 2px solid #0e52c0;
 }
 
 QPushButton#searchStudent {
