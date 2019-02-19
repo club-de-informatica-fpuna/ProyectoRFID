@@ -45,7 +45,6 @@ class View:
     def mostrarModuloSocio(self):
         if self.socioView is not None:
             quantityPartner = self.socioView.totalPartner
-            print(quantityPartner)
             if quantityPartner <= 0 :
                 self.socioView = Socio(self)
             else:

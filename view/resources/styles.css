@@ -54,9 +54,9 @@ QPushButton#botonPrimario:hover {
 }
 
 QPushButton#botonSecundario {
-    background: green;
+    background: #5cb85c;
     color: #fff;
-    border: 2px solid green;
+    border: 2px solid #5cb85c;
     padding: 5px;
     font-size: 13px;
     font-weight: 550;
@@ -65,8 +65,8 @@ QPushButton#botonSecundario {
 
 QPushButton#botonSecundario:hover {
     background: #fff;
-    color: green;
-    border: 2px solid green;
+    color: #5cb85c;
+    border: 2px solid #5cb85c;
 }
 
 QLabel#tituloModulo {
@@ -91,7 +91,7 @@ QLabel#tituloPopup {
 }
 
 QLabel#tituloMensaje {
-    color: black;
+    color: #1d2124;
     font-size: 12px;
     font-weight: 500;
     text-align: left;
@@ -101,8 +101,8 @@ QLabel#tituloMensaje {
 }
 
 QLineEdit#inputSearch {
-    background: white;
-    color: gray;
+    background: #fff;
+    color: #6c757d;
     border: 1px solid #002156;
     border-radius: 5px;
     font-size: 13px;
@@ -153,4 +153,25 @@ QPushButton#cancel:hover {
     background-color: #fff;
     color: #d9534f;
     border: 2px solid #d9534f;
+}
+
+QPushButton#page {
+    position: relative;
+    padding: 0.5em 0.5em;
+    color: #007bff;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.4em;
+}
+
+QPushButton#page:hover {
+    color: #0056b3;
+    text-decoration: none;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
+QPushButton#page:focus {
+    border-color: #6c757d;
+    border-radius: 0.4em;
 }
