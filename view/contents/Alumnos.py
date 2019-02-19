@@ -99,7 +99,10 @@ class Alumnos:
 
         btnSearch = QPushButton("Buscar")
         btnSearch.setObjectName("botonPrimario")
-        btnSearch.setIcon(QIcon("./view/resources/search.svg"))
+        btnSearchIcon = QIcon()
+        btnSearchIcon.addPixmap(QPixmap("./view/resources/search.svg"), QIcon.Normal, QIcon.Off)
+        btnSearchIcon.addPixmap(QPixmap("./view/resources/search-hover.svg"), QIcon.Normal, QIcon.On)
+        btnSearch.setIcon(btnSearchIcon)
         btnSearch.clicked.connect(self.manejarBuscar)
 
         shortcutBuscar = QShortcut(QKeySequence(Qt.Key_Return), btnSearch)

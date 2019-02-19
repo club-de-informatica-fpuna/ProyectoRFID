@@ -1,6 +1,6 @@
 QPushButton#botonHome {
     background: #fff;
-    color: #002156;
+    color: #0e52c0;
     border: 2px solid #fff;
     padding: 20px;
     font-size: 17px;
@@ -10,13 +10,13 @@ QPushButton#botonHome {
 }
 
 QPushButton#botonHome:hover {
-    background: #002156;
+    background: #0e52c0;
     color: #fff;
     border: 2px solid #fff;
 }
 
 QWidget#ventanaHome {
-    background: #002156;
+    background: qlineargradient(x1:1, y1:0, x2:1 y2:1, stop:0 #002156, stop:1 #0e52c0);
     padding: 10px;
 }
 
@@ -49,9 +49,9 @@ QLabel#footerHome {
 }
 
 QPushButton#botonPrimario {
-    background: #002156;
+    background: #0e52c0;
     color: #fff;
-    border: 2px solid #002156;
+    border: 2px solid #0e52c0;
     padding: 5px;
     font-size: 13px;
     font-weight: 550;
@@ -60,8 +60,8 @@ QPushButton#botonPrimario {
 
 QPushButton#botonPrimario:hover {
     background: #fff;
-    color: #002156;
-    border: 2px solid #002156;
+    color: #0e52c0;
+    border: 2px solid #0e52c0;
 }
 
 QPushButton#botonSecundario {
@@ -165,3 +165,4 @@ QPushButton#cancel:hover {
     color: #d9534f;
     border: 2px solid #d9534f;
 }
+
