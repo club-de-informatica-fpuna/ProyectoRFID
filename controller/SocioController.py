@@ -3,8 +3,8 @@ class SocioController:
     def __init__(self, socioManager):
         self.socioManager = socioManager
 
-    def listarSocios(self):
-        return self.socioManager.listarSocios()
+    def listarSocios(self, quantityElements, actualPage):
+        return self.socioManager.listarSocios(quantityElements, actualPage)
 
     def obtenerSocioCi(self, key):
         return self.socioManager.obtenerSocioCi(key)
@@ -18,5 +18,11 @@ class SocioController:
     def obtenerCarrera(self, key):
         return self.socioManager.obtenerCarrera(key)
 
+    def obtenerAlumno(self, key):
+        return self.socioManager.obtenerAlumno(key)        
+
     def actualizarSocioCi(self, socio):
         return self.socioManager.actualizarSocioCi(socio)
+
+    def numberOfPartners(self):
+        return self.socioManager.numberOfPartners()

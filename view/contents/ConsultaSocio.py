@@ -81,6 +81,9 @@ class ConsultaSocio:
         gridLayoutData.addWidget(self.inputCarrera,7,0,1,2)
         gridLayoutData.setAlignment(Qt.AlignTop)
 
+        formSize = gridLayoutData.geometry()
+        print(formSize.height())
+
         btnCerrar = QPushButton("Cerrar")
         btnCerrar.setObjectName("botonPrimario")
         btnCerrar.clicked.connect(self.manejarCancelar)

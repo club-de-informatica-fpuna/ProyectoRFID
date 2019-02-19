@@ -13,6 +13,7 @@ class View:
     def __init__(self, generalController):
         self.generalController = generalController
         self.alumnosView = None
+        self.socioView   = None
     
     def iniciarVista(self):
         self.app = QApplication([])
@@ -42,7 +43,16 @@ class View:
         self.formSocio.start()
     
     def mostrarModuloSocio(self):
-        self.socioView = Socio(self)
+        if self.socioView is not None:
+            quantityPartner = self.socioView.totalPartner
+            print(quantityPartner)
+            if quantityPartner <= 0 :
+                self.socioView = Socio(self)
+            else:
+                amountOfPage = math.ceil(quantityPartner/self.socioView.totalPartner)
+                self.socioView = Socio(self, amountOfPage)
+        else:
+            self.socioView = Socio(self)
         self.socioView.start()
 
     def mostrarConsultaSocio(self, socio, alumno, carrera):
