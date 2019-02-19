@@ -92,6 +92,7 @@ class Home:
 
         labelFooter = QLabel('Centro de Estudiantes de la Facultad Politécnica de la Universidad Nacional de Asunción')
         labelFooter.setObjectName('footerHome')
+        labelFooter.setWordWrap(True)
         labelFooter.setAlignment(Qt.AlignCenter)
 
         with open('./view/resources/styles.css') as f:
@@ -117,7 +118,7 @@ class Home:
 
         labelImg = QLabel()
         pixMap = QPixmap(os.getcwd()+'/view/resources/cep-logo.png')
-        pixmap_resized = pixMap.scaled(100, 100, Qt.KeepAspectRatio)
+        pixmap_resized = pixMap.scaled(100, 100, Qt.KeepAspectRatio, Qt.SmoothTransformation)
         labelImg.setPixmap(pixmap_resized)
         labelImg.setStyleSheet('margin:auto')
 
@@ -169,6 +170,4 @@ class Home:
 
     def center(self):
         screen = QDesktopWidget().screenGeometry()
-        size = self.window.geometry()      
-        self.window.move((screen.width() - size.width()) /2, (screen.height() - size.height()) / 2)
-        #self.window.setFixedSize(self.window.size())
+        self.window.setGeometry(0,0,screen.width(), screen.height())
