@@ -159,9 +159,7 @@ class Alumnos:
         
     def center(self):
         screen = QDesktopWidget().screenGeometry()
-        width = (screen.width()-screen.width()/8)
-        height = (screen.height()-screen.height()/8)
-        self.window.setGeometry( (screen.width()-width) /2, (screen.height()-height)/2, width, height)
+        self.window.setGeometry(0, 0, screen.width(), screen.height())
 
     def nextPage(self):
         if self.cantidadAlumnos is None or self.cantidadAlumnos <= 0:
