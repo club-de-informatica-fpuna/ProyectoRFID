@@ -76,12 +76,19 @@ class Home:
         btnSalir.setMinimumWidth(200)                
         btnSalir.clicked.connect(self.view.salir)
 
-        labelTitle = QLabel('Sistema de Control del CEP')
+        labelTitle = QLabel('SISTEMA DE CONTROL DEL CEP')
+        labelTitle.setWordWrap(True)
         labelTitle.setObjectName('tituloHome')
         labelTitle.setAlignment(Qt.AlignCenter)
 
+        labelFooter = QLabel('Centro de Estudiantes de la Facultad Politécnica de la Universidad Nacional de Asunción')
+        labelFooter.setObjectName('footerHome')
+        labelFooter.setAlignment(Qt.AlignCenter)
+
         with open('./view/resources/styles.css') as f:
-            labelTitle.setStyleSheet(f.read())
+            labelFooter.setStyleSheet(f.read())
+        with open('./view/resources/styles.css') as f:
+            labelTitle.setStyleSheet(f.read())            
         with open('./view/resources/styles.css') as f:
             btnSocio.setStyleSheet(f.read())
         with open('./view/resources/styles.css') as f:
@@ -105,8 +112,28 @@ class Home:
         labelImg.setPixmap(pixmap_resized)
         labelImg.setStyleSheet('margin:auto')
 
+        labelLogoClub = QLabel()
+        pixmap = QPixmap("./view/resources/logo-club-circulo.png")
+        pixmap = pixmap.scaled(120,120, Qt.IgnoreAspectRatio, Qt.SmoothTransformation)
+        labelLogoClub.setPixmap(pixmap)
+
+        labelLogoFPUNA = QLabel()
+        pixmap = QPixmap("./view/resources/logo-fpuna.png")
+        pixmap = pixmap.scaled(90,120, Qt.IgnoreAspectRatio, Qt.SmoothTransformation)
+        labelLogoFPUNA.setPixmap(pixmap)        
+
+        layoutFooter = QHBoxLayout()
+        layoutFooter.addWidget(labelLogoClub)
+        layoutFooter.addStretch()        
+        layoutFooter.addWidget(labelFooter)
+        layoutFooter.addStretch()        
+        layoutFooter.addWidget(labelLogoFPUNA)      
+        layoutFooter.setAlignment(labelFooter, Qt.AlignVCenter)
+                
+        layoutFooter.setContentsMargins(10,30,10,10)
+
         self.layout.addWidget(labelTitle, 0, 0, 1, 3)
-        self.layout.addWidget(btnSocio, 1, 0)
+        self.layout.addWidget(btnSocio, 1, 0, 1, 1)
         self.layout.addWidget(btnAlumno, 1, 2)
         self.layout.addWidget(btnPrestamo, 2, 0)
         self.layout.addWidget(btnVenta, 2, 2)
@@ -115,7 +142,16 @@ class Home:
         self.layout.addWidget(btnEquipo, 4, 0)
         self.layout.addWidget(btnSalir, 4, 2)
         self.layout.addWidget(labelImg, 1, 1, 4, 1)
-        self.layout.setContentsMargins(50, 50, 50, 50)
+        self.layout.addLayout(layoutFooter,5,0,1,3)
+
+        self.layout.setContentsMargins(50, 20, 50, 20)
+        self.layout.setAlignment(Qt.AlignTop)
+
+        labelImg.setAlignment(Qt.AlignCenter)
+        labelImg.setMaximumWidth(200)
+
+        labelTitle.setAlignment(Qt.AlignCenter | Qt.AlignBottom)
+        labelFooter.setAlignment(Qt.AlignCenter | Qt.AlignBottom)
 
         self.window.setObjectName("ventanaHome")
         with open('./view/resources/styles.css') as f:

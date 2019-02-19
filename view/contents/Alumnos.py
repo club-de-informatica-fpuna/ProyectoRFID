@@ -66,25 +66,45 @@ class Alumnos:
         btnNuevo.setIcon(QIcon("./view/resources/add.svg"))
         btnNuevo.clicked.connect(self.view.mostrarFormAlumno)
 
+        shortcutNuevo = QShortcut(QKeySequence(Qt.Key_Return), btnNuevo)
+        shortcutNuevo.setContext(Qt.WidgetShortcut)
+        shortcutNuevo.activated.connect(self.view.mostrarFormAlumno)
+
         btnEliminar = QPushButton("Eliminar")
         btnEliminar.setObjectName("cancel")
         btnEliminar.setIcon(QIcon("./view/resources/delete.svg"))
         btnEliminar.clicked.connect(self.deleteStudents) 
 
+        shortcutEliminar = QShortcut(QKeySequence(Qt.Key_Return), btnEliminar)
+        shortcutEliminar.setContext(Qt.WidgetShortcut)
+        shortcutEliminar.activated.connect(self.deleteStudents)                
+
         btnEditar = QPushButton("Editar")
         btnEditar.setObjectName("botonSecundario")
         btnEditar.setIcon(QIcon("./view/resources/edit.svg"))
-        btnEditar.clicked.connect(self.manejarEditar)         
+        btnEditar.clicked.connect(self.manejarEditar)
 
-        self.inputSearch = QLineEdit()
+        shortcutEditar = QShortcut(QKeySequence(Qt.Key_Return), btnEditar)
+        shortcutEditar.setContext(Qt.WidgetShortcut)
+        shortcutEditar.activated.connect(self.manejarEditar)               
+
+        self.inputSearch = QLineEdit(self.window)
         self.inputSearch.setObjectName("inputSearch")
         self.inputSearch.setPlaceholderText("Ingrese su CI")
         self.inputSearch.setMaximumWidth(200)
+        
+        shortcutSearch = QShortcut(QKeySequence(Qt.Key_Return), self.inputSearch)
+        shortcutSearch.setContext(Qt.WidgetShortcut)
+        shortcutSearch.activated.connect(self.manejarBuscar)
 
         btnSearch = QPushButton("Buscar")
         btnSearch.setObjectName("botonPrimario")
         btnSearch.setIcon(QIcon("./view/resources/search.svg"))
         btnSearch.clicked.connect(self.manejarBuscar)
+
+        shortcutBuscar = QShortcut(QKeySequence(Qt.Key_Return), btnSearch)
+        shortcutBuscar.setContext(Qt.WidgetShortcut)
+        shortcutBuscar.activated.connect(self.manejarEditar)          
 
         with open('./view/resources/styles.css') as f:
             labelTitle.setStyleSheet(f.read())
@@ -107,7 +127,7 @@ class Alumnos:
         with open('./view/resources/styles.css') as f:
             labelFooter.setStyleSheet(f.read())
 
-        self.tablaAlumnos = QTableWidget()
+        self.tablaAlumnos = QTableWidget(self.window)
         self.tablaAlumnos.setRowCount(len(self.alumnos))
 
         self.tablaAlumnos.setColumnCount(5)
@@ -125,10 +145,12 @@ class Alumnos:
         self.tablaAlumnos.resizeColumnsToContents()
         self.tablaAlumnos.resizeRowsToContents()
 
-
         self.tablaAlumnos.horizontalHeader().setStyleSheet("QHeaderView::section {background: #002156; color: white; font-weight: bold; border: 1px solid silver; padding: 5px}")
         self.tablaAlumnos.verticalHeader().setStyleSheet("QHeaderView::section {background: #002156; color: white; font-weight: bold; border: 1px solid silver; padding: 5px}")        
         self.tablaAlumnos.setStyleSheet("border-top: 0px solid transparent; border-left: 0px solid transparent")
+
+        self.tablaAlumnos.setFocus()
+        self.tablaAlumnos.selectRow(0)
 
         count = 0
         for i in self.alumnos:
@@ -156,6 +178,34 @@ class Alumnos:
         self.window.setObjectName("ventanaGeneral")
         with open('./view/resources/styles.css') as f:
             self.window.setStyleSheet(f.read())
+
+        shortcutKSearch = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_F), self.window)
+        shortcutKSearch.setContext(Qt.WindowShortcut)
+        shortcutKSearch.activated.connect(self.inputSearch.setFocus) 
+
+        shortcutNextPage = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_Right), self.window)
+        shortcutNextPage.setContext(Qt.WindowShortcut)
+        shortcutNextPage.activated.connect(self.nextPage)
+
+        shortcutPrevPage = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_Left), self.window)
+        shortcutPrevPage.setContext(Qt.WindowShortcut)
+        shortcutPrevPage.activated.connect(self.previousPage)                    
+
+        shortcutKNuevo = QShortcut(QKeySequence(Qt.Key_F1), self.window)
+        shortcutKNuevo.setContext(Qt.WindowShortcut)
+        shortcutKNuevo.activated.connect(self.view.mostrarFormAlumno)
+
+        shortcutKEliminar = QShortcut(QKeySequence(Qt.Key_F2), self.window)
+        shortcutKEliminar.setContext(Qt.WindowShortcut)
+        shortcutKEliminar.activated.connect(self.deleteStudents)
+
+        shortcutKEditar = QShortcut(QKeySequence(Qt.Key_F3), self.window)
+        shortcutKEditar.setContext(Qt.WindowShortcut)
+        shortcutKEditar.activated.connect(self.manejarEditar)
+
+        shortcutSalir = QShortcut(QKeySequence(Qt.Key_Escape), self.window)
+        shortcutSalir.setContext(Qt.WindowShortcut)
+        shortcutSalir.activated.connect(self.window.hide)
         
     def center(self):
         screen = QDesktopWidget().screenGeometry()

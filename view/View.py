@@ -32,7 +32,7 @@ class View:
             self.alumnosView = Alumnos(self)            
         self.alumnosView.start()
 
-    def mostrarFormAlumno(self, title, update=False, alumnoUpdate=None, editable=True):
+    def mostrarFormAlumno(self, title="Nuevo alumno | CEP", update=False, alumnoUpdate=None, editable=True):
         if title is False:
             title = "Nuevo alumno | CEP"
         self.formAlumno = FormAlumno(self, title=title, update=update, alumnoUpdate=alumnoUpdate, editable=editable)

@@ -31,10 +31,21 @@ QWidget#ventanaPopup {
 QLabel#tituloHome {
     color: #fff;
     font-size: 30px;
-    font-weight: 800;
+    font-weight: 550;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     text-align: center;
-    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 30px;    
+}
+
+QLabel#footerHome {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 400;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
 }
 
 QPushButton#botonPrimario {
