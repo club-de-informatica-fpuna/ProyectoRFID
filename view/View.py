@@ -38,8 +38,12 @@ class View:
         self.formAlumno = FormAlumno(self, title=title, update=update, alumnoUpdate=alumnoUpdate, editable=editable)
         self.formAlumno.start()        
     
-    def mostrarFormSocio(self):
-        self.formSocio = FormSocios(self)
+    def mostrarFormSocio(self, title='', update=False, socio=None):
+        if update:
+            self.formSocio = FormSocios(self,title=title, update=update, socio=socio)
+        else:
+            self.formSocio = FormSocios(self, title="Nuevo Socio | CEP", update=update, socio=socio)
+
         self.formSocio.start()
     
     def mostrarModuloSocio(self):

@@ -182,8 +182,7 @@ class Socio:
             else:
                 socio = self.view.generalController.socioController.obtenerSocioCi(selectedRows[0].data())
                 if socio is not None:
-                    #self.view
-                    pass
+                    self.view.mostrarFormSocio(title="Editar Socio | CEP", update=True, socio=socio)
                 else:
                     self.view.mostrarPopup("Error", "Ha ocurrido un error", "Ha ocurrido un error al obtener los datos solicitados")
                     return
