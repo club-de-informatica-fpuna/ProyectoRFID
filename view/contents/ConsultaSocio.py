@@ -22,7 +22,6 @@ class ConsultaSocio:
 
     def start(self):
         self.build()
-        self.window.show()        
 
     def createGridLayout(self):
 
@@ -102,6 +101,12 @@ class ConsultaSocio:
         with open('./view/resources/styles.css') as f:
             self.window.setStyleSheet(f.read())
 
+        self.window.show()
+
+        heightGRID = gridLayoutData.geometry().height()
+        pixmap = self.pixmapResized.scaledToHeight(heightGRID)
+        self.lbImg.setPixmap(pixmap)
+
     def center(self):
         screen = QDesktopWidget().screenGeometry()
         size = self.window.geometry()      
@@ -112,6 +117,6 @@ class ConsultaSocio:
 
     def imageUtil(self, base64):
         qimg = QImage.fromData(ConversorImg().decodeImg(base64))
-        pixmap = QPixmap.fromImage(qimg)
-        pixmapResized = pixmap.scaledToHeight(220)
-        self.lbImg.setPixmap(pixmapResized)
+        self.pixmap = QPixmap.fromImage(qimg)
+        self.pixmapResized = self.pixmap.scaledToHeight(220)
+        self.lbImg.setPixmap(self.pixmapResized)
