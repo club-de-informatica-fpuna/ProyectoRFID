@@ -226,6 +226,10 @@ class Socio:
             carrera = self.view.generalController.socioController.obtenerCarrera(ciSocio)
             if alumno is not None and carrera is not None:
                 self.view.mostrarConsultaSocio(socio, alumno, carrera)
+        else:
+            messageNotFount = "No se encuentra registrado el socio con número de cedula: {}".format(ciSocio)
+            messageStrEmpty = "Debe ingersar un número de cedula para iniciar con la busqueda del socio"
+            self.view.mostrarPopup("Información", "Detalle", messageNotFount if ciSocio is not '' else messageStrEmpty)
     
     def center(self):
         screen = QDesktopWidget().screenGeometry()

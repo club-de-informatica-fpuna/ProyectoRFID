@@ -42,13 +42,13 @@ class SocioManager:
             cur = self.conn.cursor()
             cur.execute(query, [str(key)])
             row = cur.fetchone()
-            return Socio(row[0], row[1], row[2], row[3].tobytes(), row[4], row[5])
+            return Socio(row[0], row[1], row[2], row[3].tobytes(), row[4], row[5]) if row is not None else None
         except(Exception) as error:
             self.conn.rollback()
             print("{} ERROR: {}".format(datetime.now(), error))
             self.logger.error(traceback.format_exc())
             self.conn.rollback()
-            return None
+            return False
         finally:
             if cur is not None:
                 cur.close()

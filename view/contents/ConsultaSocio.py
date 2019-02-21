@@ -65,6 +65,10 @@ class ConsultaSocio:
         self.inputUID.setEnabled(False)
         self.inputUID.setText(self.socio.uid)
 
+        btnCerrar = QPushButton("Ok")
+        btnCerrar.setObjectName("botonSecundario")
+        btnCerrar.clicked.connect(self.manejarCancelar)
+
         gridLayoutData.addWidget(labelNombreApellido,0,0)
         gridLayoutData.addWidget(labelFechaSocio,0,1)
         gridLayoutData.addWidget(self.inputNombreApellido,1,0)
@@ -79,14 +83,10 @@ class ConsultaSocio:
         gridLayoutData.addWidget(self.inputEmail,5,1)
         gridLayoutData.addWidget(labelCarrera,6,0,1,2)
         gridLayoutData.addWidget(self.inputCarrera,7,0,1,2)
+        gridLayoutData.addWidget(btnCerrar,8,0,1,1)
         gridLayoutData.setAlignment(Qt.AlignTop)
 
         formSize = gridLayoutData.geometry()
-        print(formSize.height())
-
-        btnCerrar = QPushButton("Cerrar")
-        btnCerrar.setObjectName("botonPrimario")
-        btnCerrar.clicked.connect(self.manejarCancelar)
 
         with open('./view/resources/styles.css') as f:
             btnCerrar.setStyleSheet(f.read())
