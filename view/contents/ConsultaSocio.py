@@ -22,7 +22,7 @@ class ConsultaSocio:
 
     def start(self):
         self.build()
-        self.window.show()
+        self.window.show()        
 
     def createGridLayout(self):
 
@@ -86,7 +86,7 @@ class ConsultaSocio:
         gridLayoutData.addWidget(btnCerrar,8,0,1,1)
         gridLayoutData.setAlignment(Qt.AlignTop)
 
-        formSize = gridLayoutData.geometry()
+        #formSize = gridLayoutData.height()
 
         with open('./view/resources/styles.css') as f:
             btnCerrar.setStyleSheet(f.read())
@@ -113,5 +113,5 @@ class ConsultaSocio:
     def imageUtil(self, base64):
         qimg = QImage.fromData(ConversorImg().decodeImg(base64))
         pixmap = QPixmap.fromImage(qimg)
-        pixmapResized = pixmap.scaled(200,200,Qt.KeepAspectRatio)
+        pixmapResized = pixmap.scaledToHeight(220)
         self.lbImg.setPixmap(pixmapResized)
