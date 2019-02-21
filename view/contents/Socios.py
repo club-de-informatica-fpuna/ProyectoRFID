@@ -70,11 +70,15 @@ class Socio:
         self.inputSearch = QLineEdit()
         self.inputSearch.setObjectName("inputSearch")
         self.inputSearch.setPlaceholderText("Ingrese su CI")
-        self.inputSearch.setMaximumWidth(200)
+        self.inputSearch.setFocus(True)
+        self.inputSearch.setToolTip("Ingrese número de sedula para buscar")
+        
+        self.inputSearch.setMaximumWidth(300)
 
         btnSearch = QPushButton("Buscar")
-        btnSearch.setObjectName("botonPrimario")
+        btnSearch.setObjectName("searchModuleButton")
         btnSearch.setIcon(QIcon(pathIcons + "search.png"))
+        btnSearch.setFixedSize(80, 32)
         btnSearch.clicked.connect(self.buscarSocio)
 
         with open(pathResource + "styles.css") as f:
@@ -99,9 +103,11 @@ class Socio:
         self.partnerTable.setHorizontalHeaderItem(5, QTableWidgetItem("CARRERA"))
         
 
-        self.partnerTable.horizontalHeader().setStyleSheet("QHeaderView::section {background: #002156; color: white; font-weight: bold; border: 1px solid silver; padding: 5px}")
-        self.partnerTable.verticalHeader().setStyleSheet("QHeaderView::section {background: #002156; color: white; font-weight: bold; border: 1px solid silver; padding: 5px}")
+        self.partnerTable.horizontalHeader().setStyleSheet("QHeaderView::section {background: #0e52c0; color: #fff; font-weight: bold; border: 1px solid #f7f7f7; padding: 5px}")
+        self.partnerTable.verticalHeader().setStyleSheet("QHeaderView::section {background: #0e52c0; color: #fff; font-weight: bold; border: 1px solid #f7f7f7; padding: 5px}")
         self.partnerTable.setStyleSheet("border-top: 0px solid transparent; border-left: 0px solid transparent")
+        self.partnerTable.setFocus()
+        self.partnerTable.selectRow(0)
 
         for partner in self.socios:
             alumno = self.view.generalController.socioController.obtenerAlumno(partner.ci)
@@ -180,9 +186,13 @@ class Socio:
                 self.view.mostrarPopup("Atención", "Atención", "Solo puedes seleccionar un registros para editar")
                 return
             else:
-                socio = self.view.generalController.socioController.obtenerSocioCi(selectedRows[0].data())
+                ciPartner = selectedRows[0].data()
+                windowTitle = "Editar Socio | CEP"
+                socio = self.view.generalController.socioController.obtenerSocioCi(ciPartner)
+                alumno = self.view.generalController.alumnoController.buscarAlumno(ciPartner)
+                carrera = self.view.generalController.socioController.obtenerCarrera(ciPartner)
                 if socio is not None:
-                    self.view.mostrarFormSocio(title="Editar Socio | CEP", update=True, socio=socio)
+                    self.view.mostrarFormSocio(windowTitle, True, socio, alumno, carrera)
                 else:
                     self.view.mostrarPopup("Error", "Ha ocurrido un error", "Ha ocurrido un error al obtener los datos solicitados")
                     return

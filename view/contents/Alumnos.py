@@ -30,22 +30,22 @@ class Alumnos:
 
         horizontalLayout = QHBoxLayout()
 
-        btnPrimeraPagina = QPushButton("<<")
+        btnPrimeraPagina = QPushButton("«")
         btnPrimeraPagina.setObjectName("page")
         btnPrimeraPagina.clicked.connect(self.firstPage)
 
-        btnAnteriorPagina = QPushButton(" < ")
+        btnAnteriorPagina = QPushButton(" ‹ ")
         btnAnteriorPagina.setObjectName("page")
         btnAnteriorPagina.clicked.connect(self.previousPage)
 
         btnPaginaActual = QPushButton(" " + str(self.paginaActual) + " ")
         btnPaginaActual.setObjectName("page")        
 
-        btnSiguientePagina = QPushButton(" > ")
+        btnSiguientePagina = QPushButton(" › ")
         btnSiguientePagina.setObjectName("page")
         btnSiguientePagina.clicked.connect(self.nextPage)
 
-        btnUltimaPagina = QPushButton(">>")
+        btnUltimaPagina = QPushButton("»")
         btnUltimaPagina.setObjectName("page")
         btnUltimaPagina.clicked.connect(self.lastPage)        
 

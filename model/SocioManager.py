@@ -29,9 +29,11 @@ class SocioManager:
         except(Exception) as error:
             print("{} ERROR: {}".format(datetime.now(), error))
             self.logger.error(traceback.format_exc())
+            self.conn.rollback()
             return None
         finally:
-            cur.close()
+            if cur is not None:
+                cur.close()
     
     def obtenerSocioCi(self, key):
         query = "SELECT * FROM socios WHERE ci = %s"
@@ -45,9 +47,11 @@ class SocioManager:
             self.conn.rollback()
             print("{} ERROR: {}".format(datetime.now(), error))
             self.logger.error(traceback.format_exc())
+            self.conn.rollback()
             return None
         finally:
-            cur.close()
+            if cur is not None:
+                cur.close()
 
     def registrarSocio(self, socio):
         query  = "INSERT INTO socios (uid, ci, foto, fecha_ingreso, estado) "
@@ -64,9 +68,11 @@ class SocioManager:
         except(Exception) as error:
             print("{} ERROR: {}".format(datetime.now(), error))
             self.logger.error(traceback.format_exc())
+            self.conn.rollback()
             return False
         finally:
-            cur.close()
+            if cur is not None:
+                cur.close()
 
     def eliminarSocioCi(self, ciKey):
         query = "DELETE FROM socios WHERE ci = %s"
@@ -81,6 +87,7 @@ class SocioManager:
                         self.conn.rollback()
                         print("{} ERROR: {}".format(datetime.now(), error))
                         self.logger.error(traceback.format_exc())   
+                        self.conn.rollback()
             else:
                 cur.execute(query, ciKey)
 
@@ -90,9 +97,10 @@ class SocioManager:
         except(Exception) as error:
             print("{} ERROR: {}".format(datetime.now(), error))
             self.logger.error(traceback.format_exc())
+            self.conn.rollback()
             return False
         finally:
-            if cur != None:
+            if cur is not None:
                 cur.close()
 
     def obtenerCarrera(self, key):
@@ -106,9 +114,10 @@ class SocioManager:
         except(Exception) as error:
             print("{} ERROR: {}".format(datetime.now(), error))
             self.logger.error(traceback.format_exc())
+            self.conn.rollback()
             return False
         finally:
-            if cur != None:
+            if cur is not None:
                 cur.close()
 
     def obtenerAlumno(self, key):
@@ -124,10 +133,28 @@ class SocioManager:
         except(Exception) as error:
             print("{} ERROR: {}".format(datetime.now(), error))
             self.logger.error(traceback.format_exc())
+            self.conn.rollback()
             return False
         finally:
-            if cur != None:
-                cur.close()                
+            if cur is not None:
+                cur.close()
+
+    def verificarExistencia(self, ci):
+        query  = "SELECT EXISTS(SELECT 1 FROM SOCIOS WHERE CI = %s)"
+        cur = None
+        try:
+            cur = self.conn.cursor()
+            cur.execute(query,[str(ci)])
+            rest = cur.fetchone()
+            return rest[0]
+        except (Exception) as error:
+            print("{} ERROR: {}".format(datetime.now(), error))
+            self.logger.error(traceback.format_exc())
+            self.conn.rollback()
+            return True
+        finally:
+            if cur is not None:
+                cur.close()
 
     def actualizarSocioCi(self, socio):
         query  = "UPDATE socios SET "
@@ -142,7 +169,7 @@ class SocioManager:
             missingValues = self.getMissingValues(socio, missingAttributes)
 
             if not missingValues :
-                return updatedRows
+                return True
             else:
                 missingValues.append(str(socio.ci))
                 cur = self.conn.cursor()
@@ -150,13 +177,14 @@ class SocioManager:
                 updatedRows = cur.rowcount
                 self.conn.commit()
                 cur.close()
-                return updatedRows
+                return True if updatedRows > 0 else False
         except(Exception) as error:
             print("{} ERROR: {}".format(datetime.now(), error))
             self.logger.error(traceback.format_exc())
-            return updatedRows
+            self.conn.rollback()
+            return False
         finally:
-            if cur != None:
+            if cur is not None:
                 cur.close()
     
     def fieldCreator(self, fieldList):
@@ -188,6 +216,6 @@ class SocioManager:
             self.logger.error(traceback.format_exc())
             return total
         finally:
-            if cur != None:
+            if cur is not None:
                 cur.close()
 

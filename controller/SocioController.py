@@ -12,6 +12,9 @@ class SocioController:
     def registrarSocio(self, socio):
         return self.socioManager.registrarSocio(socio)
 
+    def verificarExistencia(self, ci):
+        return self.socioManager.verificarExistencia(ci)
+    
     def eliminarSocioCi(self, ciKey):
         return self.socioManager.eliminarSocioCi(ciKey)
 

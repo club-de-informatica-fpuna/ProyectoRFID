@@ -38,9 +38,9 @@ class View:
         self.formAlumno = FormAlumno(self, title=title, update=update, alumnoUpdate=alumnoUpdate, editable=editable)
         self.formAlumno.start()        
     
-    def mostrarFormSocio(self, title='', update=False, socio=None):
+    def mostrarFormSocio(self, title='', update=False, socio=None, alumno=None, carrera=None):
         if update:
-            self.formSocio = FormSocios(self,title=title, update=update, socio=socio)
+            self.formSocio = FormSocios(self,title=title, update=update, socio=socio, alumno=alumno, carrera=carrera)
         else:
             self.formSocio = FormSocios(self, title="Nuevo Socio | CEP", update=update, socio=socio)
 

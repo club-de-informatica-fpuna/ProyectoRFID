@@ -3,15 +3,18 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.uic import *
 from entidad.Socio import Socio
+from util.ConversorImg import ConversorImg
 import os, uuid
 class FormSocios:
 
-    def __init__(self, view, title='', update=False, socio=None):
+    def __init__(self, view, title='', update=False, socio=None, alumno=None, carrera=None):
         self.view        = view
         self.title       = title
         self.detailRoute = None
         self.update      = update
         self.socio       = socio
+        self.alumno      = alumno
+        self.carrera     = carrera
 
     def build(self):
         self.window = QWidget()
@@ -29,7 +32,7 @@ class FormSocios:
         if not self.update:
             self.layoutPost()
         else:
-            self.layoutPut(self.socio)
+            self.layoutPut(self.alumno, self.carrera)
         
         
 
@@ -141,7 +144,7 @@ class FormSocios:
         with open(self.pathResources + "styles.css") as f:
             self.window.setStyleSheet(f.read())
 
-    def layoutPut(self, partnerUpdate):
+    def layoutPut(self, student, career):
         self.layout = QHBoxLayout(self.window)
 
         verticalLayoutImage      = QVBoxLayout()
@@ -167,14 +170,15 @@ class FormSocios:
         lbImgTile = QLabel("Imagen")
         lbImgTile.setStyleSheet("text-align:center;")
         self.lbImg = QLabel()
-        self.imageUtil(self.pathResources + "student-img-default.png")
+        if self.socio.foto is not None:
+            self.imageUpdateUtil(self.socio.foto)
 
         self.imgButton.clicked.connect(self.selectImg)
 
         ci          = QLabel("C.I.")
         firstName   = QLabel("Nombres")
         lastName    = QLabel("Apellidos")
-        career      = QLabel("Carrera")
+        careerlb    = QLabel("Carrera")
         uid         = QLabel("UID Tarjeta")
         fechaInsert = QLabel("Fecha Ingreso")
         
@@ -182,21 +186,25 @@ class FormSocios:
         self.inputCI     = QLineEdit()
         self.inputFN     = QLineEdit()
         self.inputLN     = QLineEdit()
-        self.inputCarrer = QLineEdit()
+        self.inputCareer = QLineEdit()
         self.inputUID    = QLineEdit()
         self.inputDate   = QDateEdit()
-        self.inputDate.setDisplayFormat('dd/MM/yyyy')
+        self.selectState = QComboBox()
+        self.selectState.addItem("Activo", True)
+        self.selectState.addItem("Inactivo", False)                
+        self.selectState.setCurrentIndex(0 if self.socio.estado else 1)
         
         self.inputCI.setEnabled(False)
         self.inputFN.setEnabled(False)
         self.inputLN.setEnabled(False)
+        self.inputCareer.setEnabled(False)
         self.inputDate.setEnabled(False)
 
         btnUpdate = QPushButton("Actualizar")
         btnUpdate.setIcon(QIcon(self.pathIcons+"update.png"))
         btnUpdate.setIconSize(QSize(16,16))
         btnUpdate.setObjectName("botonPrimario")
-        #btnUpdate.clicked.connect(self.postSocio)
+        btnUpdate.clicked.connect(self.putSocio)
 
         btnCancelar = QPushButton("Cancelar")
         btnCancelar.setIcon(QIcon(self.pathIcons+"cancel.png"))
@@ -204,6 +212,13 @@ class FormSocios:
         btnCancelar.setObjectName("cancel")
         btnCancelar.clicked.connect(self.cancel)
 
+        self.inputCI.setText(self.socio.ci)
+        self.inputFN.setText(student.nombre)
+        self.inputLN.setText(student.apellido)
+        self.inputCareer.setText(career.denominacion)
+        self.inputUID.setText(self.socio.uid)
+        self.inputDate.setDate(self.socio.fechaIngreso)
+        
         with open(self.pathResources + "styles.css") as f:
             btnCancelar.setStyleSheet(f.read())
         with open(self.pathResources + "styles.css") as f:
@@ -225,12 +240,13 @@ class FormSocios:
         verticalLayoutContent.addWidget(self.inputFN)
         verticalLayoutContent.addWidget(lastName)
         verticalLayoutContent.addWidget(self.inputLN)
-        verticalLayoutContent.addWidget(career)
-        verticalLayoutContent.addWidget(self.inputCarrer)
+        verticalLayoutContent.addWidget(careerlb)
+        verticalLayoutContent.addWidget(self.inputCareer)
         verticalLayoutContent.addWidget(uid)
         verticalLayoutContent.addWidget(self.inputUID)
         verticalLayoutContent.addWidget(fechaInsert)
-        verticalLayoutContent.addWidget(self.inputDate)                
+        verticalLayoutContent.addWidget(self.inputDate)
+        verticalLayoutContent.addWidget(self.selectState)
         verticalLayoutContent.addLayout(horizontalLayoutButtons)
 
         self.layout.addLayout(verticalLayoutImage)
@@ -261,15 +277,20 @@ class FormSocios:
                 self.inputCarrer.setText(carrera.denominacion)
 
     def postSocio(self):
-        ci              = self.inputCI.text()
-        uid             = self.inputUID.text()
-        photo           = self.pathResources + "student-img-default.png" if self.detailRoute is None else self.detailRoute
-        dateOfAdmission = self.inputDate.date().toPyDate()
-        socio = Socio(uid=uid, ci=ci, foto=photo, fechaIngreso=dateOfAdmission, estado=True)
-        response = self.view.generalController.socioController.registrarSocio(socio)
-        if response :
-            self.window.destroy()
-            self.view.mostrarModuloSocio()
+        ci = self.inputCI.text()
+        existencia = self.view.generalController.socioController.verificarExistencia(ci)
+        if existencia:
+            self.view.mostrarPopup("Aviso", "Detalle", "El socio ya ha sido registrado")
+            return
+        else:
+            uid             = self.inputUID.text()
+            photo           = self.pathResources + "student-img-default.png" if self.detailRoute is None else self.detailRoute
+            dateOfAdmission = self.inputDate.date().toPyDate()
+            socio = Socio(uid=uid, ci=ci, foto=photo, fechaIngreso=dateOfAdmission, estado=True)
+            response = self.view.generalController.socioController.registrarSocio(socio)
+            if response :
+                self.window.destroy()
+                self.view.mostrarModuloSocio()
         
 
     def cancel(self):
@@ -293,3 +314,33 @@ class FormSocios:
     def setPhoto(self):
         self.detailRoute = self.filename
         self.imageUtil(self.filename)
+
+    def putSocio(self):
+        socioUpdate = Socio()
+        if self.detailRoute is not None:
+            if os.path.exists(self.detailRoute):
+                socioUpdate.ci     = self.inputCI.text()
+                socioUpdate.foto   = ConversorImg(self.detailRoute).encodeImg()
+                socioUpdate.uid    = self.inputUID.text()
+                indexSelect        = self.selectState.currentIndex()
+                socioUpdate.estado = self.selectState.itemData(indexSelect)
+        else:
+            socioUpdate.ci     = self.inputCI.text()
+            socioUpdate.foto   = self.socio.foto
+            socioUpdate.uid    = self.inputUID.text()
+            indexSelect        = self.selectState.currentIndex()
+            socioUpdate.estado = self.selectState.itemData(indexSelect)
+        rest = self.view.generalController.socioController.actualizarSocioCi(socioUpdate)
+        
+        if rest:
+            self.window.destroy()
+            self.view.mostrarModuloSocio()
+        else:
+            self.view.mostrarPopup("Error", "Detalle", "Hubo un error al querer actualizar el socio")
+            return
+
+    def imageUpdateUtil(self, img64):
+        qImg = QImage.fromData(ConversorImg().decodeImg(img64))
+        pixmap = QPixmap.fromImage(qImg)
+        pixmapResized = pixmap.scaled(400,300,Qt.KeepAspectRatio)
+        self.lbImg.setPixmap(pixmapResized)
