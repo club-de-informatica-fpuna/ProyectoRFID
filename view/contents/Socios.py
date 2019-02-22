@@ -159,12 +159,15 @@ class Socio:
         with open(pathResource + "styles.css") as f:
             btnPaginaActual.setStyleSheet(f.read())
 
+        searchLayout = QHBoxLayout()
+        searchLayout.addWidget(self.inputSearch)
+        searchLayout.addWidget(btnSearch)
+
         self.layout.addWidget(labelTitle, 0, 0, 1, 10)
         self.layout.addWidget(btnNew, 1, 0)
         self.layout.addWidget(btnEdit, 1, 1)
         self.layout.addWidget(btnRemove, 1, 2)
-        self.layout.addWidget(self.inputSearch, 1, 9)
-        self.layout.addWidget(btnSearch, 1, 10)
+        self.layout.addLayout(searchLayout, 1, 9, 1, 2)
         self.layout.addWidget(self.partnerTable, 2, 0, 1, 11)
         self.layout.addWidget(total,3,0,1,2)
         self.layout.addLayout(horizontalLayout, 3, 10, 1, 1)
