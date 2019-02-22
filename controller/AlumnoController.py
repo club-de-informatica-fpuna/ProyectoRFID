@@ -23,3 +23,6 @@ class AlumnoController:
     
     def buscarAlumno(self, ci):
         return self.alumnoManager.buscarAlumno(ci)
+
+    def obtenerCarrera(self, ciKey):
+        return self.alumnoManager.obtenerCarrera(ciKey)

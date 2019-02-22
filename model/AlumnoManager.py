@@ -1,5 +1,6 @@
 import psycopg2
 from entidad.Alumno import Alumno
+from entidad.Carrera import Carrera
 import sys, traceback
 
 class AlumnoManager:
@@ -142,3 +143,21 @@ class AlumnoManager:
             return None
         finally:
             cur.close()
+
+    def obtenerCarrera(self, ciKey):
+        query  = "SELECT C.ID, C.DENOMINACION FROM CARRERAS C "
+        query += "JOIN ALUMNOS A ON A.ID_CARRERA = C.ID "
+        query += "WHERE A.CI = %s"
+        cur = None
+        try:
+            cur = self.conn.cursor()
+            cur.execute(query, [str(ciKey)])
+            row = cur.fetchone()
+            return Carrera(row[0], row[1]) if row is not None else Carrera()
+        except(Exception) as error:
+            self.conn.rollback()
+            traceback.print_exc(file=sys.stdout)
+            return None
+        finally:
+            if cur is not None:
+                cur.close()

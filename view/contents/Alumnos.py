@@ -267,12 +267,17 @@ class Alumnos:
             return    
         alumno = self.view.generalController.alumnoController.buscarAlumno(data[0])        
         if alumno is not None:
-            self.view.mostrarFormAlumno(title="Actualizar alumno | CEP", update=True, alumnoUpdate=alumno)
+            carrera = self.view.generalController.alumnoController.obtenerCarrera(alumno.ci)
+            self.view.mostrarFormAlumno(title="Actualizar alumno | CEP", update=True, alumnoUpdate=alumno, raceById=carrera)
 
 
     def manejarBuscar(self):
-        alumno = self.view.generalController.alumnoController.buscarAlumno(self.inputSearch.text())
+        inputCi = self.inputSearch.text()
+        alumno = self.view.generalController.alumnoController.buscarAlumno(inputCi)
         if alumno is not None:
-            self.view.mostrarFormAlumno(title="Ver alumno | CEP", update=True, alumnoUpdate=alumno, editable=False)
+            carrera = self.view.generalController.alumnoController.obtenerCarrera(alumno.ci)
+            self.view.mostrarFormAlumno(title="Ver alumno | CEP", update=True, alumnoUpdate=alumno, editable=False, raceById=carrera)
         else:
-            self.view.mostrarPopup("Datos no encontrados", "Datos no encontrados", "El alumno no existe")
+            messageNotFount = "El alumno con cedula [{}] no existe o aún no ha sido registrado".format(inputCi)
+            messageStrEmpty = "Debe ingersar un número de cedula para iniciar con la busqueda"
+            self.view.mostrarPopup("Datos no encontrados", "Detalle",messageNotFount if inputCi is not '' else messageStrEmpty)

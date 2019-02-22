@@ -33,10 +33,10 @@ class View:
             self.alumnosView = Alumnos(self)            
         self.alumnosView.start()
 
-    def mostrarFormAlumno(self, title="Nuevo alumno | CEP", update=False, alumnoUpdate=None, editable=True):
+    def mostrarFormAlumno(self, title="Nuevo alumno | CEP", update=False, alumnoUpdate=None, editable=True, raceById=None):
         if title is False:
             title = "Nuevo alumno | CEP"
-        self.formAlumno = FormAlumno(self, title=title, update=update, alumnoUpdate=alumnoUpdate, editable=editable)
+        self.formAlumno = FormAlumno(self, title=title, update=update, alumnoUpdate=alumnoUpdate, editable=editable, raceById=raceById)
         self.formAlumno.start()        
     
     def mostrarFormSocio(self, title='', update=False, socio=None, alumno=None, carrera=None):

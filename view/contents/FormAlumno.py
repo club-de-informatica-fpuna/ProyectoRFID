@@ -7,12 +7,13 @@ import os
 
 class FormAlumno:
 
-    def __init__(self, view, title, update=False, alumnoUpdate=None, editable=True):
-        self.view = view
-        self.title = title
-        self.update = update
+    def __init__(self, view, title, update=False, alumnoUpdate=None, editable=True, raceById=None):
+        self.view         = view
+        self.title        = title
+        self.update       = update
         self.alumnoUpdate = alumnoUpdate
-        self.editable = editable
+        self.editable     = editable
+        self.raceById     = raceById
     
     def build(self):
         self.window = QWidget()
@@ -133,7 +134,8 @@ class FormAlumno:
         self.inputCarreras = QComboBox(self.window)
         for i in self.carreras:
             self.inputCarreras.addItem(i.denominacion, i)
-        self.inputCarreras.setCurrentIndex(0)
+        careerIndex = self.inputCarreras.findText(self.raceById.denominacion)
+        self.inputCarreras.setCurrentIndex(careerIndex)
 
         shortcutCarreras = QShortcut(QKeySequence(Qt.Key_Return), self.inputCarreras)
         shortcutCarreras.setContext(Qt.WidgetShortcut)
