@@ -212,3 +212,25 @@ QPushButton#searchModuleButton:hover {
     color: #0e52c0;
     border: 2px solid #0e52c0;
 }
+
+QListWidget#list::item {
+    background-color: #0e52c0;
+    color: white;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+}
+
+QListWidget#list {
+    font-size: 20px;
+    font-weight: 500;
+    border: 0px solid transparent;
+}
+
+QListWidget#list::item:selected {
+    background-color: gray;
+}
+
+QListWidget#list::item:hover {
+    background-color: #05265a;
+}
