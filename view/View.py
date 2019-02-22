@@ -5,6 +5,7 @@ from view.contents.FormAlumno import FormAlumno
 from view.contents.FormSocios import FormSocios
 from view.contents.Socios import Socio
 from view.contents.ConsultaSocio import ConsultaSocio
+from view.contents.Configuracion import Configuracion
 from view.contents.Webcam import Webcam
 from PyQt5.QtWidgets import QApplication
 import math
@@ -72,3 +73,7 @@ class View:
     def mostrarWebcam(self, filename, setPhoto):
         self.webcamView = Webcam(filename, setPhoto)
         self.webcamView.start()
+    
+    def mostrarConfiguracion(self):
+        self.configView = Configuracion(self)
+        self.configView.start()

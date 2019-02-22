@@ -215,8 +215,7 @@ class Alumnos:
         shortcutSalir.activated.connect(self.window.hide)
         
     def center(self):
-        screen = QDesktopWidget().screenGeometry()
-        self.window.setGeometry(0, 0, screen.width(), screen.height())
+        self.window.showMaximized()
 
     def nextPage(self):
         if self.cantidadAlumnos is None or self.cantidadAlumnos <= 0:
