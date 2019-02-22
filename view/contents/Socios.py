@@ -101,11 +101,10 @@ class Socio:
         self.partnerTable.setHorizontalHeaderItem(3, QTableWidgetItem("FECHA INGRESO"))
         self.partnerTable.setHorizontalHeaderItem(4, QTableWidgetItem("ESTADO"))
         self.partnerTable.setHorizontalHeaderItem(5, QTableWidgetItem("CARRERA"))
-        
 
         self.partnerTable.horizontalHeader().setStyleSheet("QHeaderView::section {background: #0e52c0; color: #fff; font-weight: bold; border: 1px solid #f7f7f7; padding: 5px}")
         self.partnerTable.verticalHeader().setStyleSheet("QHeaderView::section {background: #0e52c0; color: #fff; font-weight: bold; border: 1px solid #f7f7f7; padding: 5px}")
-        self.partnerTable.setStyleSheet("border-top: 0px solid transparent; border-left: 0px solid transparent")
+        self.partnerTable.setStyleSheet("border-top: 0px solid transparent; border-left: 0px transparent")
         self.partnerTable.setFocus()
         self.partnerTable.selectRow(0)
 
@@ -119,9 +118,6 @@ class Socio:
             self.partnerTable.setItem(self.socios.index(partner), 5, QTableWidgetItem(alumno.idCarrera.denominacion))
 
         self.partnerTable.move(0, 0)
-
-
-
 
         btnPrimeraPagina = QPushButton("«")
         btnPrimeraPagina.setObjectName("page")

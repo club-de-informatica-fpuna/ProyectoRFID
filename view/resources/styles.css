@@ -1,8 +1,8 @@
 QPushButton#botonHome {
     background-image: url("./view/resources/fondo-6.jpg");
     background-repeat: repeat;
-    color: white;
-    border: 2px solid #fff;
+    color: #fff;
+    border: 1px solid #fff;
     padding: 10px;
     font-size: 17px;
     font-weight: 550;
@@ -24,7 +24,7 @@ QWidget#ventanaGeneral {
 }
 
 QWidget#ventanaPopup {
-    background: white;
+    background: #fff;
 }
 
 QLabel#tituloHome {
@@ -50,33 +50,33 @@ QLabel#footerHome {
 QPushButton#botonPrimario {
     background: #0e52c0;
     color: #fff;
-    border: 2px solid #0e52c0;
+    border: 1px solid #dee2e6;
     padding: 5px;
     font-size: 13px;
-    font-weight: 550;
+    font-weight: 350;
     border-radius: 5px;
 }
 
 QPushButton#botonPrimario:hover {
     background: #fff;
     color: #0e52c0;
-    border: 2px solid #0e52c0;
+    border: 1px solid #0e52c0;
 }
 
 QPushButton#botonSecundario {
     background: #5cb85c;
     color: #fff;
-    border: 2px solid #5cb85c;
+    border: 1px solid #dee2e6;
     padding: 5px;
     font-size: 13px;
-    font-weight: 550;
+    font-weight: 350;
     border-radius: 5px;
 }
 
 QPushButton#botonSecundario:hover {
     background: #fff;
     color: #5cb85c;
-    border: 2px solid #5cb85c;
+    border: 1px solid #5cb85c;
 }
 
 QLabel#tituloModulo {
@@ -91,7 +91,7 @@ QLabel#tituloModulo {
 }
 
 QLabel#tituloPopup {
-    color: #002156;
+    color: #0e52c0;
     font-size: 15px;
     font-weight: 500;
     text-align: left;
@@ -133,19 +133,20 @@ QLineEdit#inputSearch:focus {
 QPushButton#upload {
     color: #fff;
     background-color: #0e52c0;
-    border: 1px solid #0e52c0;
+    border: 1px solid #dee2e6;
+    font-weight: 350;
     border-radius: 5px;
 }
 
 QPushButton#upload:hover {
     background-color: #fff;
     color: #0e52c0;
-    border: 2px solid #0e52c0;
+    border: 1px solid #0e52c0;
 }
 
 QPushButton#searchStudent {
     color: #fff;
-    border: 1px solid #0e52c0;
+    border: 1px solid #dee2e6;
     background-color: #0e52c0;
     font-size: 13px;
     font-weight: 550;
@@ -157,23 +158,24 @@ QPushButton#searchStudent {
 QPushButton#searchStudent:hover {
     background-color: #fff;
     color: #0e52c0;
-    border: 2px solid #0e52c0;
+    font-weight: 350;
+    border: 1px solid #0e52c0;
 }
 
 QPushButton#cancel {
     background: #d9534f;
     color: #fff;
-    border: 1px solid #d9534f;
+    border: 1px solid #dee2e6;
     padding: 5px;
     font-size: 13px;
-    font-weight: 550;
+    font-weight: 350;
     border-radius: 5px;
 }
 
 QPushButton#cancel:hover {
     background-color: #fff;
     color: #d9534f;
-    border: 2px solid #d9534f;
+    border: 1px solid #d9534f;
 }
 
 QPushButton#page {
@@ -200,15 +202,15 @@ QPushButton#page:focus {
 QPushButton#searchModuleButton {
     float: right;
     color: #fff;
-    border: 1px solid #0e52c0;
+    border: 1px solid #dee2e6;
     background-color: #0e52c0;
     font-size: 13px;
-    font-weight: 550;
+    font-weight: 350;
     border-radius: 5px;
 }
 
 QPushButton#searchModuleButton:hover {
     background-color: #fff;
     color: #0e52c0;
-    border: 2px solid #0e52c0;
+    border: 1px solid #0e52c0;
 }

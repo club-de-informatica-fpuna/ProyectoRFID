@@ -81,7 +81,7 @@ class FormAlumno:
         btnRegistrar.clicked.connect(self.manejarPostAlumno)
 
         btnCancelar = QPushButton("Cancelar")
-        btnCancelar.setObjectName("botonPrimario")
+        btnCancelar.setObjectName("cancel")
         btnCancelar.clicked.connect(self.manejarCancelar)
 
         with open('./view/resources/styles.css') as f:
@@ -187,7 +187,7 @@ class FormAlumno:
         btnGuardar.clicked.connect(self.manejarUpdateAlumno)
 
         btnCancelar = QPushButton("Cancelar")
-        btnCancelar.setObjectName("botonPrimario")
+        btnCancelar.setObjectName("cancel")
         btnCancelar.clicked.connect(self.manejarCancelar)
 
         btnCerrar = QPushButton("Cerrar")
