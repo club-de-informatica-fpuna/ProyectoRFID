@@ -29,6 +29,7 @@ class CarreraManager:
             cur.close()
             return True
         except (Exception) as error:
+            self.conn.rollback()
             traceback.print_exc(file=sys.stdout)
             return False
         finally:
@@ -45,6 +46,7 @@ class CarreraManager:
             cur.close()
             return True
         except(Exception) as error:
+            self.conn.rollback()            
             traceback.print_exc(file=sys.stdout)
             return False
         finally:
@@ -64,6 +66,7 @@ class CarreraManager:
             cur.close()
             return updatedRows
         except(Exception, psycopg2.DatabaseError) as error:
+            self.conn.rollback()            
             traceback.print_exc(file=sys.stdout)
         finally:
             cur.close()
@@ -78,6 +81,7 @@ class CarreraManager:
             row = cur.fetchone()
             return Carrera(row[0], row[1])
         except(Exception) as error:
+            self.conn.rollback()            
             traceback.print_exc(file=sys.stdout)
         finally:
             cur.close()

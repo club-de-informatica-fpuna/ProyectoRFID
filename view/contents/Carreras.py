@@ -33,7 +33,7 @@ class Carreras:
         btnEliminar = QPushButton("Eliminar")
         btnEliminar.setObjectName("cancel")
         btnEliminar.setIcon(QIcon("./view/resources/delete.svg"))
-        #btnEliminar.clicked.connect(self.deleteStudents) 
+        btnEliminar.clicked.connect(partial(self.eliminarCarrera, None)) 
 
         shortcutEliminar = QShortcut(QKeySequence(Qt.Key_Return), btnEliminar)
         shortcutEliminar.setContext(Qt.WidgetShortcut)
@@ -51,6 +51,7 @@ class Carreras:
         self.listCarreras = QListWidget()
         for i in self.carreras:
             item = QListWidgetItem(i.denominacion)
+            item.setData(Qt.UserRole, int(i.id))
             self.listCarreras.addItem(item)
         self.listCarreras.setObjectName("list")
 
@@ -73,6 +74,9 @@ class Carreras:
 
         layout.addLayout(layoutButtons)
         layout.addWidget(self.listCarreras)
+        
+        layout.setContentsMargins(20,20,20,20)
+
         self.widget.setLayout(layout)
     
     def getWidgetBuilded(self):
@@ -91,3 +95,18 @@ class Carreras:
                 self.view.mostrarConfiguracion()
             else:
                 self.view.mostrarPopup("Error", "Ha ocurrido un error", "Ha ocurrido un error al crear el registro")
+
+    def eliminarCarrera(self, element):
+        selectedItems = self.listCarreras.currentItem()
+        if selectedItems is None:
+            self.view.mostrarPopup("Atención", "Atención", "Debes seleccionar el elemento a eliminar")                                   
+            return
+        idCarrera = selectedItems.data(Qt.UserRole)
+        qm = QMessageBox
+        ret = qm.question(self.widget,"Confirmación", "¿Desea eliminar los registros seleccionados?", qm.Yes | qm.No)
+        if ret == qm.Yes:
+            res = self.view.generalController.carreraController.eliminarCarrera(idCarrera)
+            if res is True:
+                self.view.mostrarConfiguracion()
+            else:
+                self.view.mostrarPopup("Atención", "No se puede eliminar", "Ha ocurrido un error al eliminar el registro")                        
