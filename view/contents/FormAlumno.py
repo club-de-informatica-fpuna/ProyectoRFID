@@ -41,36 +41,37 @@ class FormAlumno:
         labelTelefono = QLabel("Teléfono")
         labelCarreras = QLabel("Carrera")
 
+        self.inputNombre = QLineEdit(self.window)
+        self.inputNombre.setFocus()
+        self.inputApellido = QLineEdit(self.window)        
+        self.inputCedula = QLineEdit(self.window)        
+        self.inputEmail = QLineEdit(self.window)        
+        self.inputTelefono = QLineEdit(self.window)        
         self.inputCarreras = QComboBox(self.window)
         self.inputCarreras.addItem(" - Seleccione carrera - ")
         for i in self.carreras:
-            self.inputCarreras.addItem(i.denominacion, i)
+            self.inputCarreras.addItem(i.denominacion, i)            
+
         shortcutCarreras = QShortcut(QKeySequence(Qt.Key_Return), self.inputCarreras)
         shortcutCarreras.setContext(Qt.WidgetShortcut)
-        shortcutCarreras.activated.connect(self.manejarPostAlumno)            
+        shortcutCarreras.activated.connect(self.manejarPostAlumno)
 
-        self.inputTelefono = QLineEdit(self.window)
         shortcutTelefono = QShortcut(QKeySequence(Qt.Key_Return), self.inputTelefono)
         shortcutTelefono.setContext(Qt.WidgetShortcut)
         shortcutTelefono.activated.connect(self.inputCarreras.setFocus)        
 
-        self.inputEmail = QLineEdit(self.window)
         shortcutEmail = QShortcut(QKeySequence(Qt.Key_Return), self.inputEmail)
         shortcutEmail.setContext(Qt.WidgetShortcut)
         shortcutEmail.activated.connect(self.inputTelefono.setFocus)
 
-        self.inputCedula = QLineEdit(self.window)
         shortcutCedula = QShortcut(QKeySequence(Qt.Key_Return), self.inputCedula)
         shortcutCedula.setContext(Qt.WidgetShortcut)
         shortcutCedula.activated.connect(self.inputEmail.setFocus)        
 
-        self.inputApellido = QLineEdit(self.window)
         shortcutApellido = QShortcut(QKeySequence(Qt.Key_Return), self.inputApellido)
         shortcutApellido.setContext(Qt.WidgetShortcut)
         shortcutApellido.activated.connect(self.inputCedula.setFocus)        
 
-        self.inputNombre = QLineEdit(self.window)
-        self.inputNombre.setFocus()
         shortcutNombre = QShortcut(QKeySequence(Qt.Key_Return), self.inputNombre)
         shortcutNombre.setContext(Qt.WidgetShortcut)
         shortcutNombre.activated.connect(self.inputApellido.setFocus)

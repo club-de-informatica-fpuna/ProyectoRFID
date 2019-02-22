@@ -232,10 +232,7 @@ class Socio:
             self.view.mostrarPopup("Información", "Detalle", messageNotFount if ciSocio is not '' else messageStrEmpty)
     
     def center(self):
-        screen = QDesktopWidget().screenGeometry()
-        width = (screen.width()-screen.width()/8)
-        height = (screen.height()-screen.height()/8)
-        self.window.setGeometry( (screen.width()-width) /2, (screen.height()-height)/2, width, height)
+        self.window.showMaximized()
 
     def nextPage(self):
         if self.totalPartner == 0:

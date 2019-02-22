@@ -19,7 +19,6 @@ class Home:
 
     def start(self):
         self.build()
-        self.window.show()
         self.view.app.exec_()
 
     def createGridLayout(self):
@@ -76,6 +75,21 @@ class Home:
         btnEquipo.setIconSize(QSize(40,40))        
         btnEquipo.setMinimumWidth(200) 
         btnEquipo.setMaximumWidth(300)               
+
+        btnConfiguracion = QPushButton('Configuración')
+        btnConfiguracion.setObjectName('botonHome')
+        btnConfiguracion.setIcon(QIcon("./view/resources/config.svg"))
+        btnConfiguracion.setIconSize(QSize(40,40))        
+        btnConfiguracion.setMinimumWidth(200)
+        btnConfiguracion.setMaximumWidth(300)                   
+        btnConfiguracion.clicked.connect(self.view.mostrarConfiguracion)
+
+        btnAcercaDe = QPushButton('Acerca de')
+        btnAcercaDe.setObjectName('botonHome')
+        btnAcercaDe.setIcon(QIcon("./view/resources/about-other.svg"))
+        btnAcercaDe.setIconSize(QSize(40,40))
+        btnAcercaDe.setMinimumWidth(200)
+        btnAcercaDe.setMaximumWidth(300)                   
 
         btnSalir = QPushButton('Salir')
         btnSalir.setObjectName('botonHome')
@@ -150,9 +164,11 @@ class Home:
         self.layout.addWidget(btnPromocion, 3, 0, 1, 1, Qt.AlignRight)
         self.layout.addWidget(btnCaja, 3, 2, 1, 1, Qt.AlignLeft)
         self.layout.addWidget(btnEquipo, 4, 0, 1, 1, Qt.AlignRight)
-        self.layout.addWidget(btnSalir, 4, 2, 1, 1, Qt.AlignLeft)
-        self.layout.addWidget(labelImg, 1, 1, 4, 1)
-        self.layout.addLayout(layoutFooter,5,0,1,3, Qt.AlignLeft)
+        self.layout.addWidget(btnConfiguracion, 4, 2, 1, 1, Qt.AlignLeft)
+        self.layout.addWidget(btnAcercaDe, 5, 0, 1, 1, Qt.AlignRight)        
+        self.layout.addWidget(btnSalir, 5, 2, 1, 1, Qt.AlignLeft)
+        self.layout.addWidget(labelImg, 1, 1, 5, 1)
+        self.layout.addLayout(layoutFooter,6,0,1,3, Qt.AlignLeft)
 
         self.layout.setContentsMargins(50, 20, 50, 20)
         self.layout.setAlignment(Qt.AlignCenter)
@@ -169,5 +185,4 @@ class Home:
         self.window.setLayout(self.layout)
 
     def center(self):
-        screen = QDesktopWidget().screenGeometry()
-        self.window.setGeometry(0,0,screen.width(), screen.height())
+        self.window.showMaximized()

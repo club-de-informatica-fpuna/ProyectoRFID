@@ -136,7 +136,6 @@ class Alumnos:
 
         self.tablaAlumnos = QTableWidget(self.window)
         self.tablaAlumnos.setRowCount(len(self.alumnos))
-
         self.tablaAlumnos.setColumnCount(5)
 
         header = self.tablaAlumnos.horizontalHeader()
@@ -148,9 +147,6 @@ class Alumnos:
         self.tablaAlumnos.setHorizontalHeaderItem(2, QTableWidgetItem("EMAIL"))
         self.tablaAlumnos.setHorizontalHeaderItem(3, QTableWidgetItem("TELÉFONO"))
         self.tablaAlumnos.setHorizontalHeaderItem(4, QTableWidgetItem("CARRERA"))
-
-        self.tablaAlumnos.resizeColumnsToContents()
-        self.tablaAlumnos.resizeRowsToContents()
 
         self.tablaAlumnos.horizontalHeader().setStyleSheet("QHeaderView::section {background: #002156; color: white; font-weight: bold; border: 1px solid silver; padding: 5px}")
         self.tablaAlumnos.verticalHeader().setStyleSheet("QHeaderView::section {background: #002156; color: white; font-weight: bold; border: 1px solid silver; padding: 5px}")        
@@ -215,8 +211,7 @@ class Alumnos:
         shortcutSalir.activated.connect(self.window.hide)
         
     def center(self):
-        screen = QDesktopWidget().screenGeometry()
-        self.window.setGeometry(0, 0, screen.width(), screen.height())
+        self.window.showMaximized()
 
     def nextPage(self):
         if self.cantidadAlumnos is None or self.cantidadAlumnos <= 0:
