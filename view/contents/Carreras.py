@@ -54,6 +54,7 @@ class Carreras:
             item.setData(Qt.UserRole, int(i.id))
             self.listCarreras.addItem(item)
         self.listCarreras.setObjectName("list")
+        self.listCarreras.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
         with open('./view/resources/styles.css') as f:
             btnEditar.setStyleSheet(f.read())        
