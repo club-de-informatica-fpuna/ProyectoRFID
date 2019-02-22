@@ -302,10 +302,10 @@ class FormSocios:
         self.lbImg.setPixmap(pixmapResized)
 
     def center(self):
-        screen = QDesktopWidget().screenGeometry()
-        size = self.window.geometry()      
-        self.window.move((screen.width() - size.width()) /2, (screen.height() - size.height()) / 2)
-        self.window.setFixedSize(self.window.size())
+        qr = self.window.frameGeometry()
+        cp = QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.window.move(qr.topLeft())
     
     def openCamera(self):
         self.filename = str(uuid.uuid4()) + ".png"

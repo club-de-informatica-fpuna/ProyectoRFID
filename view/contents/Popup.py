@@ -72,9 +72,10 @@ class Popup:
         shortcutCerrar.activated.connect(self.window.hide)              
 
     def center(self):
-        screen = QDesktopWidget().screenGeometry()
-        size = self.window.geometry()      
-        self.window.move((screen.width() - size.width()) /2, (screen.height() - size.height()) / 2)
+        qr = self.window.frameGeometry()
+        cp = QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.window.move(qr.topLeft())
         
     def manejarCancelar(self):
         self.window.hide()
