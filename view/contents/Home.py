@@ -19,7 +19,6 @@ class Home:
 
     def start(self):
         self.build()
-        self.window.show()
         self.view.app.exec_()
 
     def createGridLayout(self):
@@ -186,4 +185,4 @@ class Home:
         self.window.setLayout(self.layout)
 
     def center(self):
-        self.window.showFullScreen()
+        self.window.showMaximized()
