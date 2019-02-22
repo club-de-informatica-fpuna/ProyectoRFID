@@ -228,7 +228,7 @@ class Socio:
                 self.view.mostrarConsultaSocio(socio, alumno, carrera)
         else:
             messageNotFount = "No se encuentra registrado el socio con número de cedula: {}".format(ciSocio)
-            messageStrEmpty = "Debe ingersar un número de cedula para iniciar con la busqueda del socio"
+            messageStrEmpty = "Debe ingersar un número de cedula para iniciar con la busqueda"
             self.view.mostrarPopup("Información", "Detalle", messageNotFount if ciSocio is not '' else messageStrEmpty)
     
     def center(self):

@@ -267,14 +267,17 @@ class FormSocios:
         ci = self.inputCI.text()
         alumno = self.view.generalController.alumnoController.buscarAlumno(ci)
 
-        if alumno is None:
-            return
-        else:
+        if alumno is not None:
             self.inputFN.setText(alumno.nombre)
             self.inputLN.setText(alumno.apellido)
             carrera = self.view.generalController.socioController.obtenerCarrera(ci)
             if carrera is not None:
                 self.inputCarrer.setText(carrera.denominacion)
+        else:
+            messageNotFount = "No existe un alumno con número de cedula: {}".format(ci)
+            messageStrEmpty = "Debe ingersar un número de cedula para iniciar con la busqueda"
+            self.view.mostrarPopup("Información", "Detalle", messageNotFount if ci is not '' else messageStrEmpty)
+            return
 
     def postSocio(self):
         ci = self.inputCI.text()
