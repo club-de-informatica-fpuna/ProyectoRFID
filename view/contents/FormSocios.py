@@ -75,11 +75,17 @@ class FormSocios:
         
 
         self.inputCI     = QLineEdit()
+        self.inputCI.setObjectName("inputFormEnable")
         self.inputFN     = QLineEdit()
+        self.inputFN.setObjectName("inputFormDisable")
         self.inputLN     = QLineEdit()
+        self.inputLN.setObjectName("inputFormDisable")
         self.inputCarrer = QLineEdit()
+        self.inputCarrer.setObjectName("inputFormDisable")
         self.inputUID    = QLineEdit()
+        self.inputUID.setObjectName("inputFormEnable")
         self.inputDate   = QDateEdit(QDate.currentDate())
+        self.inputDate.setObjectName("inputFormEnableDate")
         self.inputDate.setDisplayFormat('dd/MM/yyyy')
         
         self.inputFN.setEnabled(False)
@@ -184,12 +190,19 @@ class FormSocios:
         
 
         self.inputCI     = QLineEdit()
+        self.inputCI.setObjectName("inputFormDisable")
         self.inputFN     = QLineEdit()
+        self.inputFN.setObjectName("inputFormDisable")
         self.inputLN     = QLineEdit()
+        self.inputLN.setObjectName("inputFormDisable")
         self.inputCareer = QLineEdit()
+        self.inputCareer.setObjectName("inputFormDisable")
         self.inputUID    = QLineEdit()
+        self.inputUID.setObjectName("inputFormEnable")
         self.inputDate   = QDateEdit()
+        self.inputDate.setObjectName("inputFormDisable")
         self.selectState = QComboBox()
+        self.selectState.setObjectName("inputSelect")
         self.selectState.addItem("Activo", True)
         self.selectState.addItem("Inactivo", False)                
         self.selectState.setCurrentIndex(0 if self.socio.estado else 1)

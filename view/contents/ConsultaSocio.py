@@ -26,6 +26,8 @@ class ConsultaSocio:
     def createGridLayout(self):
 
         self.layout = QHBoxLayout(self.window)
+        self.pathResources ="./view/resources/"
+
         verticalLayoutData = QVBoxLayout()
         gridLayoutData = QGridLayout()
 
@@ -43,24 +45,37 @@ class ConsultaSocio:
         labelEstado = QLabel("Estado")
 
         self.inputNombreApellido = QLineEdit()
+        self.inputNombreApellido.setObjectName("inputFormDisable")
         self.inputNombreApellido.setEnabled(False)
         self.inputNombreApellido.setText(self.alumno.nombre + ", " + self.alumno.apellido)
+        
         self.inputCedula = QLineEdit()
+        self.inputCedula.setObjectName("inputFormDisable")
         self.inputCedula.setEnabled(False)
         self.inputCedula.setText(str(self.alumno.ci))
+
         self.inputEmail = QLineEdit()
+        self.inputEmail.setObjectName("inputFormDisable")
         self.inputEmail.setEnabled(False)
-        self.inputEmail.setText(self.alumno.email)      
+        self.inputEmail.setText(self.alumno.email)
+
         self.inputTelefono = QLineEdit()
+        self.inputTelefono.setObjectName("inputFormDisable")
         self.inputTelefono.setEnabled(False)
         self.inputTelefono.setText(self.alumno.telefono)
+
         self.inputCarrera = QLineEdit()
+        self.inputCarrera.setObjectName("inputFormDisable")
         self.inputCarrera.setEnabled(False)   
         self.inputCarrera.setText(self.carrera.denominacion)
+
         self.inputFecha = QLineEdit()
+        self.inputFecha.setObjectName("inputFormDisable")
         self.inputFecha.setEnabled(False)
         self.inputFecha.setText(str(self.socio.fechaIngreso))
+
         self.inputUID = QLineEdit()
+        self.inputUID.setObjectName("inputFormDisable")
         self.inputUID.setEnabled(False)
         self.inputUID.setText(self.socio.uid)
 
@@ -85,9 +100,7 @@ class ConsultaSocio:
         gridLayoutData.addWidget(btnCerrar,8,0,1,1)
         gridLayoutData.setAlignment(Qt.AlignTop)
 
-        #formSize = gridLayoutData.height()
-
-        with open('./view/resources/styles.css') as f:
+        with open(self.pathResources + "styles.css") as f:
             btnCerrar.setStyleSheet(f.read())
 
         if self.socio.foto is not None:
@@ -98,7 +111,7 @@ class ConsultaSocio:
         self.layout.setContentsMargins(20, 20, 20, 20)
 
         self.window.setObjectName("ventanaPopup")
-        with open('./view/resources/styles.css') as f:
+        with open(self.pathResources + "styles.css") as f:
             self.window.setStyleSheet(f.read())
 
         self.window.show()

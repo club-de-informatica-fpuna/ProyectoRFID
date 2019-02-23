@@ -125,8 +125,9 @@ QLineEdit#inputSearch:hover {
 }
 
 QLineEdit#inputSearch:focus {
-    border: 1px solid;
+    border: 0.1em solid;
     border-color: #0e52c0;
+    border-radius: 5px;
     height: 5em;
 }
 
@@ -149,10 +150,10 @@ QPushButton#searchStudent {
     border: 1px solid #dee2e6;
     background-color: #0e52c0;
     font-size: 13px;
-    font-weight: 550;
+    font-weight: 350;
     border-radius: 5px;
-    height: 25%;
-    width: 100%;
+    height: 30%;
+    width: 75%;
 }
 
 QPushButton#searchStudent:hover {
@@ -213,4 +214,75 @@ QPushButton#searchModuleButton:hover {
     background-color: #fff;
     color: #0e52c0;
     border: 1px solid #0e52c0;
+}
+
+QLineEdit#inputFormEnable {
+    background: #fff;
+    color: #292b2c;
+    border: 1px solid #6c757d;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 350;
+    padding: 5px;
+}
+
+QLineEdit#inputFormEnable:hover {
+    border: 1px solid #0e52c0;
+}
+
+QLineEdit#inputFormEnable:focus {
+    border: 0.1em solid;
+    border-color: #0e52c0;
+    border-radius: 5px;
+}
+QLineEdit#inputFormDisable {
+    background-color: #eee;
+    opacity: 1;
+    color: #555;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 350;
+    padding: 5px;
+}
+
+QDateEdit#inputFormEnableDate {
+    background: #fff;
+    color: #292b2c;
+    border: 1px solid #6c757d;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 350;
+    padding: 5px;
+}
+
+QDateEdit#inputFormEnableDate:hover {
+    border: 1px solid #0e52c0;
+}
+
+QDateEdit#inputFormEnableDate:focus {
+    border: 0.1em solid;
+    border-color: #0e52c0;
+    border-radius: 5px;
+}
+
+QDateEdit#inputFormDisable {
+    background-color: #eee;
+    opacity: 1;
+    color: #555;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 350;
+    padding: 5px;
+}
+
+QComboBox#inputSelect{
+    background: #fff;
+    color: #292b2c;
+    border: 1px solid #6c757d;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 350;
+    padding: 5px;
 }

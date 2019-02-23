@@ -72,7 +72,6 @@ class Socio:
         self.inputSearch.setPlaceholderText("Ingrese su CI")
         self.inputSearch.setFocus(True)
         self.inputSearch.setToolTip("Ingrese número de sedula para buscar")
-        
         self.inputSearch.setMaximumWidth(300)
 
         btnSearch = QPushButton("Buscar")
