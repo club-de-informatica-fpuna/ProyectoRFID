@@ -6,6 +6,7 @@ __pycache__/*
 *.pyc
 *.pyo
 *.log
+*.spec.swp
 
 # C extensions
 *.so
@@ -78,3 +79,4 @@ venv.bak/
 
 # Pyre type checker
 .pyre/
+.vscode/
