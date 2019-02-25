@@ -49,16 +49,25 @@ class Socio:
         btnNew.setObjectName("botonPrimario")
         btnNew.setIcon(QIcon(pathIcons + "add-partner.png"))
         btnNew.clicked.connect(self.view.mostrarFormSocio)
+        shortcutNew = QShortcut(QKeySequence(Qt.Key_Return), btnNew)
+        shortcutNew.setContext(Qt.WidgetShortcut)
+        shortcutNew.activated.connect(self.view.mostrarFormSocio)
 
         btnRemove = QPushButton("Eliminar")
         btnRemove.setObjectName("cancel")
         btnRemove.setIcon(QIcon(pathIcons + "remove.png"))
         btnRemove.clicked.connect(self.removePartner)
+        shortcutRemove = QShortcut(QKeySequence(Qt.Key_Return), btnRemove)
+        shortcutRemove.setContext(Qt.WidgetShortcut)
+        shortcutRemove.activated.connect(self.removePartner)
 
         btnEdit = QPushButton("Modificar")
         btnEdit.setObjectName("botonSecundario")
         btnEdit.setIcon(QIcon(pathIcons + "edit.png"))
         btnEdit.clicked.connect(self.editPartner)
+        shortcutEdit = QShortcut(QKeySequence(Qt.Key_Return), btnEdit)
+        shortcutEdit.setContext(Qt.WidgetShortcut)
+        shortcutEdit.activated.connect(self.editPartner)
 
         with open(pathResource + "styles.css") as f:
             btnNew.setStyleSheet(f.read())
@@ -70,15 +79,25 @@ class Socio:
         self.inputSearch = QLineEdit()
         self.inputSearch.setObjectName("inputSearch")
         self.inputSearch.setPlaceholderText("Ingrese su CI")
-        self.inputSearch.setFocus(True)
         self.inputSearch.setToolTip("Ingrese número de sedula para buscar")
         self.inputSearch.setMaximumWidth(300)
+
+        shortcutSearch = QShortcut(QKeySequence(Qt.Key_Return), self.inputSearch)
+        shortcutSearch.setContext(Qt.WidgetShortcut)
+        shortcutSearch.activated.connect(self.buscarSocio)
+
+        shortcutSearchIntro = QShortcut(QKeySequence(Qt.Key_Enter), self.inputSearch)
+        shortcutSearchIntro.setContext(Qt.WidgetShortcut)
+        shortcutSearchIntro.activated.connect(self.buscarSocio)
 
         btnSearch = QPushButton("Buscar")
         btnSearch.setObjectName("searchModuleButton")
         btnSearch.setIcon(QIcon(pathIcons + "search.png"))
         btnSearch.setFixedSize(80, 32)
         btnSearch.clicked.connect(self.buscarSocio)
+        shortcutBuscar = QShortcut(QKeySequence(Qt.Key_Return), btnSearch)
+        shortcutBuscar.setContext(Qt.WidgetShortcut)
+        shortcutBuscar.activated.connect(self.buscarSocio)
 
         with open(pathResource + "styles.css") as f:
             self.inputSearch.setStyleSheet(f.read())
@@ -153,6 +172,34 @@ class Socio:
             btnUltimaPagina.setStyleSheet(f.read())
         with open(pathResource + "styles.css") as f:
             btnPaginaActual.setStyleSheet(f.read())
+
+        shortcutKSearch = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_F), self.window)
+        shortcutKSearch.setContext(Qt.WindowShortcut)
+        shortcutKSearch.activated.connect(self.inputSearch.setFocus)
+
+        shortcutKNew = QShortcut(QKeySequence(Qt.Key_F1), self.window)
+        shortcutKNew.setContext(Qt.WindowShortcut)
+        shortcutKNew.activated.connect(self.view.mostrarFormSocio)
+
+        shortcutKRemove = QShortcut(QKeySequence(Qt.Key_F2), self.window)
+        shortcutKRemove.setContext(Qt.WindowShortcut)
+        shortcutKRemove.activated.connect(self.removePartner)
+
+        shortcutKEdit = QShortcut(QKeySequence(Qt.Key_F3), self.window)
+        shortcutKEdit.setContext(Qt.WindowShortcut)
+        shortcutKEdit.activated.connect(self.editPartner)
+
+        shortcutNextPage = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_Right), self.window)
+        shortcutNextPage.setContext(Qt.WindowShortcut)
+        shortcutNextPage.activated.connect(self.nextPage)
+
+        shortcutPrevPage = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_Left), self.window)
+        shortcutPrevPage.setContext(Qt.WindowShortcut)
+        shortcutPrevPage.activated.connect(self.previousPage)
+
+        shortcutExit = QShortcut(QKeySequence(Qt.Key_Escape), self.window)
+        shortcutExit.setContext(Qt.WindowShortcut)
+        shortcutExit.activated.connect(self.window.hide)
 
         searchLayout = QHBoxLayout()
         searchLayout.addWidget(self.inputSearch)

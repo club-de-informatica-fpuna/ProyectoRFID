@@ -118,6 +118,10 @@ class FormSocios:
         with open(self.pathResources + "styles.css") as f:
             btnSearch.setStyleSheet(f.read())
 
+        shortcutExit = QShortcut(QKeySequence(Qt.Key_Escape), self.window)
+        shortcutExit.setContext(Qt.WindowShortcut)
+        shortcutExit.activated.connect(self.window.hide)
+
         verticalLayoutImage.addWidget(lbImgTile)
         verticalLayoutImage.addWidget(self.lbImg)
         verticalLayoutImage.addWidget(self.imgButton)
@@ -236,6 +240,10 @@ class FormSocios:
             btnCancelar.setStyleSheet(f.read())
         with open(self.pathResources + "styles.css") as f:
             btnUpdate.setStyleSheet(f.read())
+
+        shortcutExit = QShortcut(QKeySequence(Qt.Key_Escape), self.window)
+        shortcutExit.setContext(Qt.WindowShortcut)
+        shortcutExit.activated.connect(self.window.hide)
 
         verticalLayoutImage.addWidget(lbImgTile)
         verticalLayoutImage.addWidget(self.lbImg)

@@ -83,6 +83,13 @@ class ConsultaSocio:
         btnCerrar.setObjectName("botonSecundario")
         btnCerrar.clicked.connect(self.manejarCancelar)
 
+        with open(self.pathResources + "styles.css") as f:
+            btnCerrar.setStyleSheet(f.read())
+
+        shortcutExit = QShortcut(QKeySequence(Qt.Key_Escape), self.window)
+        shortcutExit.setContext(Qt.WindowShortcut)
+        shortcutExit.activated.connect(self.window.hide)
+
         gridLayoutData.addWidget(labelNombreApellido,0,0)
         gridLayoutData.addWidget(labelFechaSocio,0,1)
         gridLayoutData.addWidget(self.inputNombreApellido,1,0)
@@ -99,9 +106,6 @@ class ConsultaSocio:
         gridLayoutData.addWidget(self.inputCarrera,7,0,1,2)
         gridLayoutData.addWidget(btnCerrar,8,0,1,1)
         gridLayoutData.setAlignment(Qt.AlignTop)
-
-        with open(self.pathResources + "styles.css") as f:
-            btnCerrar.setStyleSheet(f.read())
 
         if self.socio.foto is not None:
             self.layout.addWidget(self.lbImg)
