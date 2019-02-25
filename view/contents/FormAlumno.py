@@ -143,7 +143,7 @@ class FormAlumno:
         labelCarreras = QLabel("Carrera")
 
         self.inputCarreras = QComboBox(self.window)
-        self.inputCarreras.setObjectName("inputSelect")
+        self.inputCarreras.setObjectName("inputSelect" if self.editable else "inputSelectDisable")
         for i in self.carreras:
             self.inputCarreras.addItem(i.denominacion, i)
         careerIndex = self.inputCarreras.findText(self.raceById.denominacion)
@@ -154,7 +154,7 @@ class FormAlumno:
         shortcutCarreras.activated.connect(self.manejarUpdateAlumno)        
 
         self.inputTelefono = QLineEdit(self.window)
-        self.inputTelefono.setObjectName("inputFormEnable")
+        self.inputTelefono.setObjectName("inputFormEnable" if self.editable else "inputFormDisable")
         self.inputTelefono.setText(self.alumnoUpdate.telefono)
 
         shortcutTelefono = QShortcut(QKeySequence(Qt.Key_Return), self.inputTelefono)
@@ -162,7 +162,7 @@ class FormAlumno:
         shortcutTelefono.activated.connect(self.inputCarreras.setFocus)           
 
         self.inputEmail = QLineEdit(self.window)
-        self.inputEmail.setObjectName("inputFormEnable")
+        self.inputEmail.setObjectName("inputFormEnable" if self.editable else "inputFormDisable")
         self.inputEmail.setText(self.alumnoUpdate.email)
 
         shortcutEmail = QShortcut(QKeySequence(Qt.Key_Return), self.inputEmail)
@@ -175,7 +175,7 @@ class FormAlumno:
         self.inputCedula.setText(self.alumnoUpdate.ci)
 
         self.inputApellido = QLineEdit(self.window)
-        self.inputApellido.setObjectName("inputFormEnable")
+        self.inputApellido.setObjectName("inputFormEnable" if self.editable else "inputFormDisable")
         self.inputApellido.setText(self.alumnoUpdate.apellido)
 
         shortcutApellido = QShortcut(QKeySequence(Qt.Key_Return), self.inputApellido)
@@ -183,7 +183,7 @@ class FormAlumno:
         shortcutApellido.activated.connect(self.inputEmail.setFocus)        
 
         self.inputNombre = QLineEdit(self.window)
-        self.inputNombre.setObjectName("inputFormEnable")
+        self.inputNombre.setObjectName("inputFormEnable" if self.editable else "inputFormDisable")
         self.inputNombre.setText(self.alumnoUpdate.nombre)
         self.inputNombre.setFocus()
 
@@ -191,7 +191,7 @@ class FormAlumno:
         shortcutNombre.setContext(Qt.WidgetShortcut)
         shortcutNombre.activated.connect(self.inputApellido.setFocus)
 
-        if self.editable is False:
+        if not self.editable :
             self.inputNombre.setEnabled(False)
             self.inputApellido.setEnabled(False)
             self.inputCedula.setEnabled(False)

@@ -235,6 +235,7 @@ QLineEdit#inputFormEnable:focus {
     border-color: #0e52c0;
     border-radius: 5px;
 }
+
 QLineEdit#inputFormDisable {
     background-color: #eee;
     opacity: 1;
@@ -277,10 +278,21 @@ QDateEdit#inputFormDisable {
     padding: 5px;
 }
 
-QComboBox#inputSelect{
+QComboBox#inputSelect {
     background: #fff;
     color: #292b2c;
     border: 1px solid #6c757d;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 350;
+    padding: 5px;
+}
+
+QComboBox#inputSelectDisable {
+    background-color: #eee;
+    opacity: 1;
+    color: #555;
+    border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 13px;
     font-weight: 350;
