@@ -286,3 +286,26 @@ QComboBox#inputSelect{
     font-weight: 350;
     padding: 5px;
 }
+
+QListWidget#list::item {
+    background-color: #05265a;
+    color: white;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+}
+
+QListWidget#list {
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: 20px;
+    border: 0px solid transparent;
+}
+
+QListWidget#list::item:selected {
+    background-color: gray;
+}
+
+QListWidget#list::item:hover {
+    background-color: #0e52c0;
+}
