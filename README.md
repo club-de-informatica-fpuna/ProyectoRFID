@@ -29,3 +29,5 @@ Por lo cual, para configurar nuestra base de datos local, editamos la función *
 
 ### **Base de datos remota**
 > Nuestra base de datos remota solo la utilizarmos en el caso de no querer configurar localmente la base de datos, la cual está alojada en un servidor de [heroku](https://www.heroku.com), el sistema se conectará a la base de datos remota en el único caso de que falle la conexión a la supuesta base de datos local
+
+### **Iniciar la aplicación: python3 Application.py"**
