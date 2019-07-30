@@ -1,8 +1,10 @@
 from view.contents.Home import Home
 from view.contents.Popup import Popup
 from view.contents.Alumnos import Alumnos
+from view.contents.Prestamos import Prestamos
 from view.contents.FormAlumno import FormAlumno
 from view.contents.FormSocios import FormSocios
+from view.contents.FormPrestamo import FormPrestamo
 from view.contents.Socios import Socio
 from view.contents.ConsultaSocio import ConsultaSocio
 from view.contents.Configuracion import Configuracion
@@ -15,12 +17,25 @@ class View:
         self.generalController = generalController
         self.alumnosView = None
         self.socioView   = None
+        self.prestamosView = None
     
     def iniciarVista(self):
         self.app = QApplication([])
         self.homeView = Home(self)
         self.homeView.start()
     
+    def mostrarModuloPrestamo(self):
+        if self.prestamosView is not None:
+            cantidadPrestamos = self.prestamosView.cantidadPrestamos
+            if cantidadPrestamos is None or cantidadPrestamos <= 0:
+                self.prestamosView = Prestamos(self)
+            else:
+                cantPaginas = math.ceil(cantidadPrestamos/self.prestamosView.cantidadElementos)
+                self.prestamosView = Prestamos(self, cantPaginas)
+        else:
+            self.prestamosView = Prestamos(self)            
+        self.prestamosView.start()
+
     def mostrarModuloAlumnos(self):
         if self.alumnosView is not None:
             cantidadAlumnos = self.alumnosView.cantidadAlumnos
@@ -38,6 +53,12 @@ class View:
             title = "Nuevo alumno | CEP"
         self.formAlumno = FormAlumno(self, title=title, update=update, alumnoUpdate=alumnoUpdate, editable=editable, raceById=raceById)
         self.formAlumno.start()        
+
+    def mostrarFormPrestamo(self, title="Nuevo préstamo | CEP", update=False, alumnoUpdate=None, editable=True, raceById=None):
+        if title is False:
+            title = "Nuevo préstamo | CEP"
+        self.formPrestamo = FormPrestamo(self, title=title, update=update, prestamo=prestamo, editable=editable, raceById=raceById)
+        self.formPrestamo.start()        
     
     def mostrarFormSocio(self, title='', update=False, socio=None, alumno=None, carrera=None):
         if update:

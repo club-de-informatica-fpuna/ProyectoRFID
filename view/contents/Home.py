@@ -44,6 +44,7 @@ class Home:
         btnPrestamo = QPushButton('Prestamos')
         btnPrestamo.setObjectName('botonHome')
         btnPrestamo.setIcon(QIcon("./view/resources/loan.svg"))
+        btnPrestamo.clicked.connect(self.view.mostrarModuloPrestamo)
         btnPrestamo.setIconSize(QSize(40,40))
         btnPrestamo.setMinimumWidth(200)
         btnPrestamo.setMaximumWidth(300)

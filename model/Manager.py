@@ -2,6 +2,7 @@ import psycopg2
 from model.CarreraManager import CarreraManager
 from model.AlumnoManager import AlumnoManager
 from model.SocioManager import SocioManager
+from model.PrestamoManager import PrestamoManager
 
 class Manager:
 
@@ -40,12 +41,13 @@ class Manager:
         self.carreraManager = CarreraManager(self.conn)
         self.alumnoManager  = AlumnoManager(self.conn)
         self.socioManager   = SocioManager(self.conn)
+        self.prestamoManager = PrestamoManager(self.conn)
     
     def conexionLocal(self):
         self.PSQL_HOST = "localhost"
         self.PSQL_PORT = "5432"
         self.PSQL_USER = "postgres"
-        self.PSQL_PASS = "12345"
+        self.PSQL_PASS = "root"
         self.PSQL_DB = "rfid"
 
     def conexionRemota(self):

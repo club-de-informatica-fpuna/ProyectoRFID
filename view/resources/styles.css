@@ -47,6 +47,15 @@ QLabel#footerHome {
     margin-bottom: 20px;
 }
 
+QPushButton#search{
+    background: #ffa500;
+    color: #fff;
+    border: 1px solid #dee2e6;
+    padding: 5px;
+    font-size: 13px;
+    font-weight: 350;
+    border-radius: 5px;
+}
 QPushButton#botonPrimario {
     background: #0e52c0;
     color: #fff;
@@ -58,6 +67,12 @@ QPushButton#botonPrimario {
 }
 
 QPushButton#botonPrimario:hover {
+    background: #fff;
+    color: #0e52c0;
+    border: 1px solid #0e52c0;
+}
+
+QPushButton#search:hover {
     background: #fff;
     color: #0e52c0;
     border: 1px solid #0e52c0;
